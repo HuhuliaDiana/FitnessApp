@@ -4,7 +4,6 @@ import com.fitnessapp.dto.JwtResponse;
 import com.fitnessapp.dto.LoginRequest;
 import com.fitnessapp.security.JwtService;
 import com.fitnessapp.security.UserDetailsServiceImpl;
-import com.fitnessapp.service.UserService;
 import com.fitnessapp.service.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

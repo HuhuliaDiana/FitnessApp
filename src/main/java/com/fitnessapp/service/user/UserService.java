@@ -1,6 +1,6 @@
-package com.fitnessapp.service;
+package com.fitnessapp.service.user;
 
-import com.fitnessapp.dto.ERole;
+import com.fitnessapp.enums.ERole;
 import com.fitnessapp.dto.RoleDto;
 import com.fitnessapp.dto.UserDto;
 import com.fitnessapp.entity.Role;

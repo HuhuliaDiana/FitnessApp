@@ -1,6 +1,6 @@
 package com.fitnessapp.repository;
 
-import com.fitnessapp.dto.ERole;
+import com.fitnessapp.enums.ERole;
 import com.fitnessapp.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 

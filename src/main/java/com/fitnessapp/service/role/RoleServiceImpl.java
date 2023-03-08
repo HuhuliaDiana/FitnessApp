@@ -1,6 +1,6 @@
 package com.fitnessapp.service.role;
 
-import com.fitnessapp.dto.ERole;
+import com.fitnessapp.enums.ERole;
 import com.fitnessapp.dto.RoleDto;
 import com.fitnessapp.entity.Role;
 import com.fitnessapp.exception.EntityNotFoundException;
@@ -21,9 +21,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleDto save(RoleDto roleDto) {
+    public void save(RoleDto roleDto) {
         Role role = roleMapper.map(roleDto);
-        return roleMapper.map(roleRepository.save(role));
+        roleRepository.save(role);
     }
 
 

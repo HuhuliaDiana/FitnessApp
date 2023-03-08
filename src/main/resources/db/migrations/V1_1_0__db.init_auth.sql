@@ -16,10 +16,21 @@ create table user_role(
 role_id bigint,
 user_id bigint NOT NULL
 );
+create table membership(
+id bigserial PRIMARY KEY NOT NULL,
+name character varying(20) UNIQUE
+);
+create table city(
+id bigserial PRIMARY KEY NOT NULL,
+name character varying(20) UNIQUE
+);
 
 create table club(
 id bigserial PRIMARY KEY NOT NULL,
-name character varying(255)
+name character varying(255),
+address character varying(255),
+phone character varying(255)
+
 );
 
 create table club_role(

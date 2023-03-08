@@ -15,4 +15,5 @@ public class ClubRoleServiceImpl implements ClubRoleService {
     public List<ClubRole> findByClubAndUserEmail(String email, Long clubId) {
         return clubRoleRepository.findAllByClubIdAndParticipantEmail(clubId, email);
     }
+
 }
