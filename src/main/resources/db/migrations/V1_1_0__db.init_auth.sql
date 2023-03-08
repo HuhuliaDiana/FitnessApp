@@ -29,8 +29,9 @@ create table club(
 id bigserial PRIMARY KEY NOT NULL,
 name character varying(255),
 address character varying(255),
-phone character varying(255)
-
+phone character varying(255),
+membership_id bigint,
+city_id bigint
 );
 
 create table club_role(

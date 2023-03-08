@@ -22,12 +22,12 @@ public class Club extends BaseEntity {
 
     @OneToMany(mappedBy = "club")
     private Set<ClubRole> clubRoles = new HashSet<>();
-//    @OneToOne
-//    @JoinColumn(name = "membership_id", referencedColumnName = "id")
-//    private Membership membership;
-//    @ManyToOne(cascade = CascadeType.MERGE)
-//    @JoinColumn(name = "city_id")
-//    private City city;
+    @OneToOne
+    @JoinColumn(name = "membership_id")
+    private Membership membership;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "city_id")
+    private City city;
 
 
 }

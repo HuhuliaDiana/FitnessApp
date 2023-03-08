@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Membership extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 10)
+    @Column(length = 20)
     private EMembership name;
 
 
