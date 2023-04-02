@@ -1,0 +1,9 @@
+4 states for a training class:
+1. booking available-forth check
+2. booking starts on: ... -third check
+3. you already booked a class for this time span-second check
+4. you booked this class-first check
+
+make past training classes disappear from list displayed to user
+
+if silver than have access to bronze and silver

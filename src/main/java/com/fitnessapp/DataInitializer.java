@@ -3,13 +3,9 @@ package com.fitnessapp;
 import com.fitnessapp.dto.*;
 import com.fitnessapp.entity.City;
 import com.fitnessapp.entity.Membership;
-import com.fitnessapp.enums.ECity;
-import com.fitnessapp.enums.EMembership;
-import com.fitnessapp.enums.ERole;
-import com.fitnessapp.enums.ESubscriptionPeriod;
-import com.fitnessapp.mapper.CityMapper;
-import com.fitnessapp.mapper.MembershipMapper;
-import com.fitnessapp.mapper.SubscriptionPeriodMapper;
+import com.fitnessapp.entity.TrainingClassType;
+import com.fitnessapp.enums.*;
+import com.fitnessapp.mapper.*;
 import com.fitnessapp.repository.*;
 import com.fitnessapp.service.city.CityService;
 import com.fitnessapp.service.club.ClubService;
@@ -17,12 +13,17 @@ import com.fitnessapp.service.membership.MembershipService;
 import com.fitnessapp.service.role.RoleService;
 import com.fitnessapp.service.subscription.SubscriptionPeriodService;
 import com.fitnessapp.service.subscription.SubscriptionService;
+import com.fitnessapp.service.training_class.TrainingClassHourService;
+import com.fitnessapp.service.training_class.TrainingClassTypeService;
+import com.fitnessapp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -44,16 +45,36 @@ public class DataInitializer implements CommandLineRunner {
     private final SubscriptionPeriodService subscriptionPeriodService;
     private final SubscriptionPeriodMapper periodMapper;
     private final SubscriptionPeriodRepository periodRepository;
+    private final TrainingClassTypeRepository trainingClassTypeRepository;
+    private final TrainingClassHourService trainingClassHourService;
+    private final TrainingClassHourRepository trainingClassHourRepository;
+    private final TrainingClassRepository trainingClassRepository;
+    private final UserService userService;
+    private final UserRepository userRepository;
+
+    public final ClubMapper clubMapper;
+
 
     @Override
     public void run(String... args) {
+
         if (roleRepository.count() == 0) saveRoles();
+        if (userRepository.count() == 0) {
+            UserDto userDto = new UserDto();
+            userDto.setEmail("dianahuhulia@gmail.com");
+            userDto.setPassword("password1234");
+            userDto.setFirstname("Diana");
+            userDto.setLastname("Huhulia");
+            userDto.setPhone("0720878738");
+            userService.createUser(userDto);
+        }
         if (membershipRepository.count() == 0) saveMembershipTypes();
         if (cityRepository.count() == 0) saveCities();
         if (clubRepository.count() == 0) saveClubs();
         if (periodRepository.count() == 0) saveAllTypesOfSubscriptionPeriod();
         if (subscriptionRepository.count() == 0) saveAllTypesOfSubscription();
-
+        if (trainingClassTypeRepository.count() == 0) saveTrainingClassTypes();
+        if (trainingClassHourRepository.count() == 0) saveTrainingClassHours();
 
     }
 
@@ -67,7 +88,7 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void saveMembershipTypes() {
-        Arrays.stream(EMembership.values()).forEach(eMembership -> {
+        Arrays.stream(MembershipType.values()).forEach(eMembership -> {
             var membership = new MembershipDto();
             membership.setName(eMembership);
             membershipService.save(membership);
@@ -85,15 +106,15 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void saveClubs() {
-        saveClub("Strada Liviu Rebreanu, Nr. 4, etaj 3, sector 3, în incinta Park Lake Mall", ECity.BUCURESTI, "0749213557", "World Class Park Lake", EMembership.SILVER);
-        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.BRASOV, "0751230693", "World Class AFI Brasov", EMembership.BRONZE);
-        saveClub("Strada Călărașilor, Nr. 1", ECity.CLUJ, "0725353870", "World Class Belvedere Cluj", EMembership.SILVER);
-        saveClub("Strada Anastasie Panu, Nr. 31", ECity.IASI, "0232210765", "World Class Iasi", EMembership.SILVER);
-        saveClub("Bvd. Alexandru Lăpușneanu, Nr. 116C, Constanta, în incinta ECity Park Mall", ECity.CONSTANTA, "0723689211", "World Class ECity Park Constanta", EMembership.SILVER);
+        saveClub("Strada Liviu Rebreanu, Nr. 4, etaj 3, sector 3, în incinta Park Lake Mall", ECity.BUCURESTI, "0749213557", "World Class Park Lake", MembershipType.SILVER);
+        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.BRASOV, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
+        saveClub("Strada Călărașilor, Nr. 1", ECity.CLUJ, "0725353870", "World Class Belvedere Cluj", MembershipType.SILVER);
+        saveClub("Strada Anastasie Panu, Nr. 31", ECity.IASI, "0232210765", "World Class Iasi", MembershipType.SILVER);
+        saveClub("Bvd. Alexandru Lăpușneanu, Nr. 116C, Constanta, în incinta ECity Park Mall", ECity.CONSTANTA, "0723689211", "World Class ECity Park Constanta", MembershipType.SILVER);
 
     }
 
-    private void saveClub(String address, ECity eCity, String phone, String name, EMembership eMembership) {
+    private void saveClub(String address, ECity eCity, String phone, String name, MembershipType membershipType) {
         ClubDto clubDto = new ClubDto();
         clubDto.setAddress(address);
         clubDto.setPhone(phone);
@@ -102,17 +123,17 @@ public class DataInitializer implements CommandLineRunner {
         City city = cityService.findByName(eCity);
         clubDto.setCity(cityMapper.map(city));
 
-        Membership membership = membershipService.findByName(eMembership);
+        Membership membership = membershipService.findByName(membershipType);
         clubDto.setMembership(membershipMapper.map(membership));
 
         clubService.save(clubDto);
 
     }
 
-    private void saveSubscription(ESubscriptionPeriod subscriptName, Double price, EMembership eMembership) {
+    private void saveSubscription(SubscriptionPeriodType subscriptName, Double price, MembershipType membershipType) {
         SubscriptionDto dto = new SubscriptionDto();
-        dto.setSubscriptionPeriodDto(periodMapper.map(subscriptionPeriodService.findByName(subscriptName)));
-        dto.setMembershipDto(membershipMapper.map(membershipService.findByName(eMembership)));
+        dto.setSubscriptionPeriod(periodMapper.map(subscriptionPeriodService.findByName(subscriptName)));
+        dto.setMembership(membershipMapper.map(membershipService.findByName(membershipType)));
         dto.setPrice(price);
         subscriptionService.save(dto);
 
@@ -120,7 +141,7 @@ public class DataInitializer implements CommandLineRunner {
 
 
     private void saveAllTypesOfSubscriptionPeriod() {
-        Arrays.stream(ESubscriptionPeriod.values()).forEach(eSub -> {
+        Arrays.stream(SubscriptionPeriodType.values()).forEach(eSub -> {
             SubscriptionPeriodDto dto = new SubscriptionPeriodDto();
             dto.setName(eSub);
             subscriptionPeriodService.save(dto);
@@ -129,26 +150,63 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void saveAllTypesOfSubscription() {
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_12_MONTHS, 41.85, EMembership.SILVER);
-        saveSubscription(ESubscriptionPeriod.BINDING_12_MOTHS, 51.00, EMembership.SILVER);
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_1_MONTH_ROLLING, 75.00, EMembership.SILVER);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 41.85, MembershipType.SILVER);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 51.00, MembershipType.SILVER);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 75.00, MembershipType.SILVER);
 
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_12_MONTHS, 52.75, EMembership.GOLD);
-        saveSubscription(ESubscriptionPeriod.BINDING_12_MOTHS, 65.00, EMembership.GOLD);
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_1_MONTH_ROLLING, 95.00, EMembership.GOLD);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 52.75, MembershipType.GOLD);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 65.00, MembershipType.GOLD);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 95.00, MembershipType.GOLD);
 
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_12_MONTHS, 35.33, EMembership.BRONZE);
-        saveSubscription(ESubscriptionPeriod.BINDING_12_MOTHS, 43.75, EMembership.BRONZE);
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_1_MONTH_ROLLING, 64.00, EMembership.BRONZE);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 35.33, MembershipType.BRONZE);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 43.75, MembershipType.BRONZE);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 64.00, MembershipType.BRONZE);
 
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_12_MONTHS, 61.42, EMembership.PLATINUM);
-        saveSubscription(ESubscriptionPeriod.BINDING_12_MOTHS, 75.75, EMembership.PLATINUM);
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_1_MONTH_ROLLING, 111.00, EMembership.PLATINUM);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 61.42, MembershipType.PLATINUM);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 75.75, MembershipType.PLATINUM);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 111.00, MembershipType.PLATINUM);
 
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_12_MONTHS, 83.67, EMembership.W);
-        saveSubscription(ESubscriptionPeriod.BINDING_12_MOTHS, 152.00, EMembership.W);
-        saveSubscription(ESubscriptionPeriod.FULL_TIME_1_MONTH_ROLLING, 102.50, EMembership.W);
-
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 83.67, MembershipType.W);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 152.00, MembershipType.W);
+        saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 102.50, MembershipType.W);
 
     }
+
+    private final TrainingClassTypeService trainingClassTypeService;
+
+    private void saveTrainingClassTypes() {
+        Arrays.stream(ClassType.values()).forEach(classType -> {
+            TrainingClassTypeDto typeDto = new TrainingClassTypeDto();
+            typeDto.setName(classType);
+            trainingClassTypeService.save(typeDto);
+        });
+    }
+
+    private final TrainingClassTypeMapper trainingClassTypeMapper;
+
+    private void saveTrainingClassHours() {
+        saveClassHoursByClassType(ClassType.AEROBIC);
+        saveClassHoursByClassType(ClassType.CYCLING);
+        saveClassHoursByClassType(ClassType.SWIMMING);
+
+    }
+
+    private void saveClassHoursByClassType(ClassType classType) {
+        TrainingClassType trainingClassType = trainingClassTypeService.findByName(classType);
+        List<Object> classTypeValues = new ArrayList<>();
+        switch (classType) {
+            case AEROBIC -> classTypeValues = List.of(AerobicClassType.values());
+            case CYCLING -> classTypeValues = List.of(CyclingClassType.values());
+            case SWIMMING -> classTypeValues = List.of(SwimmingClassType.values());
+        }
+        classTypeValues.forEach(type -> {
+            TrainingClassHourDto trainingClassHourDto = new TrainingClassHourDto();
+            trainingClassHourDto.setTrainingClassType(trainingClassTypeMapper.map(trainingClassType));
+            trainingClassHourDto.setClassHour(type.toString());
+            trainingClassHourDto.setTimerDuration(60);
+            trainingClassHourService.save(trainingClassHourDto);
+        });
+    }
+
+
 }

@@ -1,7 +1,7 @@
 package com.fitnessapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fitnessapp.enums.EMembership;
+import com.fitnessapp.enums.MembershipType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -17,5 +17,5 @@ public class MembershipDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     @NotNull
-    private EMembership name;
+    private MembershipType name;
 }

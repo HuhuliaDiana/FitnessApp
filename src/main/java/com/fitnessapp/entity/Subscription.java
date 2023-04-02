@@ -7,16 +7,19 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "subscription")
 @Getter
 @Setter
-@Table(name = "subscription")
 @NoArgsConstructor
-public class Subscription extends BaseEntity {
+public class Subscription {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Double price;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subscription_period_id")
     private SubscriptionPeriod subscriptionPeriod;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "membership_id")
     private Membership membership;
 

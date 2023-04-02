@@ -1,5 +1,5 @@
 package com.fitnessapp.enums;
 
-public enum EMembership {
+public enum MembershipType {
     BRONZE, SILVER, GOLD, PLATINUM, W
 }

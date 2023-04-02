@@ -30,6 +30,8 @@ public class UserDto {
     @NotEmpty
     @Email
     private String email;
+    @NotEmpty
+    private String phone;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Schema(accessMode = Schema.AccessMode.WRITE_ONLY)
     @ToString.Exclude

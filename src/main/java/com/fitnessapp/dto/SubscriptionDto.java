@@ -6,8 +6,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class SubscriptionDto {
 
@@ -15,6 +15,6 @@ public class SubscriptionDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     private Double price;
-    private SubscriptionPeriodDto subscriptionPeriodDto;
-    private MembershipDto membershipDto;
+    private SubscriptionPeriodDto subscriptionPeriod;
+    private MembershipDto membership;
 }

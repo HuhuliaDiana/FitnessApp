@@ -10,8 +10,10 @@ import java.util.*;
 @Getter
 @Setter
 @Table(name = "club_role")
-public class ClubRole extends BaseEntity {
-
+public class ClubRole {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @ManyToMany(mappedBy = "clubRoles")
     private Set<User> participants = new HashSet<>();
 

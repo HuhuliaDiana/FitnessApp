@@ -10,7 +10,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "city", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
-public class City extends BaseEntity {
+public class City {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private ECity name;

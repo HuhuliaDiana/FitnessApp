@@ -13,7 +13,10 @@ import java.util.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity {
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String firstname;
     private String lastname;
@@ -39,5 +42,12 @@ public class User extends BaseEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "club_role_id"))
     private Set<ClubRole> clubRoles = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "booked_class",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "training_class_id"))
+    private Set<TrainingClass> trainingClasses = new HashSet<>();
+
 
 }
