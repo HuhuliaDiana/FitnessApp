@@ -57,5 +57,9 @@ public class TrainingClassController {
         return trainingClassService.isClassCancelableByUser(id);
     }
 
-
+    @Operation(summary = "Get all training classes for next 7 days by club id (from the rest of today till the end of last day).")
+    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BY_CLUB_ID_IN_NEXT_7_DAYS)
+    public List<TrainingClass> getAllClassesForNext7DaysByClubId(@PathVariable Long id) {
+        return trainingClassService.getAllClassesForNext7DaysByClubId(id);
+    }
 }

@@ -57,4 +57,18 @@ public class ClubService {
         return findAllByMembershipIdIn(membershipIds);
     }
 
+    public List<Club> getAllClubsByCityId(Long cityId) {
+        return clubRepository.findAllByCityId(cityId);
+    }
+
+    //I have a club, get me subscriptions I can buy to access that club
+    public List<Subscription> getSubscriptionsWhichAllowUserToAccessClub(Long clubId) {
+        Club club = clubRepository.findById(clubId).orElseThrow(() -> new EntityNotFoundException("Club", "id", clubId));
+        List<MembershipType> membershipTypes = club.getMembership().getName().getAllGreaterThan();
+        List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
+        return subscriptionService.findAllByMembershipIdIn(membershipIds);
+
+
+    }
+
 }

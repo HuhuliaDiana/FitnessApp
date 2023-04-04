@@ -8,6 +8,8 @@ import com.fitnessapp.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SubscriptionService {
@@ -31,9 +33,8 @@ public class SubscriptionService {
         return subscriptionMapper.map(subscription);
     }
 
-
-
-
-
+    public List<Subscription> findAllByMembershipIdIn(List<Long> ids) {
+        return (List<Subscription>) subscriptionRepository.findAllByMembershipIdIn(ids);
+    }
 
 }

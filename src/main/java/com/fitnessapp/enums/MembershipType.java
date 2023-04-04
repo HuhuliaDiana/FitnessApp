@@ -28,4 +28,10 @@ public enum MembershipType {
         for (Integer i = 1; i <= this.order; i++) list.add(getByOrder(i));
         return list;
     }
+
+    public List<MembershipType> getAllGreaterThan() {
+        List<MembershipType> list = new ArrayList<>();
+        for (Integer i = 5; i >= this.order; i--) list.add(getByOrder(i));
+        return list;
+    }
 }

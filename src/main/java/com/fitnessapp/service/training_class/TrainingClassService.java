@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -204,6 +205,11 @@ public class TrainingClassService {
         return isClassBookedByCurrentUser(id) &&
                 trainingClass.getClassDate().minusHours(2).isAfter(LocalDateTime.now());
 
+    }
+
+    public List<TrainingClass> getAllClassesForNext7DaysByClubId(Long clubId) {
+        LocalDate lastDay = LocalDate.now().plusDays(7);
+        return trainingClassRepository.findAllByClubIdAndClassDateBetween(clubId, LocalDateTime.now(), LocalDateTime.of(lastDay, LocalTime.MIDNIGHT));
     }
 
 }

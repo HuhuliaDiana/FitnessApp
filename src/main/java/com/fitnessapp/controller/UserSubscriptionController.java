@@ -12,12 +12,12 @@ import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(UserSubscriptionEndpoints.SUBSCRIPTION_BASE_URL)
+@RequestMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_BASE_URL)
 public class UserSubscriptionController {
     private final UserSubscriptionService userSubscriptionService;
 
     @Operation(summary = "Buy subscription by id and date.")
-    @PostMapping(UserSubscriptionEndpoints.SUBSCRIPTION_BUY_BY_ID)
+    @PostMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_BUY_BY_ID)
     public UserSubscription buySubscription(@PathVariable Long id, @RequestBody LocalDate startingDate) {
         return userSubscriptionService.buySubscription(id, startingDate);
     }
@@ -29,14 +29,14 @@ public class UserSubscriptionController {
     }
 
     @Operation(summary = "Upgrade membership.")
-    @PostMapping(UserSubscriptionEndpoints.SUBSCRIPTION_UPGRADE_BY_ID)
+    @PostMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_UPGRADE_BY_ID)
     public UserSubscription upgradeMembership(@PathVariable Long id,
                                               @RequestBody LocalDate date) {
         return userSubscriptionService.upgradeMembership(id, date);
     }
 
     @Operation(summary = "Freeze membership.")
-    @PatchMapping(UserSubscriptionEndpoints.SUBSCRIPTION_FREEZE_BY_ID)
+    @PatchMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_FREEZE_BY_ID)
     public UserSubscription freezeMembership(@RequestBody FreezeMembershipDto freezeMembershipDto) {
         return userSubscriptionService.freezeMembership(freezeMembershipDto);
     }
