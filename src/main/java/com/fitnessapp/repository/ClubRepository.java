@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Set;
 
 public interface ClubRepository extends JpaRepository<Club, Long> {
-    List<Club> findAllByMembership_Id(Long id);
+    Iterable<Club> findAllByMembershipIdIn(Iterable<Long> ids);
 }

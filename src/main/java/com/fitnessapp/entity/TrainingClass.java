@@ -14,6 +14,7 @@ public class TrainingClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private LocalDateTime classDate;
     private String trainerName;
     @OneToOne(cascade = CascadeType.MERGE)
@@ -23,5 +24,6 @@ public class TrainingClass {
     @JoinColumn(name = "training_class_hour_id")
     private TrainingClassHour trainingClassHour;
     private Integer spotsAvailable;
+
 
 }

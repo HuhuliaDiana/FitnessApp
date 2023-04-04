@@ -17,7 +17,7 @@ name character varying(50) UNIQUE
 create table training_class_hour(
 id bigserial PRIMARY KEY NOT NULL,
 training_class_type_id bigint,
-class_hour character varying(50) UNIQUE,
+class_name character varying(50) UNIQUE,
 timer_duration bigint
 );
 
@@ -34,7 +34,10 @@ create table user_subscription(
 id bigserial PRIMARY KEY NOT NULL,
 user_id bigint,
 subscription_id bigint,
-start_date timestamp without time zone
+start_date date,
+end_date date,
+start_freeze date,
+end_freeze date
 );
 create table booked_class(
 user_id bigint,

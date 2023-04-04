@@ -18,5 +18,8 @@ public class UserSubscriptionDto {
     private Long id;
     private UserDto user;
     private SubscriptionDto subscription;
-    private LocalDateTime startDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate startFreeze;
+    private LocalDate endFreeze;
 }

@@ -26,4 +26,14 @@ public class SubscriptionService {
     public Subscription getById(Long id) {
         return subscriptionRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Subscription", "id", id));
     }
+
+    public SubscriptionDto map(Subscription subscription) {
+        return subscriptionMapper.map(subscription);
+    }
+
+
+
+
+
+
 }

@@ -48,7 +48,7 @@ public class DataInitializer implements CommandLineRunner {
     private final TrainingClassTypeRepository trainingClassTypeRepository;
     private final TrainingClassHourService trainingClassHourService;
     private final TrainingClassHourRepository trainingClassHourRepository;
-    private final TrainingClassRepository trainingClassRepository;
+    private final TrainingClassTypeService trainingClassTypeService;
     private final UserService userService;
     private final UserRepository userRepository;
 
@@ -106,11 +106,21 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void saveClubs() {
-        saveClub("Strada Liviu Rebreanu, Nr. 4, etaj 3, sector 3, în incinta Park Lake Mall", ECity.BUCURESTI, "0749213557", "World Class Park Lake", MembershipType.SILVER);
         saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.BRASOV, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
+        saveClub("Str. Comandor Aviator Popisteanu, Nr. 54A, Sector 1, Bucuresti", ECity.BUCURESTI, "0751230693", "World Class Expo Business Park", MembershipType.BRONZE);
+        saveClub("Șoseaua Olteniței, Nr. 208, Sector 4, Bucureşti", ECity.BUCURESTI, "0751230693", "World Class Sudului", MembershipType.BRONZE);
+
+        saveClub("Strada Liviu Rebreanu, Nr. 4, etaj 3, sector 3, în incinta Park Lake Mall", ECity.BUCURESTI, "0749213557", "World Class Park Lake", MembershipType.SILVER);
         saveClub("Strada Călărașilor, Nr. 1", ECity.CLUJ, "0725353870", "World Class Belvedere Cluj", MembershipType.SILVER);
         saveClub("Strada Anastasie Panu, Nr. 31", ECity.IASI, "0232210765", "World Class Iasi", MembershipType.SILVER);
         saveClub("Bvd. Alexandru Lăpușneanu, Nr. 116C, Constanta, în incinta ECity Park Mall", ECity.CONSTANTA, "0723689211", "World Class ECity Park Constanta", MembershipType.SILVER);
+
+        saveClub("Bvd. Barbu Văcărescu, Nr. 164A, Sector 2, Bucureşti, în incinta Hotel Caro", ECity.BUCURESTI, "0751230693", "World Class Caro", MembershipType.GOLD);
+        saveClub("Str. Scortariilor Nr 10, în spatele centrului de birouri The Office", ECity.CLUJ, "0751230693", "World Class The Record Cluj", MembershipType.GOLD);
+
+        saveClub("Calea Victoriei, Nr. 63-81, Sector 1, Bucuresti, în incinta Hotel Radisson Blu", ECity.BUCURESTI, "0751230693", "World Class Downtown", MembershipType.PLATINUM);
+        saveClub("Strada Erou Iancu Nicolae, Nr. 12-26, Voluntari, Ilfov", ECity.BUCURESTI, "0751230693", "World Class Atlantis", MembershipType.PLATINUM);
+
 
     }
 
@@ -172,7 +182,6 @@ public class DataInitializer implements CommandLineRunner {
 
     }
 
-    private final TrainingClassTypeService trainingClassTypeService;
 
     private void saveTrainingClassTypes() {
         Arrays.stream(ClassType.values()).forEach(classType -> {
@@ -202,7 +211,7 @@ public class DataInitializer implements CommandLineRunner {
         classTypeValues.forEach(type -> {
             TrainingClassHourDto trainingClassHourDto = new TrainingClassHourDto();
             trainingClassHourDto.setTrainingClassType(trainingClassTypeMapper.map(trainingClassType));
-            trainingClassHourDto.setClassHour(type.toString());
+            trainingClassHourDto.setClassName(type.toString());
             trainingClassHourDto.setTimerDuration(60);
             trainingClassHourService.save(trainingClassHourDto);
         });

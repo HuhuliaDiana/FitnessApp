@@ -5,7 +5,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -23,6 +22,10 @@ public class UserSubscription {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
-    private LocalDateTime startDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate startFreeze;
+    private LocalDate endFreeze;
+
 
 }

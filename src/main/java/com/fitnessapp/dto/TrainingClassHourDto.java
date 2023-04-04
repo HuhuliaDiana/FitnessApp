@@ -14,7 +14,7 @@ public class TrainingClassHourDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     private TrainingClassTypeDto trainingClassType;
-    private String classHour;
+    private String className;
     private Integer timerDuration;
 
 }

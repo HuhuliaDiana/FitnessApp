@@ -16,7 +16,7 @@ public class TrainingClassHour {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "training_class_type_id")
     private TrainingClassType trainingClassType;
-    private String classHour;
+    private String className;
     private Integer timerDuration;
 
 }
