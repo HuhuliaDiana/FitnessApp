@@ -8,30 +8,25 @@ import java.util.List;
 
 @Getter
 public enum MembershipType {
-    BRONZE(1), SILVER(2), GOLD(3), PLATINUM(4), W(5);
-    private final Integer order;
+    BRONZE, SILVER, GOLD, PLATINUM, W;
 
-    MembershipType(Integer order) {
-        this.order = order;
-    }
-
-    public static MembershipType getByOrder(Integer order) {
+    private static MembershipType getByOrdinal(int order) {
         for (MembershipType type : MembershipType.values()) {
-            if (type.getOrder().equals(order)) return type;
+            if (type.ordinal() == order) return type;
         }
         throw new ValidationException("Provided order doesn't exist!");
 
     }
 
-    public List<MembershipType> getAllSmallerThan() {
+    public List<MembershipType> getAllLessThan() {
         List<MembershipType> list = new ArrayList<>();
-        for (Integer i = 1; i <= this.order; i++) list.add(getByOrder(i));
+        for (int i = 1; i <= this.ordinal(); i++) list.add(getByOrdinal(i));
         return list;
     }
 
     public List<MembershipType> getAllGreaterThan() {
         List<MembershipType> list = new ArrayList<>();
-        for (Integer i = 5; i >= this.order; i--) list.add(getByOrder(i));
+        for (int i = 5; i >= this.ordinal(); i--) list.add(getByOrdinal(i));
         return list;
     }
 }

@@ -119,7 +119,7 @@ public class TrainingClassService {
         TrainingClass trainingClass = getById(classId);
 
         MembershipType clubMembershipType = trainingClass.getClub().getMembership().getName();
-        return clubMembershipType.getOrder() > membershipTypeOfUser.getOrder();
+        return clubMembershipType.ordinal() > membershipTypeOfUser.ordinal();
 
     }
 

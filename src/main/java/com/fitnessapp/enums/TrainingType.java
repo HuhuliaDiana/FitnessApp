@@ -1,5 +1,5 @@
 package com.fitnessapp.enums;
 
-public enum EPersonalTrainingType {
+public enum TrainingType {
     MASTER, ELITE, FIT_PRO
 }

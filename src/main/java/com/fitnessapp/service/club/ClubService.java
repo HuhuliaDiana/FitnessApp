@@ -48,7 +48,7 @@ public class ClubService {
         Subscription subscription = subscriptionService.getById(subscriptionId);
 
         //get membership of user and its children
-        List<MembershipType> membershipTypes = subscription.getMembership().getName().getAllSmallerThan();
+        List<MembershipType> membershipTypes = subscription.getMembership().getName().getAllLessThan();
 
         //get ids of these memberships
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);

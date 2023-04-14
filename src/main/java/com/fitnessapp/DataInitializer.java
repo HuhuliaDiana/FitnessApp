@@ -10,6 +10,8 @@ import com.fitnessapp.repository.*;
 import com.fitnessapp.service.city.CityService;
 import com.fitnessapp.service.club.ClubService;
 import com.fitnessapp.service.membership.MembershipService;
+import com.fitnessapp.service.personal_training.PersonalTrainingService;
+import com.fitnessapp.service.personal_training.PersonalTrainingTypeService;
 import com.fitnessapp.service.role.RoleService;
 import com.fitnessapp.service.subscription.SubscriptionPeriodService;
 import com.fitnessapp.service.subscription.SubscriptionService;
@@ -51,9 +53,12 @@ public class DataInitializer implements CommandLineRunner {
     private final TrainingClassTypeService trainingClassTypeService;
     private final UserService userService;
     private final UserRepository userRepository;
-
     public final ClubMapper clubMapper;
-
+    private final PersonalTrainingRepository personalTrainingRepository;
+    private final PersonalTrainingService personalTrainingService;
+    private final PersonalTrainingTypeRepository personalTrainingTypeRepository;
+    private final PersonalTrainingTypeService personalTrainingTypeService;
+    private final PersonalTrainingTypeMapper personalTrainingTypeMapper;
 
     @Override
     public void run(String... args) {
@@ -75,7 +80,40 @@ public class DataInitializer implements CommandLineRunner {
         if (subscriptionRepository.count() == 0) saveAllTypesOfSubscription();
         if (trainingClassTypeRepository.count() == 0) saveTrainingClassTypes();
         if (trainingClassHourRepository.count() == 0) saveTrainingClassHours();
+        if (personalTrainingTypeRepository.count() == 0) saveTrainingTypes();
+        if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
 
+
+    }
+
+    private void saveTrainingTypes() {
+        Arrays.stream(TrainingType.values()).forEach(trainingType -> {
+            var role = new PersonalTrainingTypeDto();
+            role.setName(trainingType);
+            personalTrainingTypeService.save(role);
+        });
+    }
+
+    private void savePersonalTrainingsInfo() {
+        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00);
+        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00);
+        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00);
+
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00);
+
+        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00);
+        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00);
+        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00);
+    }
+
+    private void savePersonalTrainingDetails(TrainingType trainingType, Integer sessionsNumber, Double price) {
+        PersonalTrainingDto personalTrainingDto = new PersonalTrainingDto();
+        personalTrainingDto.setPersonalTrainingType(personalTrainingTypeMapper.map(personalTrainingTypeService.findByName(trainingType)));
+        personalTrainingDto.setSessionsNumber(sessionsNumber);
+        personalTrainingDto.setPrice(price);
+        personalTrainingService.save(personalTrainingDto);
     }
 
     private void saveRoles() {
