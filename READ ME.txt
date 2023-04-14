@@ -1,0 +1,38 @@
+
+
+{
+  "email": "dianahuhulia@gmail.com",
+  "password": "password1234"
+}
+
+
+AUTHORIZE OPERATIONS--USER HAS TO BE LOGGED!
+
+penalties
+
+waiting list!!!
+
+
+1. upgrade membership - same period type but bigger
+2. renew membership
+ renew vs buy- same shit, dar la buy imi aratat cluburile, la renew nu (am ss uri in care a explicat Danut)
+ si la renew si la buy imi arata ce membershipuri pot achizitiona
+
+
+-----------
+buy membership- what is happening?, dc trebuie sa selectez un club?
+
+--renew vs buy membership? what is difference?
+can i have more memberships? active/inactive -nu pot avea
+
+trainer- imi iau trainer, exista un calendar cu disponibilitatea lui in care ma pot programa la el sau cum are loc interactiunea?
+
+----
+
+discut cu el, cand pot eu el etc, ne intalnim si vorbim, prin telefon
+freeze- la cele de an-30 zile de freeze, se prelungeste cu 30 zile dupa ce se termina anul
+
+
+la search classes- pot cauta dupa numele clasei sau al trainereului si primesc
+rezultate doar pentru clasele la care am acces-> pastre functia get all training classes available for current user
+--in front fac request pe aceasta functie si selectez trainername sau class_name cand fac filtrarea
