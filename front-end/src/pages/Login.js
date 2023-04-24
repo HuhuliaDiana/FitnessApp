@@ -1,49 +1,59 @@
 import { Button, Col, Form, Input, Row } from "antd";
-import { useState, FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocalState } from "./util/useLocalStorage";
+import { useAuth } from "../context/AuthProvider";
+import { useEffect, useState, FC } from "react";
+import { useLocalState } from "../localStorage/useLocalStorage";
 
-type LoginFormValues = {
-  email: string;
-  password: string;
-};
-
-const Login: FC<{ requestedLocation?: string | null }> = ({
-  requestedLocation,
-}) => {
-  const [jwt, setJwt] = useLocalState("", "jwt");
+const Login = ({ requestedLocation }) => {
   const navigate = useNavigate();
-  const [isFailedLogin, setIsFailedLogin] = useState<boolean>(false);
 
-  const onFinish = async (values: LoginFormValues) => {
+  // const { auth, setAuth, isLoggedIn, setIsLoggedIn } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [email, password]);
+
+  const onFinish = async ({ email, password }) => {
     try {
-      setIsFailedLogin(false);
-      fetch("/login", {
+      fetch("http://localhost:8080/api/login", {
         headers: {
           "Content-Type": "application/json",
         },
         method: "post",
-        body: JSON.stringify(values),
+        body: JSON.stringify({ email, password }),
       })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            setIsFailedLogin(true);
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else if (!response.ok && response.status === 400) {
+            setErrMsg("Missing Username or Password");
+          } else if (!response.ok && response.status === 401) {
+            setErrMsg("Unauthorized");
           }
-          return Promise.reject("Invalid login attempt.");
+          return Promise.reject("Invalid register attempt.");
         })
         .then((data) => {
-          const jwt = data.accessToken;
-          setJwt(jwt);
-          navigate(requestedLocation || '/select-club');
+          const accessToken = data.accessToken;
+          localStorage.setItem("accessToken", accessToken);
+          // setAuth({
+          //   Email: email,
+          //   Roles: roles,
+          //   AccessToken: accessToken,
+          // });
+          setIsLoggedIn(true);
+          navigate( requestedLocation || "/select-club");
         })
         .catch((message) => {
           console.log(message);
         });
-    } catch (e) {
-      setIsFailedLogin(true);
-      console.log("Error:", e);
+    } catch (err) {
+      console.log(err.message);
+      // setIsLoggedIn(false);
     }
   };
 
@@ -69,7 +79,7 @@ const Login: FC<{ requestedLocation?: string | null }> = ({
                 { type: "email", message: "Please input a valid email!" },
               ]}
             >
-              <Input autoComplete="username" type="email" />
+              <Input autoComplete="email" type="email" />
             </Form.Item>
 
             <Form.Item
@@ -84,11 +94,7 @@ const Login: FC<{ requestedLocation?: string | null }> = ({
           </Col>
         </Row>
         <Row>
-          <Col>
-            {isFailedLogin && (
-              <p>Oops!You've enetered the username or password wrong!</p>
-            )}
-          </Col>
+          <Col>{!isLoggedIn && <p>{errMsg}</p>}</Col>
         </Row>
         <Row>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

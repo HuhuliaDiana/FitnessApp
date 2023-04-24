@@ -1,11 +1,29 @@
-import { Navigate } from "react-router-dom";
-import { useLocalState } from "./util/useLocalStorage";
+// import { Navigate } from "react-router-dom";
+// import { useState, useEffect } from "react";
+// import { useUser } from "./UserProvider";
 
-const PrivateRoute = (children: any ) => {
-    const [jwt, setJwt] = useLocalState("", "jwt");
-    return jwt ? children : <Navigate to="/login" />
+// const PrivateRoute = (props: any) => {
+//   const user = useUser();
+//   const [isLoading, setIsLoading] = useState(true);
+//   const [isValid, setIsValid] = useState(null);
+//   const { children } = props;
 
+//   if (user && user.jwt) {
+//     ajax(`/api/auth/validate`, "get", user.jwt).then((isValid) => {
+//       setIsValid(isValid);
+//       setIsLoading(false);
+//     });
+//   } else {
+//     return <Navigate to="/login" />;
+//   }
 
-};
+//   return isLoading ? (
+//     <div>Loading...</div>
+//   ) : isValid === true ? (
+//     children
+//   ) : (
+//     <Navigate to="/login" />
+//   );
+// };
 
-export default PrivateRoute;
+// export default PrivateRoute;
