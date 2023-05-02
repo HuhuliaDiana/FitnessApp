@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
-import MembershipType from "../components/MembershipType";
 import { Button } from "antd";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import MembershipType from "../components/MembershipType";
 function ClubSubscriptions() {
   const location = useLocation();
+
   const accessToken = localStorage.getItem("accessToken");
   const id = location.state.id;
   const name = location.state.name;
   const [subscriptions, setSubscriptions] = useState(null);
+  const firstLabel = "See all available memberships for the club";
+  const [label, setLabel] = useState(firstLabel);
+  const [expandList, setExpandList] = useState(true);
 
-  const getSubscriptionsForClub = () => {
+  const getSubscriptionsForClub = (endPath) => {
     try {
-      console.log(id);
-      fetch(`http://localhost:8080/api/club/${id}/subscriptions`, {
+      fetch(`http://localhost:8080/api/club/${id}/subscriptions/${endPath}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -34,8 +37,9 @@ function ClubSubscriptions() {
     }
   };
   useEffect(() => {
-    getSubscriptionsForClub();
+    getSubscriptionsForClub("");
   }, []);
+
   return (
     <>
       <div>You chose {name} </div>
@@ -46,12 +50,25 @@ function ClubSubscriptions() {
             return (
               <MembershipType
                 key={subscription.id}
-                parentToChild={subscription}
+                parentToChild={{ subscription: subscription, clubId: id }}
               />
             );
           })}
       </div>
-      <Button>See all available memberships</Button>
+      <Button
+        onClick={() => {
+          if (expandList) {
+            getSubscriptionsForClub("all");
+            setLabel("See memberships of the club");
+          } else {
+            getSubscriptionsForClub("");
+            setLabel(firstLabel);
+          }
+          setExpandList(!expandList);
+        }}
+      >
+        {label}
+      </Button>
     </>
   );
 }

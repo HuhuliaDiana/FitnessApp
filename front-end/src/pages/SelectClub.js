@@ -1,7 +1,9 @@
-import { Dropdown, Space, Button } from "antd";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState, useMemo } from "react";
 import { DownOutlined } from "@ant-design/icons";
+import { Button, Dropdown, Space } from "antd";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+//select club will be by default the club from subscription
 
 function SelectClub() {
   const accessToken = localStorage.getItem("accessToken");
@@ -11,7 +13,7 @@ function SelectClub() {
 
   const [clubsDropdown, setClubsDropdown] = useState([]);
   const [clubSelected, setClubSelected] = useState(null);
-  const location = useLocation().pathname;
+  
 
   const getDropdownClubs = () => {
     try {
@@ -89,7 +91,7 @@ function SelectClub() {
     navigate("/club-subscriptions", {
       state: {
         id: clubSelected.id,
-        name: clubSelected.name
+        name: clubSelected.name,
       },
     });
   };

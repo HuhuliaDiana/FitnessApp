@@ -9,6 +9,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import SelectClub from "./pages/SelectClub";
 import ClubSubscriptions from "./pages/ClubSubscriptions";
+import ClassesSchedule from "./pages/ClassesSchedule";
+import TrainingClassDetails from "./pages/TrainingClassDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +19,10 @@ const router = createBrowserRouter(
       <Route path="register" element={<Register />} />
       <Route path="select-club" exact element={<SelectClub />} />
       <Route path="club-subscriptions" exact element={<ClubSubscriptions />} />
+      <Route path="dashboard">
+        <Route path="" element={<ClassesSchedule />}></Route>
+        <Route path=":id" exact element={<TrainingClassDetails />}></Route>
+      </Route>
     </Route>
   )
 );
