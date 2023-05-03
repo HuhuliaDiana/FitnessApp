@@ -44,3 +44,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+validate jwt token with PrivateRoute (introduce refresh token for when it expires): https://www.youtube.com/watch?v=EobHBIUuV5w&list=PL2OrQJM8zmZ2-O_rM2Ju9zYMbY8Ta-8I4&index=22&ab_channel=CodersCampus
