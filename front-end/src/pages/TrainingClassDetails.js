@@ -56,7 +56,7 @@ const TrainingClassDetails = () => {
         })
         .then((data) => {
           getStatusOfClass();
-
+          isClassCancelableByUser()
           console.log(data);
         })
         .catch((err) => console.log(err));
@@ -81,6 +81,7 @@ const TrainingClassDetails = () => {
         })
         .then((data) => {
           getStatusOfClass();
+          isClassCancelableByUser()
           console.log(data);
         })
         .catch((err) => console.log(err));

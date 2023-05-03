@@ -9,7 +9,6 @@ const ClassesSchedule = () => {
   const [typeId, setTypeId] = useState("");
   const [clubItems, setClubItems] = useState();
   const [typeItems, setTypeItems] = useState();
-  const [classTypes, setClassTypes] = useState();
   const [nameDropdownClubs, setNameDropdownClubs] = useState("Select a club");
   const [nameDropdownTypes, setNameDropdownTypes] =
     useState("Select class type");
@@ -105,7 +104,7 @@ const ClassesSchedule = () => {
     }
     return uniqueArray;
   };
-  //for dropdown of clubs
+  //dropdown of clubs
   const getClubs = () => {
     try {
       fetch(`http://localhost:8080/api/club`, {

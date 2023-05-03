@@ -53,7 +53,7 @@ const TrainingClass = (props) => {
   return (
     <div
       onClick={() => {
-        navigate(`/dashboard/${trainingClass.id}`);
+        navigate(`/schedule/${trainingClass.id}`);
       }}
     >
       <p>{trainingClass.trainerName}</p>

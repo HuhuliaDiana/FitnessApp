@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 function SelectClub() {
   const accessToken = localStorage.getItem("accessToken");
-  //   const { auth, setAuth, isLoggedIn, setIsLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [clubName, setClubName] = useState("Select a club");
 
