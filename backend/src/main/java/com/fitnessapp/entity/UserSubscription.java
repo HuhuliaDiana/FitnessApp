@@ -27,5 +27,9 @@ public class UserSubscription {
     private LocalDate startFreeze;
     private LocalDate endFreeze;
 
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "club_id")
+    private Club club;
+
 
 }

@@ -1,8 +1,8 @@
 package com.fitnessapp.controller;
 
-import com.fitnessapp.entity.Membership;
-import com.fitnessapp.entity.MembershipRecord;
-import com.fitnessapp.service.membership.MembershipService;
+import com.fitnessapp.endpoints.CityEndpoints;
+import com.fitnessapp.entity.CityRecord;
+import com.fitnessapp.service.city.CityService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -14,15 +14,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/membership")
+@RequestMapping(CityEndpoints.CITY_BASE_URL)
 @CrossOrigin(origins = "http://localhost:3000")
-public class MembershipController {
-    private final MembershipService membershipService;
+public class CityController {
+    private final CityService cityService;
 
-    @Operation(summary = "Get all memberships.")
+    @Operation(summary = "Get all cities.")
     @GetMapping
-    public List<MembershipRecord> getAllMemberships() {
-        return membershipService.getAllMemberships();
-
+    public List<CityRecord> getAllCities() {
+        return cityService.getAllCities();
     }
 }

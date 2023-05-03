@@ -2,6 +2,7 @@ package com.fitnessapp.service.user;
 
 import com.fitnessapp.entity.ClubRole;
 import com.fitnessapp.entity.User;
+import com.fitnessapp.enums.ERole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -81,5 +82,9 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public boolean isParticipant() {
+        return authorities.stream().map(GrantedAuthority::getAuthority).anyMatch(a -> a.equals(ERole.PARTICIPANT.name()));
     }
 }

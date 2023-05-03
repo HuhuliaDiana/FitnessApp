@@ -19,6 +19,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ValidationException;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -28,7 +30,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
 
-    private User findByEmail(String email) {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found by email"));
     }
 
@@ -45,7 +47,13 @@ public class UserService {
         }
         User user = userMapper.map(userDto);
         user.setUserRole(role);
-        return userMapper.map(userRepository.save(user));
+        User saveUser;
+        try {
+            saveUser = userRepository.save(user);
+        } catch (Exception e) {
+            throw new ValidationException("User with email: %s already exists.".formatted(userDto.getEmail()));
+        }
+        return userMapper.map(saveUser);
     }
 
     public Long getCurrentUserId() {
@@ -64,7 +72,6 @@ public class UserService {
     public UserDto mapCurrentUser() {
         return userMapper.map(getCurrentUser());
     }
-
 
 
 }

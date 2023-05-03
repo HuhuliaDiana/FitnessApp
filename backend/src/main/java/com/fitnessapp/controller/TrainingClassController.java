@@ -1,6 +1,8 @@
 package com.fitnessapp.controller;
 
+import com.fitnessapp.dto.TrainingClassDto;
 import com.fitnessapp.endpoints.TrainingClassEndpoints;
+import com.fitnessapp.entity.StatusMessage;
 import com.fitnessapp.entity.TrainingClass;
 import com.fitnessapp.service.training_class.TrainingClassService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(TrainingClassEndpoints.TRAINING_CLASS_BASE_URL)
+@CrossOrigin(origins = "http://localhost:3000")
 public class TrainingClassController {
     private final TrainingClassService trainingClassService;
 
@@ -29,7 +32,7 @@ public class TrainingClassController {
 
     @Operation(summary = "Get all booked classes but not attended yet.")
     @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BOOKED_NOT_ATTENDED_YET)
-    public List<TrainingClass> getClassesBookedNotYetAttended() {
+    public List<TrainingClassDto> getClassesBookedNotYetAttended() {
         return trainingClassService.getClassesBookedNotYetAttended();
     }
 
@@ -41,7 +44,7 @@ public class TrainingClassController {
 
     @Operation(summary = "Get status of class by id for current user.")
     @GetMapping(TrainingClassEndpoints.TRAINING_CLASS_BY_ID_STATUS)
-    public String getStatusOfClassForCurrentUser(@PathVariable Long id) {
+    public StatusMessage getStatusOfClassForCurrentUser(@PathVariable Long id) {
         return trainingClassService.getStatusOfClassForCurrentUser(id);
     }
 
@@ -59,7 +62,17 @@ public class TrainingClassController {
 
     @Operation(summary = "Get all training classes for next 7 days by club id (from the rest of today till the end of last day).")
     @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BY_CLUB_ID_IN_NEXT_7_DAYS)
-    public List<TrainingClass> getAllClassesForNext7DaysByClubId(@PathVariable Long id) {
+    public List<TrainingClassDto> getAllClassesForNext7DaysByClubId(@PathVariable Long id) {
         return trainingClassService.getAllClassesForNext7DaysByClubId(id);
     }
+
+    @Operation(summary = "Get all training classes for next 7 days (from the rest of today till the end of last day).")
+    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_IN_NEXT_7_DAYS)
+    public List<TrainingClassDto> getAllClassesForNext7Days() {
+        return trainingClassService.getAllClassesForNext7Days();
+    }
+
+
+
+
 }

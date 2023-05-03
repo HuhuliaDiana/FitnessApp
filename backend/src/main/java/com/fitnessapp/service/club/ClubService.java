@@ -1,12 +1,15 @@
 package com.fitnessapp.service.club;
 
 import com.fitnessapp.dto.ClubDto;
+import com.fitnessapp.dto.SubscriptionDto;
 import com.fitnessapp.entity.Club;
+import com.fitnessapp.entity.Membership;
 import com.fitnessapp.entity.Subscription;
 import com.fitnessapp.entity.UserSubscription;
 import com.fitnessapp.enums.MembershipType;
 import com.fitnessapp.exception.EntityNotFoundException;
 import com.fitnessapp.mapper.ClubMapper;
+import com.fitnessapp.repository.CityRepository;
 import com.fitnessapp.repository.ClubRepository;
 import com.fitnessapp.service.membership.MembershipService;
 import com.fitnessapp.service.subscription.SubscriptionService;
@@ -27,12 +30,13 @@ public class ClubService {
     private final MembershipService membershipService;
     private final SubscriptionService subscriptionService;
 
+
     public void save(ClubDto clubDto) {
         clubRepository.save(clubMapper.map(clubDto));
     }
 
-    public Club findById(Long id) {
-        return clubRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Club", "id", id));
+    public ClubDto getClubById(Long id) {
+        return clubMapper.map(findClubById(id));
     }
 
     public List<Club> findAllByMembershipIdIn(List<Long> ids) {
@@ -62,12 +66,33 @@ public class ClubService {
     }
 
     //I have a club, get me subscriptions I can buy to access that club
-    public List<Subscription> getSubscriptionsWhichAllowUserToAccessClub(Long clubId) {
-        Club club = clubRepository.findById(clubId).orElseThrow(() -> new EntityNotFoundException("Club", "id", clubId));
+    public List<SubscriptionDto> getSubscriptionsWhichAllowUserToAccessClub(Long clubId) {
+        Club club = findClubById(clubId);
         List<MembershipType> membershipTypes = club.getMembership().getName().getAllGreaterThan();
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
         return subscriptionService.findAllByMembershipIdIn(membershipIds);
 
+    }
+
+    public Club findClubById(Long clubId) {
+        return clubRepository.findById(clubId).orElseThrow(() -> new EntityNotFoundException("Club", "id", clubId));
+    }
+
+    public List<ClubDto> getAllClubs() {
+        return clubRepository.findAll().stream().map(clubMapper::map).toList();
+    }
+
+    public List<SubscriptionDto> getSubscriptionsForClub(Long clubId) {
+        Membership membership = findClubById(clubId).getMembership();
+        return subscriptionService.findByMembershipId(membership.getId());
+
+    }
+
+    public List<SubscriptionDto> getAllSubscriptionsForClub(Long clubId) {
+        Membership membership = findClubById(clubId).getMembership();
+        List<MembershipType> membershipTypes = membership.getName().getAllGreaterThan();
+        List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
+        return subscriptionService.findAllByMembershipIdIn(membershipIds);
 
     }
 

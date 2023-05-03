@@ -4,7 +4,7 @@ firstname character varying(255),
 lastname character varying(255),
 email character varying(255) UNIQUE,
 password character varying(120),
-phone character varying(120) UNIQUE
+phone character varying(120)
 );
 
 create table role(
@@ -57,4 +57,10 @@ club_id bigint NOT NULL
 create table user_roles(
 role_id bigint,
 user_id bigint NOT NULL
+);
+create table refresh_token(
+id bigserial primary key not null,
+token varchar not null,
+user_id bigserial references participant(id),
+expiration timestamp not null
 );

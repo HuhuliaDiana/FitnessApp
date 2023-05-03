@@ -15,6 +15,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NotNull final HttpServletRequest request,@NotNull final HttpServletResponse response,@NotNull final FilterChain filterChain) throws ServletException, IOException {
         try {
             final var jwt = jwtService.parseJwt(request.getHeader(HttpHeaders.AUTHORIZATION));//accessToken from /login
             if (jwt != null) {
