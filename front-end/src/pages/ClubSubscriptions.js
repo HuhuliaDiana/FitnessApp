@@ -43,7 +43,7 @@ function ClubSubscriptions() {
   return (
     <>
       <div>You chose {name} </div>
-      <Link to="/select-club">Modify</Link>
+      <Link to="/buy-membership">Modify</Link>
       <div>
         {subscriptions &&
           subscriptions.map((subscription) => {

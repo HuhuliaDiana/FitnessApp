@@ -6,7 +6,7 @@ const TrainingType = (props) => {
   const navigate = useNavigate();
 
   const training = props.parentToChild.training;
-  const trainerName= props.parentToChild.trainerName;
+  const trainer= props.parentToChild.trainer;
   const [trainingName, setTrainingName] = useState("");
   useEffect(() => {
     const trainingName = training.personalTrainingType.name;
@@ -22,7 +22,8 @@ const TrainingType = (props) => {
     navigate("/buy-training", {
       state: {
         trainingId: training.id,
-        trainerName: trainerName,
+        trainerName: trainer.name,
+        trainerId: trainer.id,
       },
     });
   };

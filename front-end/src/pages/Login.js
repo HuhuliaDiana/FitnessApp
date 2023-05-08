@@ -7,7 +7,6 @@ import { useLocalState } from "../localStorage/useLocalStorage";
 const Login = ({ requestedLocation }) => {
   const navigate = useNavigate();
 
-  // const { auth, setAuth, isLoggedIn, setIsLoggedIn } = useAuth();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [errMsg, setErrMsg] = useState("");
 
@@ -40,20 +39,14 @@ const Login = ({ requestedLocation }) => {
         .then((data) => {
           const accessToken = data.accessToken;
           localStorage.setItem("accessToken", accessToken);
-          // setAuth({
-          //   Email: email,
-          //   Roles: roles,
-          //   AccessToken: accessToken,
-          // });
           setIsLoggedIn(true);
-          navigate( requestedLocation || "/select-club");
+          navigate( requestedLocation || "/home");
         })
         .catch((message) => {
           console.log(message);
         });
     } catch (err) {
       console.log(err.message);
-      // setIsLoggedIn(false);
     }
   };
 

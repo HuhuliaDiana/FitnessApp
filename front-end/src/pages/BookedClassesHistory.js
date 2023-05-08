@@ -21,7 +21,9 @@ const BookedClassesHistory = () => {
           return Promise.reject("Cannot get history of booked classes.");
         })
         .then((data) => {
+          console.log("booked classes: ");
           console.log(data);
+
           setBookedClasses(data);
         })
         .catch((err) => console.log(err));
@@ -37,15 +39,14 @@ const BookedClassesHistory = () => {
       {/* <MenuBar></MenuBar> */}
       {bookedClasses.length !== 0 &&
         bookedClasses.map((trainingClass) => {
-          return (
-            <TrainingClass
+          return  <TrainingClass
               key={trainingClass.id}
               parentToChild={trainingClass}
             />
-          );
+          
         })}
       {bookedClasses.length == 0 && (
-        <p>You haven't attened any booked class yet.</p>
+        <p>You haven't attended any booked class yet.</p>
       )}
     </div>
   );
