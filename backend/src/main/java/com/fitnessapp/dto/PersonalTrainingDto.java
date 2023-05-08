@@ -19,5 +19,6 @@ public class PersonalTrainingDto {
     private PersonalTrainingTypeDto personalTrainingType;
     private Integer sessionsNumber;
     private Double price;
+    private Integer noDaysValidity;
 
 }

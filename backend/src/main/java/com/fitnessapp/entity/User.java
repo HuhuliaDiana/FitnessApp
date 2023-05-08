@@ -50,4 +50,6 @@ public class User {
     private Set<TrainingClass> trainingClasses = new HashSet<>();
 
 
+
+
 }

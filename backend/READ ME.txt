@@ -15,7 +15,7 @@ waiting list!!!
 
 1. upgrade membership - same period type but bigger
 2. renew membership
- renew vs buy- same shit, dar la buy imi aratat cluburile, la renew nu (am ss uri in care a explicat Danut)
+ renew vs buy- same shit, dar la buy imi arata cluburile, la renew nu (am ss uri in care a explicat Danut)
  si la renew si la buy imi arata ce membershipuri pot achizitiona
 
 
@@ -36,3 +36,5 @@ freeze- la cele de an-30 zile de freeze, se prelungeste cu 30 zile dupa ce se te
 la search classes- pot cauta dupa numele clasei sau al trainereului si primesc
 rezultate doar pentru clasele la care am acces-> pastre functia get all training classes available for current user
 --in front fac request pe aceasta functie si selectez trainername sau class_name cand fac filtrarea
+
+transfer your membership to another club

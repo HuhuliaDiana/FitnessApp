@@ -23,5 +23,6 @@ public class PersonalTraining {
     private PersonalTrainingType personalTrainingType;
     private Integer sessionsNumber;
     private Double price;
+    private Integer noDaysValidity;
 
 }

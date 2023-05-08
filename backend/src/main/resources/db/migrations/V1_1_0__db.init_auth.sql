@@ -64,3 +64,4 @@ token varchar not null,
 user_id bigserial references participant(id),
 expiration timestamp not null
 );
+

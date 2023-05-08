@@ -18,8 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
+import java.lang.reflect.Field;
 
 @Service
 @RequiredArgsConstructor
@@ -69,9 +71,26 @@ public class UserService {
         return findById(getCurrentUserId());
     }
 
+    public UserDto findCurrentUser() {
+        return userMapper.map(findById(getCurrentUserId()));
+    }
+
     public UserDto mapCurrentUser() {
         return userMapper.map(getCurrentUser());
     }
 
 
+    @Transactional
+    public UserDto updateCurrentUser(UserDto userDto){
+        User user = getCurrentUser();
+        if (userDto.getEmail() != null && !userDto.getEmail().equals(""))
+            user.setEmail(userDto.getEmail());
+        if (userDto.getPhone() != null && !userDto.getPhone().equals(""))
+            user.setPhone(userDto.getPhone());
+        if (userDto.getFirstname() != null && !userDto.getFirstname().equals(""))
+            user.setFirstname(userDto.getFirstname());
+        if (userDto.getLastname() != null && !userDto.getLastname().equals(""))
+            user.setLastname(userDto.getLastname());
+        return userMapper.map(user);
+    }
 }

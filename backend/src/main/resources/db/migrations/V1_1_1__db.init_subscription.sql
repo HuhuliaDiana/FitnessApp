@@ -44,3 +44,4 @@ create table booked_class(
 user_id bigint,
 training_class_id bigint
 );
+

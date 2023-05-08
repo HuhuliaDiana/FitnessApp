@@ -1,5 +1,6 @@
 package com.fitnessapp.service.training_class;
 
+import com.fitnessapp.dto.ClubDto;
 import com.fitnessapp.dto.TrainingClassDto;
 import com.fitnessapp.entity.Club;
 import com.fitnessapp.entity.StatusMessage;
@@ -50,10 +51,10 @@ public class TrainingClassService {
         return Lists.newArrayList(trainingClassRepository.findAllByClubInAndClassDateGreaterThanEqual(clubs, LocalDateTime.now()));
     }
 
-    public List<TrainingClass> getAllClassesAvailableForCurrentUser() {
-        List<Club> clubs = clubService.getAllClubsUserHasAccessIn();
-        return getAllFutureClassesByClubIds(clubs);
-    }
+//    public List<TrainingClass> getAllClassesAvailableForCurrentUser() {
+//        List<ClubDto> clubs = clubService.getAllClubsUserHasAccessIn();
+//        return getAllFutureClassesByClubIds(clubs);
+//    }
 
 
     @Transactional
@@ -186,9 +187,10 @@ public class TrainingClassService {
         return list.stream().map(trainingClassMapper::map).toList();
     }
 
-    public List<TrainingClass> getHistoryOfBookedClasses() {
+    public List<TrainingClassDto> getHistoryOfBookedClasses() {
         Set<TrainingClass> allClassesBookedByUser = userService.getCurrentUser().getTrainingClasses();
-        return allClassesBookedByUser.stream().filter(classBooked -> classBooked.getClassDate().isBefore(LocalDateTime.now())).toList();
+        var classes = allClassesBookedByUser.stream().filter(classBooked -> classBooked.getClassDate().isBefore(LocalDateTime.now())).toList();
+        return classes.stream().map(trainingClassMapper::map).toList();
     }
 
     @Transactional

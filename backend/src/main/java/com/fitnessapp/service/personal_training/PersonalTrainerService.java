@@ -28,7 +28,7 @@ public class PersonalTrainerService {
         return personalTrainerMapper.map(findById(id));
     }
 
-    private PersonalTrainer findById(Long id) {
+    public PersonalTrainer findById(Long id) {
         return personalTrainerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Trainer", "id", id));
     }
 }

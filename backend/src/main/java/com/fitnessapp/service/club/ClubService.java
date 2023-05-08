@@ -9,7 +9,6 @@ import com.fitnessapp.entity.UserSubscription;
 import com.fitnessapp.enums.MembershipType;
 import com.fitnessapp.exception.EntityNotFoundException;
 import com.fitnessapp.mapper.ClubMapper;
-import com.fitnessapp.repository.CityRepository;
 import com.fitnessapp.repository.ClubRepository;
 import com.fitnessapp.service.membership.MembershipService;
 import com.fitnessapp.service.subscription.SubscriptionService;
@@ -19,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -43,7 +43,7 @@ public class ClubService {
         return (List<Club>) clubRepository.findAllByMembershipIdIn(ids);
     }
 
-    public List<Club> getAllClubsUserHasAccessIn() {
+    public List<ClubDto> getAllClubsUserHasAccessIn() {
         Long currentUserId = userService.getCurrentUserId();
 
         //get subscription of user
@@ -58,7 +58,8 @@ public class ClubService {
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
 
         //get clubs that can be frequented by current user
-        return findAllByMembershipIdIn(membershipIds);
+        var clubs = findAllByMembershipIdIn(membershipIds);
+        return clubs.stream().map(clubMapper::map).toList();
     }
 
     public List<Club> getAllClubsByCityId(Long cityId) {
@@ -88,12 +89,21 @@ public class ClubService {
 
     }
 
+    //sectiune de cluburi pe care le poate accesa utilizatorul
     public List<SubscriptionDto> getAllSubscriptionsForClub(Long clubId) {
         Membership membership = findClubById(clubId).getMembership();
         List<MembershipType> membershipTypes = membership.getName().getAllGreaterThan();
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
         return subscriptionService.findAllByMembershipIdIn(membershipIds);
 
+    }
+
+    //get clubs with same membership in order to transfer membership to another club
+    public List<ClubDto> getRestOfClubsWithCurrentMembershipId(Long id) {
+        UserSubscription userSubscription = userSubscriptionService.getCurrentUserSubscription();
+        List<Club> clubs = clubRepository.findAllByMembershipId(id);
+        List<Club> clubsFiltered = clubs.stream().filter(club -> !Objects.equals(club.getId(), userSubscription.getClub().getId())).toList();
+        return clubsFiltered.stream().map(clubMapper::map).toList();
     }
 
 }

@@ -121,24 +121,25 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void savePersonalTrainingsInfo() {
-        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00);
-        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00);
-        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00);
+        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00,30);
+        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00,30);
+        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00,60);
 
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00);
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00);
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00,30);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00,30);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00,60);
 
-        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00);
-        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00);
-        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00);
+        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00,30);
+        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00,30);
+        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00,60);
     }
 
-    private void savePersonalTrainingDetails(TrainingType trainingType, Integer sessionsNumber, Double price) {
+    private void savePersonalTrainingDetails(TrainingType trainingType, Integer sessionsNumber, Double price, Integer noDaysValidity) {
         PersonalTrainingDto personalTrainingDto = new PersonalTrainingDto();
         personalTrainingDto.setPersonalTrainingType(personalTrainingTypeMapper.map(personalTrainingTypeService.findByName(trainingType)));
         personalTrainingDto.setSessionsNumber(sessionsNumber);
         personalTrainingDto.setPrice(price);
+        personalTrainingDto.setNoDaysValidity(noDaysValidity);
         personalTrainingService.save(personalTrainingDto);
     }
 

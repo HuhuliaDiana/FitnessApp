@@ -20,7 +20,7 @@ public enum MembershipType {
 
     public List<MembershipType> getAllLessThan() {
         List<MembershipType> list = new ArrayList<>();
-        for (int i = 0; i < this.ordinal(); i++) list.add(getByOrdinal(i));
+        for (int i = 0; i <= this.ordinal(); i++) list.add(getByOrdinal(i));
         return list;
     }
 

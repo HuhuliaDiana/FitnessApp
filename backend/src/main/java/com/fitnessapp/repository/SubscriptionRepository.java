@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface SubscriptionRepository extends JpaRepository<Subscription,Long> {
     Optional<Subscription> findBySubscriptionPeriodIdAndMembershipId(Long subPeriodId, Long membershipId);
     Iterable<Subscription> findAllByMembershipIdIn(Iterable<Long> ids);
+    Iterable<Subscription> findAllByMembershipIdInAndSubscriptionPeriodId(Iterable<Long> ids, Long id);
     List<Subscription> findByMembershipId(Long id);
 
 }

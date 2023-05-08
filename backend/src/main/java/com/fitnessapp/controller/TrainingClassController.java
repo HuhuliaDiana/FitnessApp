@@ -18,11 +18,11 @@ import java.util.List;
 public class TrainingClassController {
     private final TrainingClassService trainingClassService;
 
-    @Operation(summary = "Get all training classes available for current user.")
-    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_AVAILABLE)
-    public List<TrainingClass> getAllClassesAvailableForCurrentUserByClubId() {
-        return trainingClassService.getAllClassesAvailableForCurrentUser();
-    }
+//    @Operation(summary = "Get all training classes available for current user.")
+//    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_AVAILABLE)
+//    public List<TrainingClass> getAllClassesAvailableForCurrentUserByClubId() {
+//        return trainingClassService.getAllClassesAvailableForCurrentUser();
+//    }
 
     @Operation(summary = "Book a class by id.")
     @PatchMapping(TrainingClassEndpoints.TRAINING_CLASS_BOOK_BY_ID)
@@ -38,7 +38,7 @@ public class TrainingClassController {
 
     @Operation(summary = "Get history of booked classes.")
     @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BOOKED_HISTORY)
-    public List<TrainingClass> getHistoryOfBookedClasses() {
+    public List<TrainingClassDto> getHistoryOfBookedClasses() {
         return trainingClassService.getHistoryOfBookedClasses();
     }
 

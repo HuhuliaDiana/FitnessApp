@@ -13,6 +13,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(UserEndpoints.USER_BASE_URL)
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private final UserService userService;
 
@@ -21,6 +22,18 @@ public class UserController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto createUser(@Valid @RequestBody UserDto userDto) {
         return userService.createUser(userDto);
+    }
+
+    @Operation(summary = "Get current user.")
+    @GetMapping
+    public UserDto getCurrentUser() {
+        return userService.findCurrentUser();
+    }
+
+    @Operation(summary = "Update contact info.")
+    @PutMapping
+    public UserDto updateCurrentUser(@Valid @RequestBody UserDto userDto){
+        return userService.updateCurrentUser(userDto);
     }
 
 

@@ -3,9 +3,7 @@ package com.fitnessapp.controller;
 import com.fitnessapp.dto.ClubDto;
 import com.fitnessapp.dto.SubscriptionDto;
 import com.fitnessapp.endpoints.ClubEndpoints;
-import com.fitnessapp.endpoints.SubscriptionEndpoints;
 import com.fitnessapp.entity.Club;
-import com.fitnessapp.entity.Subscription;
 import com.fitnessapp.service.club.ClubService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +20,7 @@ public class ClubController {
 
     @Operation(summary = "Get all clubs available for current user.")
     @GetMapping(ClubEndpoints.CLUBS_AVAILABLE_FOR_CURRENT_USER)
-    public List<Club> getAllClubsAvailableForCurrentUser() {
+    public List<ClubDto> getAllClubsAvailableForCurrentUser() {
         return clubService.getAllClubsUserHasAccessIn();
     }
 
@@ -60,6 +58,12 @@ public class ClubController {
     @GetMapping(ClubEndpoints.CLUB_ALL_SUBSCRIPTIONS_BY_ID)
     public List<SubscriptionDto> getAllSubscriptionsAvailableForClub(@PathVariable Long id) {
         return clubService.getAllSubscriptionsForClub(id);
+    }
+
+    @Operation(summary = "Get clubs with membership id, exclude current subscription's club.")
+    @GetMapping(ClubEndpoints.CLUBS_BY_MEMBERSHIP_ID_EXCLUDE_CURRENT_MEMBERSHIP_CLUB)
+    public List<ClubDto> getRestOfClubsWithCurrentMembershipId(@PathVariable Long id) {
+        return clubService.getRestOfClubsWithCurrentMembershipId(id);
     }
 
 
