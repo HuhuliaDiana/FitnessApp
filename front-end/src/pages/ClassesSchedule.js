@@ -15,7 +15,7 @@ const ClassesSchedule = () => {
 
   const getSubscriptionOfUser = () => {
     try {
-      fetch("http://localhost:8080/api/subscription", {
+      fetch("http://localhost:8080/api/user-subscription", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

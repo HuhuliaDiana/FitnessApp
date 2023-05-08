@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 const TrainingClass = (props) => {
   const trainingClass = props.parentToChild;
+  console.log("trainingClass")
+  console.log(trainingClass)
   const navigate = useNavigate();
 
   const duration = Number(trainingClass.trainingClassHour.timerDuration);

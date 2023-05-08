@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TrainingType from "../components/TrainingType";
 
@@ -45,7 +45,7 @@ const TrainerPage = () => {
           return (
             <TrainingType
               key={training.id}
-              parentToChild={{ training: training, trainerName: trainer.name }}
+              parentToChild={{ training: training, trainer: trainer }}
             />
           );
         })}

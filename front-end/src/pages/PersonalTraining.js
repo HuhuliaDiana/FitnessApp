@@ -1,9 +1,7 @@
-import { Button, Dropdown, Space } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { Dropdown, Input, Space } from "antd";
 import { useEffect, useState } from "react";
-import { Input } from "antd";
-import { DownOutlined } from "@ant-design/icons";
 import Trainer from "../components/Trainer";
-import { UserOutlined } from "@ant-design/icons";
 
 const PersonalTraining = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -13,7 +11,6 @@ const PersonalTraining = () => {
 
   const [trainerName, setTrainerName] = useState("");
   const [trainers, setTrainers] = useState([]);
-  const { Search } = Input;
 
   //dropdown of clubs
   const getDropdownMemberships = () => {
@@ -79,7 +76,7 @@ const PersonalTraining = () => {
   };
   const getSubscriptionOfUser = () => {
     try {
-      fetch("http://localhost:8080/api/subscription", {
+      fetch("http://localhost:8080/api/user-subscription", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,

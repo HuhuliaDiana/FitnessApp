@@ -1,7 +1,9 @@
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const MenuBar = () => {
+  const navigate = useNavigate();
   function getItem(label, key, icon, children, type) {
     return {
       key,
@@ -12,19 +14,24 @@ const MenuBar = () => {
     };
   }
   const items = [
-    getItem("Dashboard", "1", <HomeOutlined />),
-    getItem("Buy membership", "2"),
-    getItem("Schedule", "3"),
-    getItem("Booked classes", "4"),
-    getItem("Personal Training", "5"),
-    getItem("Your profile", "sub1", <UserOutlined />, [
-      getItem("Contact", "6"),
-      getItem("Memberships", "7"),
-      getItem("Bookings history", "8"),
+    getItem("Home", "/home", <HomeOutlined />),
+    getItem("Buy membership", "/buy-membership"),
+    getItem("Schedule", "/schedule"),
+    getItem("Booked classes", "/bookings"),
+    getItem("Personal Training", "/training", null, [
+      getItem("Buy PT","/personal-training"),
+      getItem("Book PT session", "/book-PT"),
+      getItem("Booked PT sessions", "/bookings-PT"),
+      getItem("Session history", "/bookings-history-PT"),
+    ]),
+    getItem("Your profile", null, <UserOutlined />, [
+      getItem("Contact", "/contact"),
+      getItem("Membership", "/membership"),
+      getItem("Bookings history", "/bookings-history"),
     ]),
   ];
   const onClick = (key) => {
-    console.log(key);
+    navigate(key.key);
   };
   return (
     <>

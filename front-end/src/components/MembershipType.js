@@ -7,10 +7,17 @@ const MembershipType = (props) => {
   const id = subscription.id;
   const [date, setDate] = useState("");
 
+  const buy = () => {
+    if (date !== "") {
+      buyMembership();
+    } else {
+      console.log("Pick a date!")
+    }
+  };
   const buyMembership = () => {
     try {
-      console.log(date)
-      fetch(`http://localhost:8080/api/subscription/buy`, {
+      console.log(date);
+      fetch(`http://localhost:8080/api/user-subscription/buy`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -22,17 +29,17 @@ const MembershipType = (props) => {
           if (response.ok) {
             return response.json();
           }
-          console.log(response)
+          console.log(response);
         })
         .then((data) => {
-          console.log(data)
+          console.log(data);
         })
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
     }
   };
-  const onChange = (date, dateString) => {
+  const onChange = (dateString) => {
     setDate(new Date(dateString).toISOString().split("T")[0]);
   };
   return (
@@ -45,7 +52,7 @@ const MembershipType = (props) => {
       </p>
       <p>{subscription.price}</p>
       {/* temporary- buy this membership */}
-      <Button onClick={buyMembership}>Buy membership</Button>
+      <Button onClick={buy}>Buy membership</Button>
     </div>
   );
 };
