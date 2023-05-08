@@ -7,6 +7,8 @@ import com.fitnessapp.repository.PersonalTrainingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PersonalTrainingService {
@@ -15,6 +17,10 @@ public class PersonalTrainingService {
 
     public PersonalTraining save(PersonalTrainingDto personalTrainingDto) {
         return personalTrainingRepository.save(personalTrainingMapper.map(personalTrainingDto));
+    }
+
+    public List<PersonalTrainingDto> getAllByTrainingTypeId(Long id){
+        return personalTrainingRepository.findAllByPersonalTrainingTypeId(id).stream().map(personalTrainingMapper::map).toList();
     }
 
 }

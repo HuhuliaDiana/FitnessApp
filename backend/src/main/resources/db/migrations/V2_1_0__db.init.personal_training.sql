@@ -12,10 +12,14 @@ price double precision
 
 create table personal_trainer(
 id bigserial PRIMARY KEY NOT NULL,
-name character varying(255),
-personal_training_type_id bigint
+name character varying(255)
 );
 create table trainer_club(
 personal_trainer_id bigint,
 club_id bigint
+);
+
+create table trainer_personal_training(
+personal_trainer_id bigint,
+personal_training_id bigint
 );

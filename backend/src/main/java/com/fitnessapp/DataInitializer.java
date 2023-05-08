@@ -3,6 +3,7 @@ package com.fitnessapp;
 import com.fitnessapp.dto.*;
 import com.fitnessapp.entity.City;
 import com.fitnessapp.entity.Membership;
+import com.fitnessapp.entity.PersonalTrainer;
 import com.fitnessapp.entity.TrainingClassType;
 import com.fitnessapp.enums.*;
 import com.fitnessapp.mapper.*;
@@ -10,6 +11,7 @@ import com.fitnessapp.repository.*;
 import com.fitnessapp.service.city.CityService;
 import com.fitnessapp.service.club.ClubService;
 import com.fitnessapp.service.membership.MembershipService;
+import com.fitnessapp.service.personal_training.PersonalTrainerService;
 import com.fitnessapp.service.personal_training.PersonalTrainingService;
 import com.fitnessapp.service.personal_training.PersonalTrainingTypeService;
 import com.fitnessapp.service.role.RoleService;
@@ -57,12 +59,14 @@ public class DataInitializer implements CommandLineRunner {
     private final PersonalTrainingRepository personalTrainingRepository;
     private final PersonalTrainingService personalTrainingService;
     private final PersonalTrainingTypeRepository personalTrainingTypeRepository;
+    private final PersonalTrainerRepository personalTrainerRepository;
     private final PersonalTrainingTypeService personalTrainingTypeService;
+    private final PersonalTrainerService personalTrainerService;
     private final PersonalTrainingTypeMapper personalTrainingTypeMapper;
+    private final PersonalTrainerMapper personalTrainerMapper;
 
     @Override
     public void run(String... args) {
-
         if (roleRepository.count() == 0) saveRoles();
         if (userRepository.count() == 0) {
             UserDto userDto = new UserDto();
@@ -82,7 +86,29 @@ public class DataInitializer implements CommandLineRunner {
         if (trainingClassHourRepository.count() == 0) saveTrainingClassHours();
         if (personalTrainingTypeRepository.count() == 0) saveTrainingTypes();
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
+        if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
+        if (personalTrainerRepository.count() == 0) saveTrainers();
 
+    }
+
+    private void saveTrainer(String name, Long trainingTypeId, Long clubId) {
+        PersonalTrainerDto trainerDto = new PersonalTrainerDto();
+        trainerDto.setName(name);
+        trainerDto.getPersonalTrainings().addAll(personalTrainingService.getAllByTrainingTypeId(trainingTypeId));
+        trainerDto.getClubs().add(clubService.getClubById(clubId));
+        personalTrainerService.save(trainerDto);
+    }
+
+    private void saveTrainers() {
+        saveTrainer("LAURENTIU SANDU", 3L, 4L);
+        saveTrainer("RAMONA GANEA", 3L, 4L);
+        saveTrainer("DAN SZENTKOVICS", 1L, 4L);
+        saveTrainer("ALEXANDRU MITU", 1L, 8L);
+        saveTrainer("LILIANA NEAGU", 1L, 8L);
+        saveTrainer("DICU ROBERT ADRIAN", 3L, 8L);
+        saveTrainer("VALENTIN VACARIU", 3L, 1L);
+        saveTrainer("PAUL STOICESCU", 2L, 10L);
+        saveTrainer("CRISTINA EPURE", 1L, 10L);
 
     }
 
@@ -158,6 +184,9 @@ public class DataInitializer implements CommandLineRunner {
 
         saveClub("Calea Victoriei, Nr. 63-81, Sector 1, Bucuresti, în incinta Hotel Radisson Blu", ECity.BUCURESTI, "0751230693", "World Class Downtown", MembershipType.PLATINUM);
         saveClub("Strada Erou Iancu Nicolae, Nr. 12-26, Voluntari, Ilfov", ECity.BUCURESTI, "0751230693", "World Class Atlantis", MembershipType.PLATINUM);
+
+        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.PLOIESTI, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
+        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.TIMISOARA, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
 
 
     }

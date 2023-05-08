@@ -1,5 +1,6 @@
 package com.fitnessapp.config;
 
+import com.fitnessapp.endpoints.UserEndpoints;
 import com.fitnessapp.security.AuthEntryPointJwt;
 import com.fitnessapp.security.AuthTokenFilter;
 import com.fitnessapp.security.UserDetailsServiceImpl;
@@ -35,7 +36,7 @@ public class WebSecurityConfig {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/login/**", "/user").permitAll()
+                .antMatchers("/login/**", UserEndpoints.USER_BASE_URL).permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated();

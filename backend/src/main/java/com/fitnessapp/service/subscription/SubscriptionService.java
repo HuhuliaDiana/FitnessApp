@@ -33,8 +33,14 @@ public class SubscriptionService {
         return subscriptionMapper.map(subscription);
     }
 
-    public List<Subscription> findAllByMembershipIdIn(List<Long> ids) {
-        return (List<Subscription>) subscriptionRepository.findAllByMembershipIdIn(ids);
+    public List<SubscriptionDto> findAllByMembershipIdIn(List<Long> ids) {
+        var subscriptions = (List<Subscription>) subscriptionRepository.findAllByMembershipIdIn(ids);
+        return subscriptions.stream().map(subscriptionMapper::map).toList();
     }
+
+    public List<SubscriptionDto> findByMembershipId(Long id) {
+        return subscriptionRepository.findByMembershipId(id).stream().map(subscriptionMapper::map).toList();
+    }
+
 
 }

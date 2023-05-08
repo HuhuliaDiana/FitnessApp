@@ -2,6 +2,7 @@ package com.fitnessapp.service.training_class;
 
 import com.fitnessapp.dto.TrainingClassDto;
 import com.fitnessapp.entity.Club;
+import com.fitnessapp.entity.StatusMessage;
 import com.fitnessapp.entity.TrainingClass;
 import com.fitnessapp.entity.UserSubscription;
 import com.fitnessapp.enums.MembershipType;
@@ -34,6 +35,7 @@ public class TrainingClassService {
     private final UserService userService;
     private final UserSubscriptionService userSubscriptionService;
     private final ClubService clubService;
+    private final TrainingClassTypeService trainingClassTypeService;
 
     public TrainingClass save(TrainingClassDto trainingClassDto) {
         TrainingClass trainingClass = trainingClassMapper.map(trainingClassDto);
@@ -138,36 +140,36 @@ public class TrainingClassService {
                 || classDate.isEqual(userSubscription.getStartFreeze()));
     }
 
-    public String getStatusOfClassForCurrentUser(Long classId) {
+    public StatusMessage getStatusOfClassForCurrentUser(Long classId) {
         if (userSubscriptionService.currentUserHasNoSubscription())
-            return "Buy subscription";
+            return new StatusMessage("Buy subscription");
 
         if (subscriptionDoNotPermitAccessToClass(classId))
-            return "Your subscription starts with: %s".formatted(userSubscriptionService.getCurrentUserSubscription().getStartDate());
+            return new StatusMessage("Your subscription starts with: %s".formatted(userSubscriptionService.getCurrentUserSubscription().getStartDate()));
 
         if (isClassBetweenDaysOfFreeze(classId))
-            return "You froze this day";
+            return new StatusMessage("You froze this day");
 
         if (userMembershipDoNotAllowAttendanceToClass(classId))
-            return "Upgrade your membership";
+            return new StatusMessage("Upgrade your membership");
 
         if (isClassBookedByCurrentUser(classId)) {
-            return "You booked this class";
+            return new StatusMessage("You booked this class");
         }
         if (userAlreadyBookedClassForThisTimeSpan(classId).isPresent()) {
             TrainingClass classBooked = userAlreadyBookedClassForThisTimeSpan(classId).get();
             String className = classBooked.getTrainingClassHour().getClassName();
             LocalDateTime classDate = classBooked.getClassDate();
             String clubName = classBooked.getClub().getName();
-            return "You already booked a class for this time span: %s %s %s ".formatted(className, getDateFormatted(classDate), clubName);
+            return new StatusMessage("You already booked a class for this time span: %s %s %s ".formatted(className, getDateFormatted(classDate), clubName));
         }
         if (isBookingClassNotAvailable(classId)) {
             TrainingClass trainingClass = getById(classId);
             LocalDateTime bookingStartDate = trainingClass.getClassDate().minusHours(26);
 
-            return "Booking starts on: ".concat(getDateFormatted(bookingStartDate));
+            return new StatusMessage("Booking starts on: ".concat(getDateFormatted(bookingStartDate)));
         }
-        return "Booking available";
+        return new StatusMessage("Booking available");
 
     }
 
@@ -178,9 +180,10 @@ public class TrainingClassService {
 
     }
 
-    public List<TrainingClass> getClassesBookedNotYetAttended() {
+    public List<TrainingClassDto> getClassesBookedNotYetAttended() {
         Set<TrainingClass> allClassesBookedByUser = userService.getCurrentUser().getTrainingClasses();
-        return allClassesBookedByUser.stream().filter(classBooked -> classBooked.getClassDate().isAfter(LocalDateTime.now())).toList();
+        var list = allClassesBookedByUser.stream().filter(classBooked -> classBooked.getClassDate().isAfter(LocalDateTime.now())).toList();
+        return list.stream().map(trainingClassMapper::map).toList();
     }
 
     public List<TrainingClass> getHistoryOfBookedClasses() {
@@ -207,9 +210,17 @@ public class TrainingClassService {
 
     }
 
-    public List<TrainingClass> getAllClassesForNext7DaysByClubId(Long clubId) {
+    public List<TrainingClassDto> getAllClassesForNext7DaysByClubId(Long clubId) {
         LocalDate lastDay = LocalDate.now().plusDays(7);
-        return trainingClassRepository.findAllByClubIdAndClassDateBetween(clubId, LocalDateTime.now(), LocalDateTime.of(lastDay, LocalTime.MIDNIGHT));
+        var classes = trainingClassRepository.findAllByClubIdAndClassDateBetween(clubId, LocalDateTime.now(), LocalDateTime.of(lastDay, LocalTime.MIDNIGHT));
+        return classes.stream().map(trainingClassMapper::map).toList();
     }
+
+    public List<TrainingClassDto> getAllClassesForNext7Days() {
+        LocalDate lastDay = LocalDate.now().plusDays(7);
+        var classes = trainingClassRepository.findAllByClassDateBetween(LocalDateTime.now(), LocalDateTime.of(lastDay, LocalTime.MIDNIGHT));
+        return classes.stream().map(trainingClassMapper::map).toList();
+    }
+
 
 }

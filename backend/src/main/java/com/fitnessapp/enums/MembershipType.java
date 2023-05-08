@@ -20,13 +20,13 @@ public enum MembershipType {
 
     public List<MembershipType> getAllLessThan() {
         List<MembershipType> list = new ArrayList<>();
-        for (int i = 1; i <= this.ordinal(); i++) list.add(getByOrdinal(i));
+        for (int i = 0; i < this.ordinal(); i++) list.add(getByOrdinal(i));
         return list;
     }
 
     public List<MembershipType> getAllGreaterThan() {
         List<MembershipType> list = new ArrayList<>();
-        for (int i = 5; i >= this.ordinal(); i--) list.add(getByOrdinal(i));
+        for (int i = 4; i >= this.ordinal(); i--) list.add(getByOrdinal(i));
         return list;
     }
 }

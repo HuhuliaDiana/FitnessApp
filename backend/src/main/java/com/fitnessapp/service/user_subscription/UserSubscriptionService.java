@@ -1,13 +1,18 @@
 package com.fitnessapp.service.user_subscription;
 
+import com.fitnessapp.dto.ClubDto;
 import com.fitnessapp.dto.FreezeMembershipDto;
 import com.fitnessapp.dto.UserSubscriptionDto;
+import com.fitnessapp.entity.Club;
 import com.fitnessapp.entity.Subscription;
+import com.fitnessapp.entity.SubscriptionDate;
 import com.fitnessapp.entity.UserSubscription;
 import com.fitnessapp.enums.MembershipType;
 import com.fitnessapp.enums.SubscriptionPeriodType;
 import com.fitnessapp.exception.EntityNotFoundException;
+import com.fitnessapp.mapper.ClubMapper;
 import com.fitnessapp.mapper.UserSubscriptionMapper;
+import com.fitnessapp.repository.ClubRepository;
 import com.fitnessapp.repository.UserSubscriptionRepository;
 import com.fitnessapp.service.subscription.SubscriptionService;
 import com.fitnessapp.service.user.UserService;
@@ -16,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 @Service
@@ -25,6 +31,8 @@ public class UserSubscriptionService {
     private final UserSubscriptionMapper userSubscriptionMapper;
     private final SubscriptionService subscriptionService;
     private final UserService userService;
+    private final ClubMapper clubMapper;
+    private final ClubRepository clubRepository;
 
 
     public UserSubscription save(UserSubscriptionDto userSubscriptionDto) {
@@ -36,15 +44,19 @@ public class UserSubscriptionService {
     }
 
     @Transactional
-    public UserSubscription buySubscription(Long id, LocalDate startingDate) {
+    public UserSubscription buySubscription(SubscriptionDate subscriptionDate) {
         if (getOptionalCurrentUserSubscription().isPresent()) cancelSubscription(); // user can not have 2 subscriptions
 
-        Subscription subscriptionWanted = subscriptionService.getById(id);
+        Subscription subscriptionWanted = subscriptionService.getById(subscriptionDate.getId());
+        LocalDate date = LocalDate.parse(subscriptionDate.getDate());
+
         SubscriptionPeriodType subPeriodType = subscriptionWanted.getSubscriptionPeriod().getName();
 
         UserSubscriptionDto userSubscriptionDto = new UserSubscriptionDto();
         userSubscriptionDto.setUser(userService.mapCurrentUser());
-        userSubscriptionDto.setStartDate(startingDate);
+        userSubscriptionDto.setStartDate(date);
+        Club club = clubRepository.findById(subscriptionDate.getClubId()).orElseThrow(() -> new EntityNotFoundException("Club", "id", subscriptionDate.getClubId()));
+        userSubscriptionDto.setClub(clubMapper.map(club));
 
         userSubscriptionDto.setEndDate(userSubscriptionDto.getStartDate().plusMonths(subPeriodType.getNoMonths()).minusDays(1));
         userSubscriptionDto.setSubscription(subscriptionService.map(subscriptionWanted));
@@ -72,13 +84,18 @@ public class UserSubscriptionService {
         return getOptionalCurrentUserSubscription().orElseThrow(() -> new EntityNotFoundException("User subscription", "user_id", userService.getCurrentUserId()));
     }
 
+    public UserSubscriptionDto getCurrentUserSubscriptionDto() {
+        return userSubscriptionMapper.map(getCurrentUserSubscription());
+    }
+
     public Optional<UserSubscription> getOptionalCurrentUserSubscription() {
         Long currentUserId = userService.getCurrentUserId();
         return userSubscriptionRepository.findByUser_Id(currentUserId);
     }
 
     //in front afiseaza suma ce ramane de platit de la dateTime pana la finalul abonamentului
-    public UserSubscription upgradeMembership(Long subscriptionId, LocalDate dateTime) {
+    public UserSubscription upgradeMembership(Long subscriptionId, String date) {
+        LocalDate dateTime = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         cancelSubscription();
         UserSubscriptionDto userSubscriptionDto = new UserSubscriptionDto();
         userSubscriptionDto.setUser(userService.mapCurrentUser());
@@ -87,6 +104,7 @@ public class UserSubscriptionService {
         return save(userSubscriptionDto);
 
     }
+
     @Transactional
     public UserSubscription freezeMembership(FreezeMembershipDto freezeMembershipDto) {
         UserSubscription userSubscription = getByUserId(userService.getCurrentUserId());

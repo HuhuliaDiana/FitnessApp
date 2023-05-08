@@ -37,7 +37,8 @@ subscription_id bigint,
 start_date date,
 end_date date,
 start_freeze date,
-end_freeze date
+end_freeze date,
+club_id bigint
 );
 create table booked_class(
 user_id bigint,

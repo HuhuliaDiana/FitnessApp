@@ -1,14 +1,22 @@
 package com.fitnessapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fitnessapp.entity.Club;
+import com.fitnessapp.entity.PersonalTraining;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,11 +26,11 @@ public class PersonalTrainerDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
-
     @NotNull
     @NotEmpty
     private String name;
+    private Set<ClubDto> clubs = new HashSet<>();
+    private Set<PersonalTrainingDto> personalTrainings = new HashSet<>();
 
-    private PersonalTrainingTypeDto personalTrainingType;
 
 }

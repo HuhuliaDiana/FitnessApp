@@ -9,6 +9,8 @@ import com.fitnessapp.repository.TrainingClassTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TrainingClassTypeService {
@@ -21,5 +23,8 @@ public class TrainingClassTypeService {
 
     public TrainingClassType findByName(ClassType name) {
         return trainingClassTypeRepository.findByName(name).orElseThrow(() -> new EntityNotFoundException("Training class type", "name", name));
+    }
+    public List<TrainingClassTypeDto> getTrainingClassTypes() {
+        return trainingClassTypeRepository.findAll().stream().map(trainingClassTypeMapper::map).toList();
     }
 }

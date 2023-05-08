@@ -1,6 +1,6 @@
 package com.fitnessapp.entity;
 
-import com.fitnessapp.enums.ECity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,13 +23,13 @@ public class Club {
     private String phone;
     @ManyToMany(mappedBy = "clubs")
     private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "clubs")
+    private Set<PersonalTrainer> personalTrainers;
     @OneToMany(mappedBy = "club")
     private Set<ClubRole> clubRoles = new HashSet<>();
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "membership_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Membership membership;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "city_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private City city;
 
 

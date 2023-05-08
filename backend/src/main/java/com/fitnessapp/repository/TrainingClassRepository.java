@@ -12,6 +12,7 @@ import java.util.List;
 public interface TrainingClassRepository extends JpaRepository<TrainingClass, Long> {
     Iterable<TrainingClass> findAllByClubInAndClassDateGreaterThanEqual(Iterable<Club> clubs, LocalDateTime dateTime);
     List<TrainingClass> findAllByClubIdAndClassDateBetween(Long clubId, LocalDateTime today, LocalDateTime lastDay);
+    List<TrainingClass> findAllByClassDateBetween(LocalDateTime today, LocalDateTime lastDay);
 
     List<TrainingClass> findAllByClubIdAndClassDateGreaterThanEqual(Long clubId, LocalDate localDate);
 }
