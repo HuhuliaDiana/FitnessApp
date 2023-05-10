@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
-import PickDateTimeOfPTSession from "./PickDateTimeOfPTSession";
 import "@progress/kendo-theme-default/dist/all.css";
 import { Button } from "antd";
+import { useEffect, useState } from "react";
+import PickDateTimeOfPTSession from "./PickDateTimeOfPTSession";
 
 const BookPTSession = () => {
   const [trainerId, setTrainerId] = useState();
   const [localDate, setLocalDate] = useState();
   const [localTime, setLocalTime] = useState();
+  const [noDaysValidity, setNoDaysValidity] = useState();
+  const [errMsg, setErrMsg] = useState();
+  const [startDateOfPT, setStartDateOfPT] = useState();
   const accessToken = localStorage.getItem("accessToken");
 
   const getPTOfCurrentUser = () => {
@@ -29,6 +32,8 @@ const BookPTSession = () => {
         })
         .then((data) => {
           setTrainerId(data.personalTrainer.id);
+          setStartDateOfPT(data.startDate);
+          setNoDaysValidity(data.personalTraining.noDaysValidity);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -46,15 +51,14 @@ const BookPTSession = () => {
         body: JSON.stringify({ trainerId, localDate, localTime }),
       })
         .then((response) => {
-          console.log(localDate);
-          console.log(localTime);
-          if (response.ok) {
+          if (response.status === 406) {
             return response.json();
+          } else if (!response.ok && response.status !== 406) {
+            return Promise.reject("Cannot book PT.");
           }
-          return Promise.reject("Cannot book PT.");
         })
         .then((data) => {
-          console.log(data);
+          setErrMsg(data.message);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -66,6 +70,9 @@ const BookPTSession = () => {
     setLocalTime(data.localTime);
   };
   useEffect(() => {
+    setErrMsg(null);
+  }, [localDate, localTime]);
+  useEffect(() => {
     getPTOfCurrentUser();
   }, []);
   return (
@@ -73,10 +80,11 @@ const BookPTSession = () => {
       {trainerId && (
         <PickDateTimeOfPTSession
           onSelectDateTime={onSelectDateTime}
-          parentToChild={{ trainerId }}
+          parentToChild={{ trainerId, startDateOfPT, noDaysValidity }}
         />
       )}
       <Button onClick={bookPTSession}>Book PT </Button>
+      {errMsg && <p>{errMsg}</p>}
     </div>
   );
 };
