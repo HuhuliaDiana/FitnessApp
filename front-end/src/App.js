@@ -1,3 +1,4 @@
+import "@progress/kendo-theme-default/dist/all.css";
 import {
   Route,
   RouterProvider,
@@ -5,10 +6,10 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import "./App.css";
-import '@progress/kendo-theme-default/dist/all.css';  
 import BookPTSession from "./pages/BookPTSession";
 import BookedClassesHistory from "./pages/BookedClassesHistory";
 import BookingClasses from "./pages/BookingClasses";
+import BookingsPTHistory from "./pages/BookingsPTHistory";
 import BuyPersonalTraining from "./pages/BuyPersonalTraining";
 import ClassesSchedule from "./pages/ClassesSchedule";
 import ClubSubscriptions from "./pages/ClubSubscriptions";
@@ -22,6 +23,7 @@ import TrainingClassDetails from "./pages/TrainingClassDetails";
 import UpgradeMembership from "./pages/UpgradeMembership";
 import UserContact from "./pages/UserContact";
 import UserMembership from "./pages/UserMembership";
+import BookingsPT from "./pages/BookingsPT";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -47,6 +49,11 @@ const router = createBrowserRouter(
       <Route path="/upgrade-membership" element={<UpgradeMembership />}></Route>
       <Route path="/contact" element={<UserContact />}></Route>
       <Route path="/book-PT" element={<BookPTSession />}></Route>
+      <Route
+        path="/bookings-PT-history"
+        element={<BookingsPTHistory />}
+      ></Route>
+      <Route path="/bookings-PT" element={<BookingsPT />}></Route>
     </Route>
   )
 );

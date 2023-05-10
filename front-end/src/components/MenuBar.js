@@ -19,10 +19,10 @@ const MenuBar = () => {
     getItem("Schedule", "/schedule"),
     getItem("Booked classes", "/bookings"),
     getItem("Personal Training", "/training", null, [
-      getItem("Buy PT","/personal-training"),
+      getItem("Buy PT", "/personal-training"),
       getItem("Book PT session", "/book-PT"),
       getItem("Booked PT sessions", "/bookings-PT"),
-      getItem("Session history", "/bookings-history-PT"),
+      getItem("PT sessions history", "/bookings-PT-history"),
     ]),
     getItem("Your profile", null, <UserOutlined />, [
       getItem("Contact", "/contact"),
