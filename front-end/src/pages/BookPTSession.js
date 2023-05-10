@@ -48,7 +48,7 @@ const BookPTSession = () => {
           Authorization: `Bearer ${accessToken}`,
         },
         method: "post",
-        body: JSON.stringify({ trainerId, localDate, localTime }),
+        body: JSON.stringify({localDate, localTime }),
       })
         .then((response) => {
           if (response.status === 406) {
