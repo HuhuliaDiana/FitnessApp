@@ -35,8 +35,7 @@ no_sessions_left bigint
 );
 create table personal_training_session(
 id bigserial PRIMARY KEY NOT NULL,
-user_id bigint,
-personal_trainer_id bigint,
+user_personal_training_id bigint,
 session_date date,
 start_session_time character varying(255),
 end_session_time character varying(255)

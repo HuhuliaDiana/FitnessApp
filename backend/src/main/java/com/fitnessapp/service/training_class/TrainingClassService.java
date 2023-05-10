@@ -51,12 +51,6 @@ public class TrainingClassService {
         return Lists.newArrayList(trainingClassRepository.findAllByClubInAndClassDateGreaterThanEqual(clubs, LocalDateTime.now()));
     }
 
-//    public List<TrainingClass> getAllClassesAvailableForCurrentUser() {
-//        List<ClubDto> clubs = clubService.getAllClubsUserHasAccessIn();
-//        return getAllFutureClassesByClubIds(clubs);
-//    }
-
-
     @Transactional
     public TrainingClass bookClass(Long classId) {
         TrainingClass trainingClass = getById(classId);

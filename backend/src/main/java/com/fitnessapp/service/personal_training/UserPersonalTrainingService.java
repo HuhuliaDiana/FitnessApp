@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -48,10 +49,18 @@ public class UserPersonalTrainingService {
     }
 
     public UserPersonalTrainingDto getPTOfCurrentUser() {
-        Long userId = userService.getCurrentUserId();
-        UserPersonalTraining training = userPersonalTrainingRepository.findByUserId(userId).orElseThrow(() -> new EntityNotFoundException("User personal training", "user_id", userId));
+        UserPersonalTraining training = getCurrentUserPersonalTraining();
         return userPersonalTrainingMapper.map(training);
 
+    }
+
+    public UserPersonalTraining getCurrentUserPersonalTraining() {
+        Long userId = userService.getCurrentUserId();
+        return userPersonalTrainingRepository.findByUserId(userId).orElseThrow(() -> new EntityNotFoundException("User personal training", "user_id", userId));
+    }
+
+    public List<UserPersonalTraining> getUserPTByTrainerId(Long id) {
+        return userPersonalTrainingRepository.findByPersonalTrainerId(id);
     }
 
 }

@@ -27,4 +27,16 @@ public class PTSessionController {
     public List<PTSessionDto> getPTSessionsByTrainerId(@PathVariable Long id) {
         return ptSessionService.getPTSessionsByTrainerId(id);
     }
+
+    @Operation(summary = "Get bookings PT history of current user.")
+    @GetMapping("/bookings-history")
+    public List<PTSessionDto> getBookingsPTHistoryOfCurrentUser() {
+        return ptSessionService.getBookingsPTHistoryOfCurrentUser();
+    }
+
+    @Operation(summary = "Get bookings PT of current user.")
+    @GetMapping("/bookings")
+    public List<PTSessionDto> getBookingsPTOfCurrentUser() {
+        return ptSessionService.getBookingsPTOfCurrentUser();
+    }
 }

@@ -2,6 +2,7 @@ package com.fitnessapp.controller;
 
 import com.fitnessapp.exception.ApiError;
 import com.fitnessapp.exception.EntityNotFoundException;
+import com.fitnessapp.exception.PTException;
 import com.fitnessapp.exception.TrainingClassCanNotBeAccessedException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex, WebRequest request) {
         ApiError apiError = new ApiError(HttpStatus.NOT_FOUND);
+        apiError.setMessage(ex.getMessage());
+        log.error(LOG_FORMAT, ex, request);
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
+
+    @ExceptionHandler(PTException.class)
+    protected ResponseEntity<Object> handlePTException(PTException ex, WebRequest request) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_ACCEPTABLE);
         apiError.setMessage(ex.getMessage());
         log.error(LOG_FORMAT, ex, request);
         return new ResponseEntity<>(apiError, apiError.getStatus());

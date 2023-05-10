@@ -1,4 +1,4 @@
 package com.fitnessapp.dto;
 
-public record PTSessionRecord(Long trainerId, String localDate, String localTime) {
+public record PTSessionRecord(String localDate, String localTime) {
 }
