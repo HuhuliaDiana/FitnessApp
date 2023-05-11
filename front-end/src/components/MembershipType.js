@@ -1,28 +1,29 @@
 import { Button, Space, DatePicker } from "antd";
 import { useState } from "react";
+
 const MembershipType = (props) => {
   const subscription = props.parentToChild.subscription;
   const clubId = props.parentToChild.clubId;
   const accessToken = localStorage.getItem("accessToken");
   const id = subscription.id;
-  const [date, setDate] = useState("");
+  const [localDate, setLocalDate] = useState("");
 
   const buy = () => {
-    if (date !== "") {
+    if (localDate !== "") {
       buyMembership();
     } else {
-      console.log("Pick a date!")
+      console.log("Pick a date!");
     }
   };
   const buyMembership = () => {
     try {
-      console.log(date);
+      console.log(localDate);
       fetch(`http://localhost:8080/api/user-subscription/buy`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ id: id, date: date, clubId: clubId }),
+        body: JSON.stringify({ id, localDate, clubId }),
         method: "POST",
       })
         .then((response) => {
@@ -40,18 +41,20 @@ const MembershipType = (props) => {
     }
   };
   const onChange = (dateString) => {
-    setDate(new Date(dateString).toISOString().split("T")[0]);
+    setLocalDate(new Date(dateString).toISOString().split("T")[0]);
   };
   return (
     <div>
       <Space direction="vertical">
-        <DatePicker onChange={onChange} />
+        <DatePicker
+          onChange={onChange}
+          disabledDate={(d) => !d || d.isBefore(new Date())}
+        />
       </Space>
       <p>
         {subscription.membership.name} {subscription.subscriptionPeriod.name}
       </p>
       <p>{subscription.price}</p>
-      {/* temporary- buy this membership */}
       <Button onClick={buy}>Buy membership</Button>
     </div>
   );

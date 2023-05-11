@@ -1,6 +1,6 @@
 import { Calendar } from "@progress/kendo-react-dateinputs";
 import moment from "moment";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const allTimes = [
   "07:00 - 08:00",
