@@ -23,4 +23,6 @@ public class UserSubscriptionDto {
     private LocalDate startFreeze;
     private LocalDate endFreeze;
     private ClubDto club;
+    private Integer noDaysLeftToFreeze;
+
 }

@@ -15,7 +15,5 @@ public class FreezeMembershipDto {
     @NotNull
     @NotEmpty
     private LocalDate firstDayOfFreeze;
-    @NotNull
-    @NotEmpty
     private Long numberOfDays;
 }

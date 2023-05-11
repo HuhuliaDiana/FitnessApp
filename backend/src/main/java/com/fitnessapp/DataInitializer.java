@@ -186,8 +186,8 @@ public class DataInitializer implements CommandLineRunner {
         saveClub("Calea Victoriei, Nr. 63-81, Sector 1, Bucuresti, în incinta Hotel Radisson Blu", ECity.BUCURESTI, "0751230693", "World Class Downtown", MembershipType.PLATINUM);
         saveClub("Strada Erou Iancu Nicolae, Nr. 12-26, Voluntari, Ilfov", ECity.BUCURESTI, "0751230693", "World Class Atlantis", MembershipType.PLATINUM);
 
-        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.PLOIESTI, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
-        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.TIMISOARA, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
+        saveClub("Strada Calomfirescu, nr. 2, Ploiești, Jud. Prahova, în incinta Afi Palace", ECity.PLOIESTI, "0751230693", "World Class Ploiesti", MembershipType.BRONZE);
+        saveClub("Piata Consiliul Europei, Nr. 2, Timișoara, jud. Timis, în incinta Iulius Mall", ECity.TIMISOARA, "0751230693", "World Class Timisoara", MembershipType.BRONZE);
 
 
     }

@@ -39,8 +39,8 @@ public class UserSubscriptionController {
     }
 
     @Operation(summary = "Freeze membership.")
-    @PatchMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_FREEZE_BY_ID)
-    public UserSubscription freezeMembership(@RequestBody FreezeMembershipDto freezeMembershipDto) {
+    @PutMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_FREEZE)
+    public UserSubscriptionDto freezeMembership(@RequestBody FreezeMembershipDto freezeMembershipDto) {
         return userSubscriptionService.freezeMembership(freezeMembershipDto);
     }
 

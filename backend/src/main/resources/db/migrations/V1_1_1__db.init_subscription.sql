@@ -38,7 +38,8 @@ start_date date,
 end_date date,
 start_freeze date,
 end_freeze date,
-club_id bigint
+club_id bigint,
+no_days_left_to_freeze bigint
 );
 create table booked_class(
 user_id bigint,

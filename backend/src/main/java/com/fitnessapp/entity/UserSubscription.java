@@ -30,6 +30,7 @@ public class UserSubscription {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "club_id")
     private Club club;
+    private Integer noDaysLeftToFreeze = 0;
 
 
 }

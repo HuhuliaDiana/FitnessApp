@@ -63,8 +63,12 @@ public class UserSubscriptionService {
 
         userSubscriptionDto.setEndDate(userSubscriptionDto.getStartDate().plusMonths(subPeriodType.getNoMonths()).minusDays(1));
         userSubscriptionDto.setSubscription(subscriptionService.map(subscriptionWanted));
-        return save(userSubscriptionDto);
 
+        var subscriptionPeriodType = subscriptionWanted.getSubscriptionPeriod().getName();
+        if (!subscriptionPeriodType.equals(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING))
+            userSubscriptionDto.setNoDaysLeftToFreeze(30);
+
+        return save(userSubscriptionDto);
     }
 
     public MembershipType getMembershipOfCurrentUser() {
@@ -109,7 +113,7 @@ public class UserSubscriptionService {
     }
 
     @Transactional
-    public UserSubscription freezeMembership(FreezeMembershipDto freezeMembershipDto) {
+    public UserSubscriptionDto freezeMembership(FreezeMembershipDto freezeMembershipDto) {
         UserSubscription userSubscription = getByUserId(userService.getCurrentUserId());
 
         LocalDate firstDayOfFreeze = freezeMembershipDto.getFirstDayOfFreeze();
@@ -118,13 +122,13 @@ public class UserSubscriptionService {
 
         userSubscription.setEndFreeze(firstDayOfFreeze.plusDays(numberOfDays));
         userSubscription.setEndDate(userSubscription.getEndDate().plusDays(numberOfDays));
-        return userSubscription;
+        return userSubscriptionMapper.map(userSubscription);
     }
 
-    public List<SubscriptionDto> getMembershipsForUpgrading( ) {
+    public List<SubscriptionDto> getMembershipsForUpgrading() {
         UserSubscription userSubscription = getCurrentUserSubscription();
-        MembershipType membershipName= userSubscription.getSubscription().getMembership().getName();
-        Long subPeriodId=userSubscription.getSubscription().getSubscriptionPeriod().getId();
+        MembershipType membershipName = userSubscription.getSubscription().getMembership().getName();
+        Long subPeriodId = userSubscription.getSubscription().getSubscriptionPeriod().getId();
         List<MembershipType> membershipTypes = membershipName.getAllGreaterThan();
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
         return subscriptionService.findAllByMembershipIdInAndSubscriptionPeriodId(membershipIds, subPeriodId);
@@ -132,9 +136,9 @@ public class UserSubscriptionService {
     }
 
     @Transactional
-    public UserSubscriptionDto transferMembershipToClubById(Long id){
+    public UserSubscriptionDto transferMembershipToClubById(Long id) {
         UserSubscription userSubscription = getCurrentUserSubscription();
-        userSubscription.setClub(clubRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Club","id",id)));
+        userSubscription.setClub(clubRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Club", "id", id)));
         return userSubscriptionMapper.map(userSubscription);
     }
 }
