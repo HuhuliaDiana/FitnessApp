@@ -9,6 +9,7 @@ import "./App.css";
 import BookPTSession from "./pages/BookPTSession";
 import BookedClassesHistory from "./pages/BookedClassesHistory";
 import BookingClasses from "./pages/BookingClasses";
+import BookingsPT from "./pages/BookingsPT";
 import BookingsPTHistory from "./pages/BookingsPTHistory";
 import BuyPersonalTraining from "./pages/BuyPersonalTraining";
 import ClassesSchedule from "./pages/ClassesSchedule";
@@ -17,13 +18,14 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import PersonalTraining from "./pages/PersonalTraining";
 import Register from "./pages/Register";
+import SearchClasses from "./pages/SearchClasses";
 import SelectClub from "./pages/SelectClub";
 import TrainerPage from "./pages/TrainerPage";
 import TrainingClassDetails from "./pages/TrainingClassDetails";
 import UpgradeMembership from "./pages/UpgradeMembership";
 import UserContact from "./pages/UserContact";
 import UserMembership from "./pages/UserMembership";
-import BookingsPT from "./pages/BookingsPT";
+import RenewMembership from "./pages/RenewMembership";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,6 +56,8 @@ const router = createBrowserRouter(
         element={<BookingsPTHistory />}
       ></Route>
       <Route path="/bookings-PT" element={<BookingsPT />}></Route>
+      <Route path="/search-classes" element={<SearchClasses />}></Route>
+      <Route path="/renew-membership" element={<RenewMembership />}></Route>
     </Route>
   )
 );

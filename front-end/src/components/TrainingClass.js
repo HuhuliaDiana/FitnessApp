@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 const TrainingClass = (props) => {
   const trainingClass = props.parentToChild;
-  console.log("trainingClass")
-  console.log(trainingClass)
   const navigate = useNavigate();
 
   const duration = Number(trainingClass.trainingClassHour.timerDuration);
@@ -16,12 +14,19 @@ const TrainingClass = (props) => {
   const getHour = () => {
     const beginningTime = new Date(trainingClass.classDate);
     const beginningTimeHour = beginningTime.getUTCHours();
-    const beginningTimeMinutes = beginningTime.getUTCMinutes();
+    let beginningTimeMinutes = "";
+    if (beginningTime.getUTCMinutes() === "0")
+      beginningTimeMinutes = beginningTime.getUTCMinutes();
+    else beginningTimeMinutes = beginningTime.getUTCMinutes() + "0";
+
     setBeginningTimeString(beginningTimeHour + ":" + beginningTimeMinutes);
 
     const endingTime = new Date(beginningTime.getTime() + 60000 * duration);
     const endingTimeHour = endingTime.getUTCHours();
-    const endingTimeMinutes = endingTime.getUTCMinutes();
+    let endingTimeMinutes = "";
+    if (endingTime.getUTCMinutes() === "0")
+      endingTimeMinutes = endingTime.getUTCMinutes();
+    else endingTimeMinutes = endingTime.getUTCMinutes() + "0";
     setEndingTimeString(endingTimeHour + ":" + endingTimeMinutes);
   };
   useEffect(() => {
@@ -60,6 +65,7 @@ const TrainingClass = (props) => {
     >
       <p>{trainingClass.trainerName}</p>
       <p>{trainingClass.trainingClassHour.className}</p>
+      <b>{trainingClass.trainingClassHour.trainingClassType.name}</b>
       <p>
         {beginningTimeString}-{endingTimeString}
       </p>

@@ -12,6 +12,7 @@ const ClassesSchedule = () => {
   const [nameDropdownClubs, setNameDropdownClubs] = useState("Select a club");
   const [nameDropdownTypes, setNameDropdownTypes] =
     useState("Select class type");
+  const [data, setData] = useState([]);
 
   const getSubscriptionOfUser = () => {
     try {
@@ -54,43 +55,43 @@ const ClassesSchedule = () => {
           return Promise.reject("Cannot fetch classes for next 7 days.");
         })
         .then((data) => {
-          console.log(clubId);
           let newData = data;
           if (clubId !== "") {
-            newData = data.filter((d) => d.club.id == clubId);
+            newData = newData.filter((d) => d.club.id === clubId);
           }
           if (typeId !== "") {
             newData = newData.filter(
-              (d) => typeId == d.trainingClassHour.trainingClassType.id
+              (d) => typeId === d.trainingClassHour.trainingClassType.id
             );
           }
-          const namesOfWeekDays = newData.map((c) => {
-            const nameOfWeekDay = new Date(c.classDate).toLocaleDateString(
-              "en-us",
-              {
-                weekday: "long",
-              }
-            );
-            const localDateOfClass = new Date(c.classDate).toLocaleDateString();
-            const dayOfMonth = new Date(c.classDate).getDate();
-            const month = new Date(c.classDate).toLocaleDateString("en-us", {
-              month: "long",
-            });
-            return {
-              id: c.id,
-              nameOfWeekDay: nameOfWeekDay,
-              localDateOfClass: localDateOfClass,
-              dayOfMonth: dayOfMonth,
-              month: month,
-            };
-          });
-          setNamesOfWeekDays(removeJSONDuplicates(namesOfWeekDays));
+          console.log(newData)
+          setData(newData);
         })
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
     }
   };
+  useEffect(() => {
+    let namesOfWeekDays = data.map((c) => {
+      const nameOfWeekDay = new Date(c.classDate).toLocaleDateString("en-us", {
+        weekday: "long",
+      });
+      const localDateOfClass = new Date(c.classDate).toLocaleDateString();
+      const dayOfMonth = new Date(c.classDate).getDate();
+      const month = new Date(c.classDate).toLocaleDateString("en-us", {
+        month: "long",
+      });
+      return {
+        id: c.id,
+        nameOfWeekDay: nameOfWeekDay,
+        localDateOfClass: localDateOfClass,
+        dayOfMonth: dayOfMonth,
+        month: month,
+      };
+    });
+    setNamesOfWeekDays(removeJSONDuplicates(namesOfWeekDays));
+  }, [data, setData]);
   const removeJSONDuplicates = (namesOfWeekDays) => {
     var uniqueArray = [];
     for (var i = 0; i < namesOfWeekDays.length; i++) {
@@ -172,9 +173,10 @@ const ClassesSchedule = () => {
   }, [typeId, setTypeId]);
 
   useEffect(() => {
+    getSubscriptionOfUser();
+
     getClubs();
     getTrainingClassTypes();
-    getSubscriptionOfUser();
     getClassesForNext7Days();
   }, []);
 
@@ -182,12 +184,14 @@ const ClassesSchedule = () => {
     const item = clubItems.find((i) => i.key == key);
     setNameDropdownClubs(item.label);
     const clubId = item.key;
+    console.log(clubId);
     setClubId(clubId);
   };
   const handleMenuClickTypes = ({ key }) => {
     const item = typeItems.find((i) => i.key == key);
     setNameDropdownTypes(item.label);
     const typeId = item.key;
+    console.log(typeId);
     setTypeId(typeId);
   };
 
@@ -221,7 +225,7 @@ const ClassesSchedule = () => {
           {nameDropdownTypes}
         </Dropdown.Button>
       </Space>
-      {namesOfWeekDays !== [] &&
+      {data !== [] &&
         namesOfWeekDays.map((nameOfWeekDay) => {
           return (
             <div key={nameOfWeekDay.id}>
@@ -231,7 +235,10 @@ const ClassesSchedule = () => {
                   {nameOfWeekDay.month}
                 </b>
               </p>
-              <TrainingClassesByDay parentToChild={{ nameOfWeekDay, clubId }} />
+              <TrainingClassesByDay
+                key={nameOfWeekDay.id}
+                parentToChild={{ nameOfWeekDay,  data }}
+              />
             </div>
           );
         })}

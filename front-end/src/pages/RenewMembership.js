@@ -1,7 +1,6 @@
-import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MembershipType from "../components/MembershipType";
-const UpgradeMembership = () => {
+const RenewMembership = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [clubId, setClubId] = useState();
   const [memberships, setMemberships] = useState([]);
@@ -30,9 +29,9 @@ const UpgradeMembership = () => {
     }
   };
 
-  const getMembershipsForUpgrading = () => {
+  const getMembershipsForRenew = () => {
     try {
-      fetch(`http://localhost:8080/api/user-subscription/upgrade`, {
+      fetch(`http://localhost:8080/api/user-subscription/renew`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -43,7 +42,7 @@ const UpgradeMembership = () => {
           if (response.ok) {
             return response.json();
           }
-          return Promise.reject("Cannot fetch memberships for upgrade.");
+          return Promise.reject("Cannot fetch memberships for renew.");
         })
         .then((data) => {
           console.log(data);
@@ -56,7 +55,7 @@ const UpgradeMembership = () => {
   };
   useEffect(() => {
     getUserSubscription();
-    getMembershipsForUpgrading();
+    getMembershipsForRenew();
   }, []);
   return (
     <div>
@@ -72,4 +71,4 @@ const UpgradeMembership = () => {
     </div>
   );
 };
-export default UpgradeMembership;
+export default RenewMembership;

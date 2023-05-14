@@ -196,6 +196,13 @@ const UserMembership = () => {
           navigate("/buy-membership");
         }}
       >
+        Buy membership
+      </Button>
+      <Button
+        onClick={() => {
+          navigate("/renew-membership");
+        }}
+      >
         Renew membership
       </Button>
       <Button

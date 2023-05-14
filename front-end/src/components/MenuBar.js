@@ -16,8 +16,9 @@ const MenuBar = () => {
   const items = [
     getItem("Home", "/home", <HomeOutlined />),
     getItem("Buy membership", "/buy-membership"),
-    getItem("Schedule", "/schedule"),
-    getItem("Booked classes", "/bookings"),
+    getItem("Our clubs", "/clubs"),
+    getItem("Class schedule", "/schedule"),
+    getItem("Search classes", "/search-classes"),
     getItem("Personal Training", "/training", null, [
       getItem("Buy PT", "/personal-training"),
       getItem("Book PT session", "/book-PT"),
@@ -28,6 +29,8 @@ const MenuBar = () => {
       getItem("Contact", "/contact"),
       getItem("Membership", "/membership"),
       getItem("Bookings history", "/bookings-history"),
+      getItem("Booked classes", "/bookings"),
+      getItem("Log out", null),
     ]),
   ];
   const onClick = (key) => {
