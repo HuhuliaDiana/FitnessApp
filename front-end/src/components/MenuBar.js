@@ -37,16 +37,15 @@ const MenuBar = () => {
     navigate(key.key);
   };
   return (
-    <>
+    <div className="menu">
       <Menu
         onClick={onClick}
-        className="menu"
         defaultSelectedKeys={["1"]}
         mode="inline"
         theme="light"
         items={items}
       />
-    </>
+    </div>
   );
 };
 export default MenuBar;

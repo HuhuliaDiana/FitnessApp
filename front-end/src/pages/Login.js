@@ -1,8 +1,6 @@
 import { Button, Col, Form, Input, Row } from "antd";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthProvider";
-import { useEffect, useState, FC } from "react";
-import { useLocalState } from "../localStorage/useLocalStorage";
 
 const Login = ({ requestedLocation }) => {
   const navigate = useNavigate();

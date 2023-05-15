@@ -1,6 +1,7 @@
 import { Dropdown, Space, Input } from "antd";
 import { useEffect, useState } from "react";
 import TrainingClassesByClub from "../components/TrainingClassesByClub";
+import MenuBar from "../components/MenuBar";
 
 const SearchClasses = () => {
   const { Search } = Input;
@@ -13,6 +14,7 @@ const SearchClasses = () => {
     useState("Select class type");
   const [data, setData] = useState([]);
   const [trainerName, setTrainerName] = useState("");
+  const [inputValue, setInputValue] = useState("");
   useEffect(() => {
     if (typeId !== "") {
       getClassesForNext7Days();
@@ -58,11 +60,13 @@ const SearchClasses = () => {
 
   const handleMenuClickTypes = ({ key }) => {
     setTrainerName("");
+    setInputValue("");
     const item = typeItems.find((i) => i.key == key);
     setNameDropdownTypes(item.label);
     const typeId = item.key;
     setTypeId(typeId);
   };
+  useEffect(() => {}, []);
 
   const removeJSONDuplicatesClubs = (clubs) => {
     var uniqueArray = [];
@@ -100,18 +104,17 @@ const SearchClasses = () => {
               d.trainerName.toUpperCase().includes(trainerName.toUpperCase())
             );
           }
-          console.log("newData")
-          console.log(newData)
           setData(newData);
           let clubs = newData.map((d) => d.club);
           setClubs(removeJSONDuplicatesClubs(clubs));
+          // console.log(newData)
         })
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
     }
   };
-
+  useEffect(() => {}, [nameDropdownTypes]);
   const menuPropsTypes = {
     items: typeItems,
     onClick: handleMenuClickTypes,
@@ -119,10 +122,12 @@ const SearchClasses = () => {
   const onSearchByTrainer = (trainerName) => {
     setTrainerName(trainerName);
     setTypeId("");
+    setNameDropdownTypes("Select class type");
   };
   return (
-    <div>
-      <div>
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
         <Space wrap>
           <Dropdown.Button
             menu={menuPropsTypes}
@@ -136,6 +141,8 @@ const SearchClasses = () => {
         <Search
           placeholder="search by trainer"
           onSearch={onSearchByTrainer}
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           style={{ width: 200 }}
         />
         {clubs !== [] &&

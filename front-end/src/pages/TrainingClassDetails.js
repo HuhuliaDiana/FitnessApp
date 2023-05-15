@@ -1,6 +1,8 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import MenuBar from "../components/MenuBar";
+
 
 const TrainingClassDetails = () => {
   const id = useParams().id;
@@ -56,7 +58,7 @@ const TrainingClassDetails = () => {
         })
         .then((data) => {
           getStatusOfClass();
-          isClassCancelableByUser()
+          isClassCancelableByUser();
           console.log(data);
         })
         .catch((err) => console.log(err));
@@ -81,7 +83,7 @@ const TrainingClassDetails = () => {
         })
         .then((data) => {
           getStatusOfClass();
-          isClassCancelableByUser()
+          isClassCancelableByUser();
           console.log(data);
         })
         .catch((err) => console.log(err));
@@ -130,12 +132,15 @@ const TrainingClassDetails = () => {
   };
 
   return (
-    <div>
-      {status && <p>{status}</p>}
-      {displayBtn && <Button onClick={handleOnClick}>{buttonTitle}</Button>}
-      {isCancelable == false && status == "You booked this class" && (
-        <p>You can not cancel this class. Time limit has expired</p>
-      )}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {status && <p>{status}</p>}
+        {displayBtn && <Button onClick={handleOnClick}>{buttonTitle}</Button>}
+        {isCancelable == false && status == "You booked this class" && (
+          <p>You can not cancel this class. Time limit has expired</p>
+        )}
+      </div>
     </div>
   );
 };

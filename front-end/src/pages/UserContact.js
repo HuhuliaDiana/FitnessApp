@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
+import MenuBar from "../components/MenuBar";
 
 const UserContact = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -103,99 +104,106 @@ const UserContact = () => {
   }, []);
 
   return (
-    <div>
-      <div className="contact">
-        {user && (
-          <Form
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
-            onFinish={onFinish}
-            autoComplete="off"
-          >
-            <Row gutter={24}>
-              <Col span={12}>
-                <Form.Item
-                  label="Firstname"
-                  name="firstname"
-                  validateFirst={true}
-                  rules={[
-                    {
-                      min: 2,
-                      message: "Firstname must have at least 2 characters.",
-                    },
-                  ]}
-                >
-                  <Input
-                    defaultValue={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Lastname"
-                  name="lastname"
-                  rules={[
-                    {
-                      min: 2,
-                      message: "Lastname must have at least 2 characters.",
-                    },
-                  ]}
-                >
-                  <Input
-                    defaultValue={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Email"
-                  name="email"
-                  rules={[
-                    { type: "email", message: "Please input your email!" },
-                  ]}
-                >
-                  <Input
-                    defaultValue={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Phone"
-                  name="phone"
-                  rules={[
-                    {
-                      pattern: new RegExp(
-                        /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i
-                      ),
-                      message: "Please input a valid phone number!",
-                    },
-                    {
-                      max: 10,
-                      message: "Phone number cannot have more than 10 digits!",
-                    },
-                  ]}
-                >
-                  <Input
-                    defaultValue={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </Form.Item>
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                  <Button disabled={disabled} type="primary" htmlType="submit">
-                    Update
-                  </Button>
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        )}
-        
-      </div>
-      <div>
-        {clubsAllowAccess &&
-          clubsAllowAccess.map((club) => {
-            return <p key={club.id}>{club.name}</p>;
-          })}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        <div className="contact">
+          {user && (
+            <Form
+              name="basic"
+              labelCol={{ span: 8 }}
+              wrapperCol={{ span: 16 }}
+              style={{ maxWidth: 600 }}
+              onFinish={onFinish}
+              autoComplete="off"
+            >
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Form.Item
+                    label="Firstname"
+                    name="firstname"
+                    validateFirst={true}
+                    rules={[
+                      {
+                        min: 2,
+                        message: "Firstname must have at least 2 characters.",
+                      },
+                    ]}
+                  >
+                    <Input
+                      defaultValue={firstname}
+                      onChange={(e) => setFirstname(e.target.value)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Lastname"
+                    name="lastname"
+                    rules={[
+                      {
+                        min: 2,
+                        message: "Lastname must have at least 2 characters.",
+                      },
+                    ]}
+                  >
+                    <Input
+                      defaultValue={lastname}
+                      onChange={(e) => setLastname(e.target.value)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[
+                      { type: "email", message: "Please input your email!" },
+                    ]}
+                  >
+                    <Input
+                      defaultValue={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    label="Phone"
+                    name="phone"
+                    rules={[
+                      {
+                        pattern: new RegExp(
+                          /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/i
+                        ),
+                        message: "Please input a valid phone number!",
+                      },
+                      {
+                        max: 10,
+                        message:
+                          "Phone number cannot have more than 10 digits!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      defaultValue={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </Form.Item>
+                  <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Button
+                      disabled={disabled}
+                      type="primary"
+                      htmlType="submit"
+                    >
+                      Update
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          )}
+        </div>
+        <div>
+          {clubsAllowAccess &&
+            clubsAllowAccess.map((club) => {
+              return <p key={club.id}>{club.name}</p>;
+            })}
+        </div>
       </div>
     </div>
   );

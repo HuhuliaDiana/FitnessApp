@@ -1,9 +1,9 @@
-.menu{
-  position: absolute;
-  width: 15%;
-  height: 100%;
+.parent {
+  display: flex
 }
 
-.home{
-  position:relative
+.child {
+  width: 100%;
+  text-align: center;
+
 }

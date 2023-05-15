@@ -2,6 +2,8 @@ import { DownOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Dropdown, InputNumber, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MenuBar from "../components/MenuBar";
+
 import moment from "moment";
 const UserMembership = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -176,100 +178,104 @@ const UserMembership = () => {
   };
   const selectDateStartFreezing = (dateString) => {
     setFirstDayOfFreeze(
-      moment(new Date(dateString)).add(1, "days").toISOString().split("T")[0]
+      moment(new Date(dateString)).toISOString().split("T")[0]
     );
   };
   const selectNoDaysToFreeze = (value) => {
     setNumberOfDays(value);
   };
   return (
-    <div>
-      {subscription && (
-        <p>
-          {subscription.subscription.membership.name} {subscriptionPeriodName}
-          <br />
-          Availability: {`${subscription.startDate} to ${subscription.endDate}`}
-        </p>
-      )}
-      <Button
-        onClick={() => {
-          navigate("/buy-membership");
-        }}
-      >
-        Buy membership
-      </Button>
-      <Button
-        onClick={() => {
-          navigate("/renew-membership");
-        }}
-      >
-        Renew membership
-      </Button>
-      <Button
-        onClick={() => {
-          navigate("/upgrade-membership");
-        }}
-      >
-        Upgrade membership
-      </Button>
-      <Button onClick={changeClubForMembership}>
-        Transfer membership to another club
-      </Button>
-      {transfer && (
-        <Dropdown menu={{ items: clubsDropdown, onClick }}>
-          <a
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <Space>
-              {clubName}
-              <DownOutlined />
-            </Space>
-          </a>
-        </Dropdown>
-      )}
-      {club && (
-        <div>
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {subscription && (
           <p>
-            {club.name} {club.address}
+            {subscription.subscription.membership.name} {subscriptionPeriodName}
+            <br />
+            Availability:{" "}
+            {`${subscription.startDate} to ${subscription.endDate}`}
           </p>
-          <Button onClick={handleOnClickTransfer}>
-            Transfer to {club.name}
-          </Button>
-        </div>
-      )}
-      {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
-        <div>
-          <Button onClick={() => setOpenDatePickerToFreeze(true)}>
-            Choose to freeze membership
-          </Button>
-        </div>
-      )}
-      {openDatePickerToFreeze === true && (
-        <div>
-          <Space direction="vertical">
-            <DatePicker
-              onChange={selectDateStartFreezing}
-              disabledDate={(d) =>
-                d.isBefore(new Date(startDayOfMembership)) ||
-                (dataStartFreeze &&
-                  (d.isAfter(dataStartFreeze) || d.isSame(dataStartFreeze)) &&
-                  dataEndFreeze &&
-                  (d.isBefore(dataEndFreeze) || d.isSame(dataEndFreeze)))
-              }
+        )}
+        <Button
+          onClick={() => {
+            navigate("/buy-membership");
+          }}
+        >
+          Buy membership
+        </Button>
+        <Button
+          onClick={() => {
+            navigate("/renew-membership");
+          }}
+        >
+          Renew membership
+        </Button>
+        <Button
+          onClick={() => {
+            navigate("/upgrade-membership");
+          }}
+        >
+          Upgrade membership
+        </Button>
+        <Button onClick={changeClubForMembership}>
+          Transfer membership to another club
+        </Button>
+        {transfer && (
+          <Dropdown menu={{ items: clubsDropdown, onClick }}>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+            >
+              <Space>
+                {clubName}
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
+        )}
+        {club && (
+          <div>
+            <p>
+              {club.name} {club.address}
+            </p>
+            <Button onClick={handleOnClickTransfer}>
+              Transfer to {club.name}
+            </Button>
+          </div>
+        )}
+        {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
+          <div>
+            <Button onClick={() => setOpenDatePickerToFreeze(true)}>
+              Choose to freeze membership
+            </Button>
+          </div>
+        )}
+        {openDatePickerToFreeze === true && (
+          <div>
+            <Space direction="vertical">
+              <DatePicker
+                onChange={selectDateStartFreezing}
+                disabledDate={(d) =>
+                  d.isBefore(new Date(startDayOfMembership)) ||
+                  (dataStartFreeze &&
+                    (d.isAfter(dataStartFreeze) || d.isSame(dataStartFreeze)) &&
+                    dataEndFreeze &&
+                    (d.isBefore(dataEndFreeze) || d.isSame(dataEndFreeze)))
+                }
+              />
+            </Space>
+            <InputNumber
+              min={1}
+              max={30}
+              defaultValue={1}
+              onChange={selectNoDaysToFreeze}
             />
-          </Space>
-          <InputNumber
-            min={1}
-            max={30}
-            defaultValue={1}
-            onChange={selectNoDaysToFreeze}
-          />
-          ;<Button onClick={freezeMembership}>Freeze membership</Button>
-          {/* disable date till the beginning of subscription and already frozen days */}
-        </div>
-      )}
+            ;<Button onClick={freezeMembership}>Freeze membership</Button>
+            {/* disable date till the beginning of subscription and already frozen days */}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { Button, Space, DatePicker } from "antd";
 import { useState } from "react";
+import MenuBar from "../components/MenuBar";
 
 const BuyPersonalTraining = () => {
   const location = useLocation();
@@ -49,11 +50,14 @@ const BuyPersonalTraining = () => {
     setDate(new Date(dateString).toISOString().split("T")[0]);
   };
   return (
-    <div>
-      <Space direction="vertical">
-        <DatePicker onChange={onChange} />
-      </Space>
-      <Button onClick={buy}>Buy training</Button>
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        <Space direction="vertical">
+          <DatePicker onChange={onChange} />
+        </Space>
+        <Button onClick={buy}>Buy training</Button>
+      </div>
     </div>
   );
 };

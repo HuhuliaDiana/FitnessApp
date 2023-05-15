@@ -2,8 +2,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-//select club will be by default the club from subscription
+import MenuBar from "../components/MenuBar";
 
 function SelectClub() {
   const accessToken = localStorage.getItem("accessToken");
@@ -12,7 +11,6 @@ function SelectClub() {
 
   const [clubsDropdown, setClubsDropdown] = useState([]);
   const [clubSelected, setClubSelected] = useState(null);
-  
 
   const getDropdownClubs = () => {
     try {
@@ -95,27 +93,30 @@ function SelectClub() {
     });
   };
   return (
-    <>
-      <Dropdown menu={{ items: clubsDropdown, onClick }}>
-        <a
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <Space>
-            {clubName}
-            <DownOutlined />
-          </Space>
-        </a>
-      </Dropdown>
-      {clubSelected && (
-        <div>
-          <p>{clubSelected.name}</p>
-          <p>{clubSelected.address}</p>
-          <Button onClick={onOpenBuyMembershipPage}>Continue</Button>
-        </div>
-      )}
-    </>
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        <Dropdown menu={{ items: clubsDropdown, onClick }}>
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <Space>
+              {clubName}
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+        {clubSelected && (
+          <div>
+            <p>{clubSelected.name}</p>
+            <p>{clubSelected.address}</p>
+            <Button onClick={onOpenBuyMembershipPage}>Continue</Button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 export default SelectClub;

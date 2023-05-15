@@ -2,6 +2,8 @@ import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { Dropdown, Input, Space } from "antd";
 import { useEffect, useState } from "react";
 import Trainer from "../components/Trainer";
+import MenuBar from "../components/MenuBar";
+
 
 const PersonalTraining = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -167,42 +169,45 @@ const PersonalTraining = () => {
   // };
 
   return (
-    <div>
-      <Dropdown menu={{ items: clubsDropdown, onClick }}>
-        <a
-          onClick={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <Space>
-            {clubName}
-            <DownOutlined />
-          </Space>
-        </a>
-      </Dropdown>
-      <Input
-        size="default size"
-        value={trainerName}
-        onChange={(e) => setTrainerName(e.target.value)}
-        placeholder="Search by name"
-        style={{ width: 200 }}
-        prefix={<UserOutlined />}
-      />
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        <Dropdown menu={{ items: clubsDropdown, onClick }}>
+          <a
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <Space>
+              {clubName}
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+        <Input
+          size="default size"
+          value={trainerName}
+          onChange={(e) => setTrainerName(e.target.value)}
+          placeholder="Search by name"
+          style={{ width: 200 }}
+          prefix={<UserOutlined />}
+        />
 
-      {/* <Search
+        {/* <Search
         value={trainerName}
         onChange={(e) => setTrainerName(e.target.value)}
         placeholder="Search by name"
         onSearch={onSearch}
         style={{ width: 200 }}
       /> */}
-      {trainers.length !== 0 &&
-        trainers.map((trainer) => {
-          return <Trainer key={trainer.id} parentToChild={trainer} />;
-        })}
-      {/* {trainerName !== "" && (
+        {trainers.length !== 0 &&
+          trainers.map((trainer) => {
+            return <Trainer key={trainer.id} parentToChild={trainer} />;
+          })}
+        {/* {trainerName !== "" && (
         <Button onClick={handleOnClickCancel}>Cancel</Button>
       )} */}
+      </div>
     </div>
   );
 };

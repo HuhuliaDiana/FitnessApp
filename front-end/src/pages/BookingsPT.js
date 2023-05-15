@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import PTSession from "../components/PTSession";
+import MenuBar from "../components/MenuBar";
+
 const BookingsPT = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [bookingsPT, setBookingsPT] = useState();
@@ -32,11 +34,14 @@ const BookingsPT = () => {
     getBookingsPT();
   }, []);
   return (
-    <div>
-      {bookingsPT &&
-        bookingsPT.map((bookingPT) => {
-          return <PTSession key={bookingPT.id} parentToChild={bookingPT} />;
-        })}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {bookingsPT &&
+          bookingsPT.map((bookingPT) => {
+            return <PTSession key={bookingPT.id} parentToChild={bookingPT} />;
+          })}
+      </div>
     </div>
   );
 };

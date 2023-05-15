@@ -14,20 +14,20 @@ const TrainingClass = (props) => {
   const getHour = () => {
     const beginningTime = new Date(trainingClass.classDate);
     const beginningTimeHour = beginningTime.getUTCHours();
-    let beginningTimeMinutes = "";
-    if (beginningTime.getUTCMinutes() === "0")
-      beginningTimeMinutes = beginningTime.getUTCMinutes();
-    else beginningTimeMinutes = beginningTime.getUTCMinutes() + "0";
 
-    setBeginningTimeString(beginningTimeHour + ":" + beginningTimeMinutes);
+    const beginningTimeMinutes = beginningTime.getUTCMinutes();
+
+    const beginningTimeString = beginningTimeHour + ":" + beginningTimeMinutes;
+    if (beginningTimeMinutes === 0)
+      setBeginningTimeString(beginningTimeString + "0");
+    else setBeginningTimeString(beginningTimeString);
 
     const endingTime = new Date(beginningTime.getTime() + 60000 * duration);
     const endingTimeHour = endingTime.getUTCHours();
-    let endingTimeMinutes = "";
-    if (endingTime.getUTCMinutes() === "0")
-      endingTimeMinutes = endingTime.getUTCMinutes();
-    else endingTimeMinutes = endingTime.getUTCMinutes() + "0";
-    setEndingTimeString(endingTimeHour + ":" + endingTimeMinutes);
+    const endingTimeMinutes = endingTime.getUTCMinutes();
+    const endingTimeString = endingTimeHour + ":" + endingTimeMinutes;
+    if (endingTimeMinutes === 0) setEndingTimeString(endingTimeString + "0");
+    else setEndingTimeString(endingTimeString);
   };
   useEffect(() => {
     getHour();

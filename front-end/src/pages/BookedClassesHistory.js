@@ -35,19 +35,22 @@ const BookedClassesHistory = () => {
     getBookedClassesHistory();
   }, []);
   return (
-    <div>
-      {/* <MenuBar></MenuBar> */}
-      {bookedClasses.length !== 0 &&
-        bookedClasses.map((trainingClass) => {
-          return  <TrainingClass
-              key={trainingClass.id}
-              parentToChild={trainingClass}
-            />
-          
-        })}
-      {bookedClasses.length == 0 && (
-        <p>You haven't attended any booked class yet.</p>
-      )}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {bookedClasses.length !== 0 &&
+          bookedClasses.map((trainingClass) => {
+            return (
+              <TrainingClass
+                key={trainingClass.id}
+                parentToChild={trainingClass}
+              />
+            );
+          })}
+        {bookedClasses.length == 0 && (
+          <p>You haven't attended any booked class yet.</p>
+        )}
+      </div>
     </div>
   );
 };

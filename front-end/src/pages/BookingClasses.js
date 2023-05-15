@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TrainingClass from "../components/TrainingClass";
+import MenuBar from "../components/MenuBar";
 
 const BookingClasses = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -33,11 +34,14 @@ const BookingClasses = () => {
     getBookingClasses();
   }, []);
   return (
-    <div>
-      {bookings !== [] &&
-        bookings.map((booking) => {
-          return <TrainingClass key={booking.id} parentToChild={booking} />;
-        })}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {bookings !== [] &&
+          bookings.map((booking) => {
+            return <TrainingClass key={booking.id} parentToChild={booking} />;
+          })}
+      </div>
     </div>
   );
 };

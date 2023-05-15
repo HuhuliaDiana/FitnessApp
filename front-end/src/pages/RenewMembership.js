@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import MembershipType from "../components/MembershipType";
+import MenuBar from "../components/MenuBar";
+
 const RenewMembership = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [clubId, setClubId] = useState();
@@ -58,16 +60,19 @@ const RenewMembership = () => {
     getMembershipsForRenew();
   }, []);
   return (
-    <div>
-      {memberships &&
-        memberships.map((membership) => {
-          return (
-            <MembershipType
-              key={membership.id}
-              parentToChild={{ subscription: membership, clubId: clubId }}
-            />
-          );
-        })}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {memberships &&
+          memberships.map((membership) => {
+            return (
+              <MembershipType
+                key={membership.id}
+                parentToChild={{ subscription: membership, clubId: clubId }}
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };

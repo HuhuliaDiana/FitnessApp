@@ -1,7 +1,8 @@
 import "@progress/kendo-theme-default/dist/all.css";
 import { Button } from "antd";
 import { useEffect, useState } from "react";
-import PickDateTimeOfPTSession from "./PickDateTimeOfPTSession";
+import PickDateTimeOfPTSession from "../components/PickDateTimeOfPTSession";
+import MenuBar from "../components/MenuBar";
 
 const BookPTSession = () => {
   const [trainerId, setTrainerId] = useState();
@@ -48,7 +49,7 @@ const BookPTSession = () => {
           Authorization: `Bearer ${accessToken}`,
         },
         method: "post",
-        body: JSON.stringify({localDate, localTime }),
+        body: JSON.stringify({ localDate, localTime }),
       })
         .then((response) => {
           if (response.status === 406) {
@@ -76,15 +77,18 @@ const BookPTSession = () => {
     getPTOfCurrentUser();
   }, []);
   return (
-    <div>
-      {trainerId && (
-        <PickDateTimeOfPTSession
-          onSelectDateTime={onSelectDateTime}
-          parentToChild={{ trainerId, startDateOfPT, noDaysValidity }}
-        />
-      )}
-      <Button onClick={bookPTSession}>Book PT </Button>
-      {errMsg && <p>{errMsg}</p>}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        {trainerId && (
+          <PickDateTimeOfPTSession
+            onSelectDateTime={onSelectDateTime}
+            parentToChild={{ trainerId, startDateOfPT, noDaysValidity }}
+          />
+        )}
+        <Button onClick={bookPTSession}>Book PT </Button>
+        {errMsg && <p>{errMsg}</p>}
+      </div>
     </div>
   );
 };

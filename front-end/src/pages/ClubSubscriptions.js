@@ -2,6 +2,8 @@ import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import MembershipType from "../components/MembershipType";
+import MenuBar from "../components/MenuBar";
+
 function ClubSubscriptions() {
   const location = useLocation();
 
@@ -41,35 +43,38 @@ function ClubSubscriptions() {
   }, []);
 
   return (
-    <>
-      <div>You chose {name} </div>
-      <Link to="/buy-membership">Modify</Link>
-      <div>
-        {subscriptions &&
-          subscriptions.map((subscription) => {
-            return (
-              <MembershipType
-                key={subscription.id}
-                parentToChild={{ subscription: subscription, clubId: id }}
-              />
-            );
-          })}
+    <div className="parent">
+      <MenuBar></MenuBar>
+      <div className="child">
+        <div>You chose {name} </div>
+        <Link to="/buy-membership">Modify</Link>
+        <div>
+          {subscriptions &&
+            subscriptions.map((subscription) => {
+              return (
+                <MembershipType
+                  key={subscription.id}
+                  parentToChild={{ subscription: subscription, clubId: id }}
+                />
+              );
+            })}
+        </div>
+        <Button
+          onClick={() => {
+            if (expandList) {
+              getSubscriptionsForClub("all");
+              setLabel("See memberships of the club");
+            } else {
+              getSubscriptionsForClub("");
+              setLabel(firstLabel);
+            }
+            setExpandList(!expandList);
+          }}
+        >
+          {label}
+        </Button>
       </div>
-      <Button
-        onClick={() => {
-          if (expandList) {
-            getSubscriptionsForClub("all");
-            setLabel("See memberships of the club");
-          } else {
-            getSubscriptionsForClub("");
-            setLabel(firstLabel);
-          }
-          setExpandList(!expandList);
-        }}
-      >
-        {label}
-      </Button>
-    </>
+    </div>
   );
 }
 export default ClubSubscriptions;

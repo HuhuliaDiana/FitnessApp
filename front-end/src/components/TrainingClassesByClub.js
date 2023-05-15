@@ -3,7 +3,10 @@ import TrainingClassesByDay from "../components/TrainingClassesByDay";
 
 const TrainingClassesByClub = (props) => {
   const club = props.parentToChild.club;
-  const data = props.parentToChild.data;
+  const dataFromParent = props.parentToChild.data;
+  // console.log(club)
+  // console.log(data)
+  const [data, setData] = useState([]);
 
   const [namesOfWeekDays, setNamesOfWeekDays] = useState([]);
 
@@ -21,7 +24,7 @@ const TrainingClassesByClub = (props) => {
     return uniqueArray;
   };
   useEffect(() => {
-    let newData = data.filter((d) => d.club.id === club.id);
+    let newData = dataFromParent.filter((d) => d.club.id === club.id);
     const namesOfDays = newData.map((c) => {
       const nameOfWeekDay = new Date(c.classDate).toLocaleDateString("en-us", {
         weekday: "long",
@@ -40,7 +43,11 @@ const TrainingClassesByClub = (props) => {
       };
     });
     setNamesOfWeekDays(removeJSONDuplicates(namesOfDays));
-  }, []);
+    setData(newData);
+    // console.log("club and data filtered by date and club");
+    // console.log(club.name);
+    // console.log(newData);
+  }, [dataFromParent]);
   return (
     <div key={club.id}>
       <b>{club.name}</b>
@@ -55,9 +62,7 @@ const TrainingClassesByClub = (props) => {
                     {nameOfWeekDay.month}
                   </b>
                 </p>
-                <TrainingClassesByDay
-                  parentToChild={{ nameOfWeekDay,  data }}
-                />
+                <TrainingClassesByDay parentToChild={{ nameOfWeekDay, data }} />
               </div>
             );
           })}
