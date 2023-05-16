@@ -1,6 +1,5 @@
 package com.fitnessapp.service.user;
 
-import com.fitnessapp.entity.ClubRole;
 import com.fitnessapp.entity.User;
 import com.fitnessapp.enums.ERole;
 import lombok.AllArgsConstructor;
@@ -31,14 +30,6 @@ public class UserDetailsImpl implements UserDetails {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(user.getUserRole().getName().name()));
         return build(user, authorities, null);
-    }
-
-    public static UserDetailsImpl buildWithClubBoundAuthorities(User user, List<ClubRole> clubRoles, Long clubId) {
-        List<SimpleGrantedAuthority> authorities = clubRoles
-                .stream()
-                .map(pr -> new SimpleGrantedAuthority(pr.getRole().getName().name()))
-                .toList();
-        return build(user, authorities, clubId);
     }
 
     private static UserDetailsImpl build(User user, List<? extends GrantedAuthority> authorities, Long clubId) {

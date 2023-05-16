@@ -6,14 +6,9 @@ import com.fitnessapp.entity.Role;
 import com.fitnessapp.entity.User;
 import com.fitnessapp.enums.ERole;
 import com.fitnessapp.exception.EntityNotFoundException;
-import com.fitnessapp.mapper.SubscriptionMapper;
 import com.fitnessapp.mapper.UserMapper;
 import com.fitnessapp.repository.UserRepository;
-import com.fitnessapp.service.membership.MembershipService;
 import com.fitnessapp.service.role.RoleService;
-import com.fitnessapp.service.subscription.SubscriptionPeriodService;
-import com.fitnessapp.service.subscription.SubscriptionService;
-import com.fitnessapp.service.user_subscription.UserSubscriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.ValidationException;
-import java.lang.reflect.Field;
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +25,6 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final RoleService roleService;
-
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found by email"));
-    }
 
     public UserDto createUser(UserDto userDto) {
         String rawPassword = userDto.getPassword();

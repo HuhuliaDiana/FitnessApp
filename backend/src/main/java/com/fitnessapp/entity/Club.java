@@ -22,11 +22,7 @@ public class Club {
     private String address;
     private String phone;
     @ManyToMany(mappedBy = "clubs")
-    private Set<User> users = new HashSet<>();
-    @ManyToMany(mappedBy = "clubs")
     private Set<PersonalTrainer> personalTrainers;
-    @OneToMany(mappedBy = "club")
-    private Set<ClubRole> clubRoles = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY)
     private Membership membership;
     @ManyToOne(fetch = FetchType.LAZY)

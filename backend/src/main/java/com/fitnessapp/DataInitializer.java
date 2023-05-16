@@ -3,7 +3,6 @@ package com.fitnessapp;
 import com.fitnessapp.dto.*;
 import com.fitnessapp.entity.City;
 import com.fitnessapp.entity.Membership;
-import com.fitnessapp.entity.PersonalTrainer;
 import com.fitnessapp.entity.TrainingClassType;
 import com.fitnessapp.enums.*;
 import com.fitnessapp.mapper.*;
@@ -229,23 +228,23 @@ public class DataInitializer implements CommandLineRunner {
 
     private void saveAllTypesOfSubscription() {
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 41.85, MembershipType.SILVER);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 51.00, MembershipType.SILVER);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 51.00, MembershipType.SILVER);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 75.00, MembershipType.SILVER);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 52.75, MembershipType.GOLD);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 65.00, MembershipType.GOLD);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 65.00, MembershipType.GOLD);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 95.00, MembershipType.GOLD);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 35.33, MembershipType.BRONZE);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 43.75, MembershipType.BRONZE);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 43.75, MembershipType.BRONZE);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 64.00, MembershipType.BRONZE);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 61.42, MembershipType.PLATINUM);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 75.75, MembershipType.PLATINUM);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 75.75, MembershipType.PLATINUM);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 111.00, MembershipType.PLATINUM);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 83.67, MembershipType.W);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 152.00, MembershipType.W);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 152.00, MembershipType.W);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 102.50, MembershipType.W);
 
     }

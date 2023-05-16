@@ -34,34 +34,4 @@ membership_id bigint,
 city_id bigint
 );
 
-create table club_role(
-id bigserial PRIMARY KEY NOT NULL,
-club_id bigint
-);
-
-create table club_roles(
-role_id bigint,
-club_role_id bigint NOT NULL
-);
-
-create table club_roles_user(
-user_id bigint NOT NULL,
-club_role_id bigint NOT NULL
-);
-
-create table club_user(
-user_id bigint NOT NULL,
-club_id bigint NOT NULL
-);
-
-create table user_roles(
-role_id bigint,
-user_id bigint NOT NULL
-);
-create table refresh_token(
-id bigserial primary key not null,
-token varchar not null,
-user_id bigserial references participant(id),
-expiration timestamp not null
-);
 

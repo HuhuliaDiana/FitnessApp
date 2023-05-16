@@ -47,7 +47,7 @@ public class UserSubscriptionService {
     }
 
     @Transactional
-    public UserSubscription buySubscription(SubscriptionRecord subscriptionRecord) {
+    public UserSubscription buyMembership(SubscriptionRecord subscriptionRecord) {
         if (getOptionalCurrentUserSubscription().isPresent()) cancelSubscription(); // user can not have 2 subscriptions
 
         Subscription subscriptionWanted = subscriptionService.getById(subscriptionRecord.id());
@@ -100,28 +100,17 @@ public class UserSubscriptionService {
         return userSubscriptionRepository.findByUser_Id(currentUserId);
     }
 
-    //in front afiseaza suma ce ramane de platit de la dateTime pana la finalul abonamentului
-    public UserSubscription upgradeMembership(Long subscriptionId, String date) {
-        LocalDate dateTime = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
-        cancelSubscription();
-        UserSubscriptionDto userSubscriptionDto = new UserSubscriptionDto();
-        userSubscriptionDto.setUser(userService.mapCurrentUser());
-        userSubscriptionDto.setStartDate(dateTime);
-        userSubscriptionDto.setSubscription(subscriptionService.map(subscriptionService.getById(subscriptionId)));
-        return save(userSubscriptionDto);
-
-    }
-
     @Transactional
     public UserSubscriptionDto freezeMembership(FreezeMembershipDto freezeMembershipDto) {
         UserSubscription userSubscription = getByUserId(userService.getCurrentUserId());
 
         LocalDate firstDayOfFreeze = freezeMembershipDto.getFirstDayOfFreeze();
         userSubscription.setStartFreeze(firstDayOfFreeze);
-        Long numberOfDays = freezeMembershipDto.getNumberOfDays();
+        Integer numberOfDays = freezeMembershipDto.getNumberOfDays();
 
         userSubscription.setEndFreeze(firstDayOfFreeze.plusDays(numberOfDays));
         userSubscription.setEndDate(userSubscription.getEndDate().plusDays(numberOfDays));
+        userSubscription.setNoDaysLeftToFreeze(userSubscription.getNoDaysLeftToFreeze() - freezeMembershipDto.getNumberOfDays());
         return userSubscriptionMapper.map(userSubscription);
     }
 
@@ -140,5 +129,14 @@ public class UserSubscriptionService {
         UserSubscription userSubscription = getCurrentUserSubscription();
         userSubscription.setClub(clubRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Club", "id", id)));
         return userSubscriptionMapper.map(userSubscription);
+    }
+
+
+    public List<SubscriptionDto> getMembershipsForRenew() {
+        UserSubscription userSubscription = getCurrentUserSubscription();
+        MembershipType membershipName = userSubscription.getSubscription().getMembership().getName();
+        List<MembershipType> membershipTypes = membershipName.getAllGreaterThan();
+        List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
+        return subscriptionService.findAllByMembershipIdIn(membershipIds);
     }
 }

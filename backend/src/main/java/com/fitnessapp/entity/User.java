@@ -17,7 +17,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String firstname;
     private String lastname;
     private String email;
@@ -26,22 +25,10 @@ public class User {
     private String password;
 
     @ManyToOne
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Role userRole;
-
-    @ManyToMany
-    @JoinTable(name = "club_user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "club_id"))
-    private Set<Club> clubs = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(name = "club_roles_user",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "club_role_id"))
-    private Set<ClubRole> clubRoles = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "booked_class",
