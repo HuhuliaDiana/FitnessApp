@@ -19,16 +19,14 @@ public class UserSubscription {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "subscription_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Subscription subscription;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate startFreeze;
     private LocalDate endFreeze;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "club_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Club club;
     private Integer noDaysLeftToFreeze = 0;
 

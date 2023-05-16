@@ -19,13 +19,11 @@ public class UserPersonalTraining {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "personal_training_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private PersonalTraining personalTraining;
     private LocalDate startDate;
 
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "personal_trainer_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private PersonalTrainer personalTrainer;
     private Integer noSessionsLeft;
 

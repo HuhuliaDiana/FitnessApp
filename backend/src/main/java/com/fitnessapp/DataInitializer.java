@@ -17,6 +17,7 @@ import com.fitnessapp.service.role.RoleService;
 import com.fitnessapp.service.subscription.SubscriptionPeriodService;
 import com.fitnessapp.service.subscription.SubscriptionService;
 import com.fitnessapp.service.training_class.TrainingClassHourService;
+import com.fitnessapp.service.training_class.TrainingClassService;
 import com.fitnessapp.service.training_class.TrainingClassTypeService;
 import com.fitnessapp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +65,7 @@ public class DataInitializer implements CommandLineRunner {
     private final PersonalTrainingTypeService personalTrainingTypeService;
     private final PersonalTrainerService personalTrainerService;
     private final PersonalTrainingTypeMapper personalTrainingTypeMapper;
-    private final PersonalTrainerMapper personalTrainerMapper;
+    private final TrainingClassRepository trainingClassRepository;
 
     @Override
     public void run(String... args) {
@@ -87,6 +90,7 @@ public class DataInitializer implements CommandLineRunner {
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainerRepository.count() == 0) saveTrainers();
+        if (trainingClassRepository.count() == 0) saveTrainingClasses();
 
     }
 
@@ -120,17 +124,17 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void savePersonalTrainingsInfo() {
-        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00,30);
-        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00,30);
-        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00,60);
+        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00, 30);
+        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00, 30);
+        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00, 60);
 
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00,30);
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00,30);
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00,60);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00, 30);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00, 30);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00, 60);
 
-        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00,30);
-        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00,30);
-        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00,60);
+        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00, 30);
+        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00, 30);
+        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00, 60);
     }
 
     private void savePersonalTrainingDetails(TrainingType trainingType, Integer sessionsNumber, Double price, Integer noDaysValidity) {
@@ -188,6 +192,31 @@ public class DataInitializer implements CommandLineRunner {
         saveClub("Strada Calomfirescu, nr. 2, Ploiești, Jud. Prahova, în incinta Afi Palace", ECity.PLOIESTI, "0751230693", "World Class Ploiesti", MembershipType.BRONZE);
         saveClub("Piata Consiliul Europei, Nr. 2, Timișoara, jud. Timis, în incinta Iulius Mall", ECity.TIMISOARA, "0751230693", "World Class Timisoara", MembershipType.BRONZE);
 
+
+    }
+
+    private final TrainingClassService trainingClassService;
+
+    private void saveClass(String class_date, String trainer_name, Long club_id, Long training_class_hour_id, Integer spots_available) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        TrainingClassDto trainingClass = new TrainingClassDto(null, LocalDateTime.parse(class_date, formatter), trainer_name, clubService.getClubById(club_id), trainingClassHourService.getById(training_class_hour_id), spots_available);
+        trainingClassService.save(trainingClass);
+    }
+
+    private void saveTrainingClasses() {
+        saveClass("2023-05-16 18:30:00", "Ioana Chitu", 1L, 1L, 30);
+        saveClass("2023-05-16 10:30:00", "Ioana Coarna", 1L, 2L, 30);
+        saveClass("2023-05-16 20:00:00", "Ana Maria Calin", 1L, 3L, 30);
+        saveClass("2023-05-17 13:20:00", "Ciprian Nita", 4L, 10L, 25);
+        saveClass("2023-05-17 18:00:00", "Gabriel Pana", 4L, 9L, 25);
+        saveClass("2023-05-17 18:30:00", "Ioana Chitu", 4L, 1L, 30);
+        saveClass("2023-05-17 20:10:00", "Mihai Baloiu", 4L, 8L, 25);
+        saveClass("2023-05-18 18:00:00", "Mihai Baloiu", 8L, 8L, 25);
+        saveClass("2023-05-18 10:00:00", "Ioana Coarna", 8L, 2L, 30);
+        saveClass("2023-05-18 18:30:00", "Ioana Chitu", 7L, 8L, 30);
+        saveClass("2023-05-18 20:00:00", "Ana Maria Calin", 8L, 2L, 30);
+        saveClass("2023-05-18 18:00:00", "Mihai Baloiu", 10L, 8L, 25);
+        saveClass("2023-05-18 10:00:00", "Ioana Coarna", 10L, 2L, 30);
 
     }
 

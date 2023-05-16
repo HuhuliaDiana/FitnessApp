@@ -23,12 +23,8 @@ public class User {
     private String phone;
     @Size(min = 8, max = 100)
     private String password;
-
-    @ManyToOne
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Role userRole;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Role role;
 
     @ManyToMany
     @JoinTable(name = "booked_class",

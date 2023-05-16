@@ -14,8 +14,7 @@ public class PTSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_personal_training_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private UserPersonalTraining userPersonalTraining;
     private LocalDate sessionDate;
     private String startSessionTime;

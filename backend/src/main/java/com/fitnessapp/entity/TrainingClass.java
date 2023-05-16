@@ -1,6 +1,8 @@
 package com.fitnessapp.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,14 +16,11 @@ public class TrainingClass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private LocalDateTime classDate;
     private String trainerName;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "club_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Club club;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "training_class_hour_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TrainingClassHour trainingClassHour;
     private Integer spotsAvailable;
 

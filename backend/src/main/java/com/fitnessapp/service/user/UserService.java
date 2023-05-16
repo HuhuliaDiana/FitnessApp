@@ -31,14 +31,14 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(rawPassword);
         userDto.setPassword(encodedPassword);
         Role role;
-        if (userDto.getUserRole() != null) {
-            RoleDto roleDto = userDto.getUserRole();
+        if (userDto.getRole() != null) {
+            RoleDto roleDto = userDto.getRole();
             role = roleService.findByName(roleDto.getName());
         } else {
             role = roleService.findByName(ERole.PARTICIPANT);
         }
         User user = userMapper.map(userDto);
-        user.setUserRole(role);
+        user.setRole(role);
         User saveUser;
         try {
             saveUser = userRepository.save(user);

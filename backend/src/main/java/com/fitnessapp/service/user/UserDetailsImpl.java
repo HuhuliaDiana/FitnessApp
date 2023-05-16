@@ -28,7 +28,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public static UserDetailsImpl buildWithAppBoundAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getUserRole().getName().name()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName().name()));
         return build(user, authorities, null);
     }
 
