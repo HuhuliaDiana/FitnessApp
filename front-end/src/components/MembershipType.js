@@ -51,18 +51,26 @@ const MembershipType = (props) => {
     setLocalDate(new Date(dateString).toISOString().split("T")[0]);
   };
   return (
-    <div>
-      <Space direction="vertical">
+    <div
+      style={{
+        "box-shadow":"rgba(0, 0, 0, 0.24) 0px 3px 8px",
+        width: "25%",
+        "margin-bottom": "50px",
+        height: "100px",
+        padding:"20px"
+      }}
+    >
+      {/* <Space direction="vertical">
         <DatePicker
           onChange={onChange}
           disabledDate={(d) => !d || d.isBefore(new Date())}
         />
-      </Space>
+      </Space> */}
       <p>
         {subscription.membership.name} {formattedSubscriptionPeriodName}
       </p>
       <p>{subscription.price}</p>
-      <Button onClick={buy}>Buy membership</Button>
+      {/* <Button onClick={buy}>Buy membership</Button> */}
     </div>
   );
 };
