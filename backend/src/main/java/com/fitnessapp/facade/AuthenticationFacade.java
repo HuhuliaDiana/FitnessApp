@@ -1,4 +1,4 @@
-package com.fitnessapp.security;
+package com.fitnessapp.facade;
 
 import com.fitnessapp.dto.JwtResponse;
 import com.fitnessapp.dto.LoginRequest;

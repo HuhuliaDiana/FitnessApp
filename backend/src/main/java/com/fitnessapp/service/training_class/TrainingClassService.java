@@ -138,8 +138,7 @@ public class TrainingClassService {
             return new StatusMessage("Buy subscription");
 
         if (subscriptionDoNotPermitAccessToClass(classId))
-            return new StatusMessage("Your subscription starts with: %s"
-                    .formatted(userSubscriptionService.getCurrentUserSubscription().getStartDate()));
+            return new StatusMessage("Your subscription starts with: %s".formatted(userSubscriptionService.getCurrentUserSubscription().getStartDate()));
 
         if (isClassBetweenDaysOfFreeze(classId))
             return new StatusMessage("You froze this day");
@@ -155,8 +154,7 @@ public class TrainingClassService {
             String className = classBooked.getTrainingClassHour().getClassName();
             LocalDateTime classDate = classBooked.getClassDate();
             String clubName = classBooked.getClub().getName();
-            return new StatusMessage("You already booked a class for this time span: %s %s %s "
-                    .formatted(className, getDateFormatted(classDate), clubName));
+            return new StatusMessage("You already booked a class for this time span: %s %s %s ".formatted(className, getDateFormatted(classDate), clubName));
         }
         if (isBookingClassNotAvailable(classId)) {
             TrainingClass trainingClass = getById(classId);

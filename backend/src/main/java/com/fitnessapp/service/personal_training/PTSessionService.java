@@ -32,12 +32,8 @@ public class PTSessionService {
     }
 
     public PTSessionDto bookPTSession(PTSessionRecord ptSessionRecord) {
-        List<PTSession> currentUserPTSessions = ptSessionRepository.findByUserPersonalTrainingId(userPersonalTrainingService
-                .getCurrentUserPersonalTraining().getId());
-        Stream<PTSession> sessionsInSameDay = currentUserPTSessions
-                .stream()
-                .filter(ptSession -> ptSession.getSessionDate().equals(LocalDate.parse(ptSessionRecord.localDate())));
-
+        List<PTSession> currentUserPTSessions = ptSessionRepository.findByUserPersonalTrainingId(userPersonalTrainingService.getCurrentUserPersonalTraining().getId());
+        Stream<PTSession> sessionsInSameDay = currentUserPTSessions.stream().filter(ptSession -> ptSession.getSessionDate().equals(LocalDate.parse(ptSessionRecord.localDate())));
         if (sessionsInSameDay.findAny().isPresent()) {
             throw new PTException("You cannot book two sessions in the same day.");
         }
@@ -67,7 +63,6 @@ public class PTSessionService {
         return oldPTSessions.stream().map(ptSessionMapper::map).toList();
 
     }
-
     public List<PTSessionDto> getBookingsPTOfCurrentUser() {
         UserPersonalTraining currentUserPT = userPersonalTrainingService.getCurrentUserPersonalTraining();
         var ptSessionDtoList = ptSessionRepository.findByUserPersonalTrainingId(currentUserPT.getId());
