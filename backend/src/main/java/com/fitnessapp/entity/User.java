@@ -32,7 +32,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "training_class_id"))
     private Set<TrainingClass> trainingClasses = new HashSet<>();
 
+    @OneToOne(mappedBy = "user")
+    private UserSubscription userSubscription;
 
+    @OneToOne(mappedBy = "user")
+    private UserPersonalTraining userPersonalTraining;
 
 
 }

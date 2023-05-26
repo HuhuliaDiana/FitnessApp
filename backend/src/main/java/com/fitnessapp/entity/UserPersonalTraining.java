@@ -16,7 +16,7 @@ public class UserPersonalTraining {
     private Long id;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
