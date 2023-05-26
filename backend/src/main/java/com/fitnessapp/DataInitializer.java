@@ -3,7 +3,6 @@ package com.fitnessapp;
 import com.fitnessapp.dto.*;
 import com.fitnessapp.entity.City;
 import com.fitnessapp.entity.Membership;
-import com.fitnessapp.entity.PersonalTrainer;
 import com.fitnessapp.entity.TrainingClassType;
 import com.fitnessapp.enums.*;
 import com.fitnessapp.mapper.*;
@@ -18,6 +17,7 @@ import com.fitnessapp.service.role.RoleService;
 import com.fitnessapp.service.subscription.SubscriptionPeriodService;
 import com.fitnessapp.service.subscription.SubscriptionService;
 import com.fitnessapp.service.training_class.TrainingClassHourService;
+import com.fitnessapp.service.training_class.TrainingClassService;
 import com.fitnessapp.service.training_class.TrainingClassTypeService;
 import com.fitnessapp.service.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +25,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -63,7 +65,7 @@ public class DataInitializer implements CommandLineRunner {
     private final PersonalTrainingTypeService personalTrainingTypeService;
     private final PersonalTrainerService personalTrainerService;
     private final PersonalTrainingTypeMapper personalTrainingTypeMapper;
-    private final PersonalTrainerMapper personalTrainerMapper;
+    private final TrainingClassRepository trainingClassRepository;
 
     @Override
     public void run(String... args) {
@@ -88,6 +90,7 @@ public class DataInitializer implements CommandLineRunner {
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainerRepository.count() == 0) saveTrainers();
+        if (trainingClassRepository.count() == 0) saveTrainingClasses();
 
     }
 
@@ -121,17 +124,17 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void savePersonalTrainingsInfo() {
-        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00,30);
-        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00,30);
-        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00,60);
+        savePersonalTrainingDetails(TrainingType.ELITE, 5, 208.00, 30);
+        savePersonalTrainingDetails(TrainingType.ELITE, 10, 333.00, 30);
+        savePersonalTrainingDetails(TrainingType.ELITE, 20, 532.00, 60);
 
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00,30);
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00,30);
-        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00,60);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 5, 158.00, 30);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 10, 252.00, 30);
+        savePersonalTrainingDetails(TrainingType.FIT_PRO, 20, 404.00, 60);
 
-        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00,30);
-        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00,30);
-        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00,60);
+        savePersonalTrainingDetails(TrainingType.MASTER, 5, 181.00, 30);
+        savePersonalTrainingDetails(TrainingType.MASTER, 10, 290.00, 30);
+        savePersonalTrainingDetails(TrainingType.MASTER, 20, 464.00, 60);
     }
 
     private void savePersonalTrainingDetails(TrainingType trainingType, Integer sessionsNumber, Double price, Integer noDaysValidity) {
@@ -192,6 +195,31 @@ public class DataInitializer implements CommandLineRunner {
 
     }
 
+    private final TrainingClassService trainingClassService;
+
+    private void saveClass(String class_date, String trainer_name, Long club_id, Long training_class_hour_id, Integer spots_available) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        TrainingClassDto trainingClass = new TrainingClassDto(null, LocalDateTime.parse(class_date, formatter), trainer_name, clubService.getClubById(club_id), trainingClassHourService.getById(training_class_hour_id), spots_available);
+        trainingClassService.save(trainingClass);
+    }
+
+    private void saveTrainingClasses() {
+        saveClass("2023-05-16 18:30:00", "Ioana Chitu", 1L, 1L, 30);
+        saveClass("2023-05-16 10:30:00", "Ioana Coarna", 1L, 2L, 30);
+        saveClass("2023-05-16 20:00:00", "Ana Maria Calin", 1L, 3L, 30);
+        saveClass("2023-05-17 13:20:00", "Ciprian Nita", 4L, 10L, 25);
+        saveClass("2023-05-17 18:00:00", "Gabriel Pana", 4L, 9L, 25);
+        saveClass("2023-05-17 18:30:00", "Ioana Chitu", 4L, 1L, 30);
+        saveClass("2023-05-17 20:10:00", "Mihai Baloiu", 4L, 8L, 25);
+        saveClass("2023-05-18 18:00:00", "Mihai Baloiu", 8L, 8L, 25);
+        saveClass("2023-05-18 10:00:00", "Ioana Coarna", 8L, 2L, 30);
+        saveClass("2023-05-18 18:30:00", "Ioana Chitu", 7L, 8L, 30);
+        saveClass("2023-05-18 20:00:00", "Ana Maria Calin", 8L, 2L, 30);
+        saveClass("2023-05-18 18:00:00", "Mihai Baloiu", 10L, 8L, 25);
+        saveClass("2023-05-18 10:00:00", "Ioana Coarna", 10L, 2L, 30);
+
+    }
+
     private void saveClub(String address, ECity eCity, String phone, String name, MembershipType membershipType) {
         ClubDto clubDto = new ClubDto();
         clubDto.setAddress(address);
@@ -229,23 +257,23 @@ public class DataInitializer implements CommandLineRunner {
 
     private void saveAllTypesOfSubscription() {
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 41.85, MembershipType.SILVER);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 51.00, MembershipType.SILVER);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 51.00, MembershipType.SILVER);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 75.00, MembershipType.SILVER);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 52.75, MembershipType.GOLD);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 65.00, MembershipType.GOLD);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 65.00, MembershipType.GOLD);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 95.00, MembershipType.GOLD);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 35.33, MembershipType.BRONZE);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 43.75, MembershipType.BRONZE);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 43.75, MembershipType.BRONZE);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 64.00, MembershipType.BRONZE);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 61.42, MembershipType.PLATINUM);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 75.75, MembershipType.PLATINUM);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 75.75, MembershipType.PLATINUM);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 111.00, MembershipType.PLATINUM);
 
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 83.67, MembershipType.W);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MOTHS, 152.00, MembershipType.W);
+        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 152.00, MembershipType.W);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 102.50, MembershipType.W);
 
     }

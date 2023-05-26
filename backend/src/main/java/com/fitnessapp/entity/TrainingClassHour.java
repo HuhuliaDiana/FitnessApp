@@ -13,8 +13,7 @@ public class TrainingClassHour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "training_class_type_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private TrainingClassType trainingClassType;
     private String className;
     private Integer timerDuration;

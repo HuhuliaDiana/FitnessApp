@@ -14,11 +14,16 @@ import org.springframework.stereotype.Service;
 public class TrainingClassHourService {
     private final TrainingClassHourRepository trainingClassHourRepository;
     private final TrainingClassHourMapper trainingClassHourMapper;
-    public TrainingClassHour save(TrainingClassHourDto trainingClassHourDto){
+
+    public TrainingClassHour save(TrainingClassHourDto trainingClassHourDto) {
         return trainingClassHourRepository.save(trainingClassHourMapper.map(trainingClassHourDto));
     }
 
     public TrainingClassHour findById(Long id) {
         return trainingClassHourRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Training class hour", "id", id));
+    }
+
+    public TrainingClassHourDto getById(Long id) {
+        return trainingClassHourMapper.map(findById(id));
     }
 }

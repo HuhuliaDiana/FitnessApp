@@ -1,11 +1,9 @@
 package com.fitnessapp.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -16,13 +14,12 @@ public class PersonalTraining {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToMany(mappedBy = "personalTrainings")
-    private Set<PersonalTrainer> personalTrainer;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "personal_training_type_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private PersonalTrainingType personalTrainingType;
     private Integer sessionsNumber;
     private Double price;
     private Integer noDaysValidity;
 
+    @ManyToMany(mappedBy = "personalTrainings")
+    private Set<PersonalTrainer> personalTrainer;
 }

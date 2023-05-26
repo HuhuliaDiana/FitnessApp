@@ -30,7 +30,7 @@ public class JwtService {
     @Value("${app.jwtExpirationHours}")
     public Integer expiration;
 
-    public String generateJwtToken(final UserDetailsImpl userDetails, Optional<Long> clubId) {
+    public String generateJwtToken(final UserDetailsImpl userDetails) {
         final String authorities = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -40,7 +40,6 @@ public class JwtService {
                 .setIssuedAt(new Date())
                 .setExpiration(Date.from(Instant.now().plus(expiration, ChronoUnit.HOURS)))
                 .signWith(SignatureAlgorithm.HS384, "superSecretKey");
-        clubId.ifPresent(id -> jwtBuilder.claim("clubId", id));
         return jwtBuilder.compact();
     }
 

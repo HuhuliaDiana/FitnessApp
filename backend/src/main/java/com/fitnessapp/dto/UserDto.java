@@ -38,5 +38,5 @@ public class UserDto {
     private String password;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
-    private RoleDto userRole;
+    private RoleDto role;
 }

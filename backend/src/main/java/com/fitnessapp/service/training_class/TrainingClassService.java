@@ -35,8 +35,6 @@ public class TrainingClassService {
     private final TrainingClassMapper trainingClassMapper;
     private final UserService userService;
     private final UserSubscriptionService userSubscriptionService;
-    private final ClubService clubService;
-    private final TrainingClassTypeService trainingClassTypeService;
 
     public TrainingClass save(TrainingClassDto trainingClassDto) {
         TrainingClass trainingClass = trainingClassMapper.map(trainingClassDto);

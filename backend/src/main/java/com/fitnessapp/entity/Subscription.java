@@ -16,11 +16,9 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Double price;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "subscription_period_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private SubscriptionPeriod subscriptionPeriod;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "membership_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Membership membership;
 
 }

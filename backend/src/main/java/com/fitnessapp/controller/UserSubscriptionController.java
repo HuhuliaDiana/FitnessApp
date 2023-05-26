@@ -20,22 +20,16 @@ import java.util.List;
 public class UserSubscriptionController {
     private final UserSubscriptionService userSubscriptionService;
 
-    @Operation(summary = "Buy subscription by id and date.")
+    @Operation(summary = "Buy membership by id and date.")
     @PostMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_BUY_BY_ID)
-    public UserSubscription buySubscription(@RequestBody SubscriptionRecord subscriptionRecord) {
-        return userSubscriptionService.buySubscription(subscriptionRecord);
+    public UserSubscription buyMembership(@RequestBody SubscriptionRecord subscriptionRecord) {
+        return userSubscriptionService.buyMembership(subscriptionRecord);
     }
 
     @Operation(summary = "Cancel subscription.")
     @DeleteMapping
     public void cancelSubscription() {
         userSubscriptionService.cancelSubscription();
-    }
-
-    @Operation(summary = "Upgrade membership.")
-    @PostMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_UPGRADE_BY_ID)
-    public UserSubscription upgradeMembership(@RequestBody SubscriptionRecord subscriptionRecord) {
-        return userSubscriptionService.upgradeMembership(subscriptionRecord.id(), subscriptionRecord.localDate());
     }
 
     @Operation(summary = "Freeze membership.")
@@ -53,6 +47,11 @@ public class UserSubscriptionController {
     @GetMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_UPGRADE_BY_ID)
     public List<SubscriptionDto> getMembershipsForUpgrading() {
         return userSubscriptionService.getMembershipsForUpgrading();
+    }
+    @Operation(summary = "Get memberships to renew current membership.")
+    @GetMapping(UserSubscriptionEndpoints.USER_SUBSCRIPTION_RENEW_BY_ID)
+    public List<SubscriptionDto> getMembershipsForRenew() {
+        return userSubscriptionService.getMembershipsForRenew();
     }
 
     @Operation(summary = "Transfer current membership to club by id.")

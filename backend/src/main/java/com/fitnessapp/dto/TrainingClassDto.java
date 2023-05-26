@@ -19,8 +19,6 @@ public class TrainingClassDto {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
     @Schema(type = "String")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime classDate;
     private String trainerName;
     private ClubDto club;
