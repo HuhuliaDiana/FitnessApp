@@ -18,7 +18,4 @@ public class CityDto {
     private Long id;
     @NotNull
     private ECity name;
-
-
-
 }
