@@ -1,3 +1,4 @@
+import { FaLock, FaMailBulk } from "react-icons/fa";
 import { Button, Col, Form, Input, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ const Login = ({ requestedLocation }) => {
   const [password, setPassword] = useState("");
 
   useEffect(() => {
+    localStorage.removeItem("accessToken");
     setErrMsg("");
   }, [email, password]);
 
@@ -38,7 +40,7 @@ const Login = ({ requestedLocation }) => {
           const accessToken = data.accessToken;
           localStorage.setItem("accessToken", accessToken);
           setIsLoggedIn(true);
-          navigate( requestedLocation || "/home");
+          navigate(requestedLocation || "/home");
         })
         .catch((message) => {
           console.log(message);
@@ -49,53 +51,98 @@ const Login = ({ requestedLocation }) => {
   };
 
   return (
-    <>
-      <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 600 }}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        autoComplete="off"
-      >
-        <Row gutter={24}>
-          <Col span={12}>
-            <Form.Item
-              label="Username"
-              name="email"
-              validateFirst={true}
-              rules={[
-                { required: true, message: "Please input your username!" },
-                { type: "email", message: "Please input a valid email!" },
-              ]}
-            >
-              <Input autoComplete="email" type="email" />
-            </Form.Item>
+    <div className="login-page">
+      <div className="floating">
+        <img src="/login.svg" alt="image" style={{ width: "80%" }} />
+      </div>
+      <div className="login-form">
+        <div className="component-login">
+          <div className="app-name">Fit & Repeat</div>
+          <Form
+            className="login"
+            name="basic"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            autoComplete="off"
+          >
+            <Row>
+              <Col style={{ width: "100%" }}>
+                <Row className="row-mail">
+                  <FaMailBulk style={{ fontSize: "40px", color: "#A9A9A9" }} />
+                  <Form.Item
+                    style={{ width: "80%" }}
+                    name="email"
+                    validateFirst={true}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your username!",
+                      },
+                      {
+                        type: "email",
+                        message: "Please input a valid email!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      autoComplete="email"
+                      placeholder="type your email *"
+                      type="email"
+                      style={{ height: "40px" }}
+                    />
+                  </Form.Item>
+                </Row>
 
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+                <Row className="row-password-login">
+                  <FaLock style={{ fontSize: "40px", color: "#A9A9A9" }} />
+                  <Form.Item
+                    name="password"
+                    style={{ width: "80%" }}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your password!",
+                      },
+                    ]}
+                  >
+                    <Input.Password
+                      style={{ height: "40px" }}
+                      autoComplete="current-password"
+                      placeholder="type your password *"
+                    />
+                  </Form.Item>
+                </Row>
+              </Col>
+            </Row>
+            <Row>
+              <Col>{!isLoggedIn && <p>{errMsg}</p>}</Col>
+            </Row>
+            <Row
+              style={{
+                display: "flex",
+                "justify-content": " center",
+                "margin-top": "10%",
+              }}
             >
-              <Input.Password autoComplete="current-password" />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col>{!isLoggedIn && <p>{errMsg}</p>}</Col>
-        </Row>
-        <Row>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit">
-              Sign in
-            </Button>
-          </Form.Item>
-        </Row>
-      </Form>
-    </>
+              <Form.Item style={{ height: "50px" }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-button"
+                  style={{
+                    height: "100%",
+                    width: "130px",
+                    "background-color": "#006E7F",
+                  }}
+                >
+                  Sign in
+                </Button>
+              </Form.Item>
+            </Row>
+          </Form>
+        </div>
+      </div>
+    </div>
   );
 };
 

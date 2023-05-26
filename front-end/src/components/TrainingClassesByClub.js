@@ -2,27 +2,13 @@ import { useEffect, useState } from "react";
 import TrainingClassesByDay from "../components/TrainingClassesByDay";
 
 const TrainingClassesByClub = (props) => {
-  const club = props.parentToChild.club;
-  const dataFromParent = props.parentToChild.data;
-  // console.log(club)
-  // console.log(data)
+  
   const [data, setData] = useState([]);
-
   const [namesOfWeekDays, setNamesOfWeekDays] = useState([]);
 
-  const removeJSONDuplicates = (namesOfWeekDays) => {
-    var uniqueArray = [];
-    for (var i = 0; i < namesOfWeekDays.length; i++) {
-      if (
-        !uniqueArray.find(
-          (x) => x.nameOfWeekDay === namesOfWeekDays[i].nameOfWeekDay
-        )
-      ) {
-        uniqueArray.push(namesOfWeekDays[i]);
-      }
-    }
-    return uniqueArray;
-  };
+  const club = props.parentToChild.club;
+  const dataFromParent = props.parentToChild.data;
+
   useEffect(() => {
     let newData = dataFromParent.filter((d) => d.club.id === club.id);
     const namesOfDays = newData.map((c) => {
@@ -44,10 +30,22 @@ const TrainingClassesByClub = (props) => {
     });
     setNamesOfWeekDays(removeJSONDuplicates(namesOfDays));
     setData(newData);
-    // console.log("club and data filtered by date and club");
-    // console.log(club.name);
-    // console.log(newData);
   }, [dataFromParent]);
+
+  
+  const removeJSONDuplicates = (namesOfWeekDays) => {
+    var uniqueArray = [];
+    for (var i = 0; i < namesOfWeekDays.length; i++) {
+      if (
+        !uniqueArray.find(
+          (x) => x.nameOfWeekDay === namesOfWeekDays[i].nameOfWeekDay
+        )
+      ) {
+        uniqueArray.push(namesOfWeekDays[i]);
+      }
+    }
+    return uniqueArray;
+  };
   return (
     <div key={club.id}>
       <b>{club.name}</b>

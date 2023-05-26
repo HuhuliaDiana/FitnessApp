@@ -66,7 +66,6 @@ const SearchClasses = () => {
     const typeId = item.key;
     setTypeId(typeId);
   };
-  useEffect(() => {}, []);
 
   const removeJSONDuplicatesClubs = (clubs) => {
     var uniqueArray = [];
@@ -107,7 +106,7 @@ const SearchClasses = () => {
           setData(newData);
           let clubs = newData.map((d) => d.club);
           setClubs(removeJSONDuplicatesClubs(clubs));
-          // console.log(newData)
+          console.log(newData)
         })
         .catch((err) => console.log(err));
     } catch (err) {

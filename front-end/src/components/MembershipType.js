@@ -7,6 +7,13 @@ const MembershipType = (props) => {
   const accessToken = localStorage.getItem("accessToken");
   const id = subscription.id;
   const [localDate, setLocalDate] = useState("");
+  const subPeriodName = subscription.subscriptionPeriod.name;
+  const array = subPeriodName.split("_");
+  let formattedSubscriptionPeriodName = "";
+  array.forEach((a) => {
+    formattedSubscriptionPeriodName += a + " ";
+  });
+  console.log(formattedSubscriptionPeriodName);
 
   const buy = () => {
     if (localDate !== "") {
@@ -52,7 +59,7 @@ const MembershipType = (props) => {
         />
       </Space>
       <p>
-        {subscription.membership.name} {subscription.subscriptionPeriod.name}
+        {subscription.membership.name} {formattedSubscriptionPeriodName}
       </p>
       <p>{subscription.price}</p>
       <Button onClick={buy}>Buy membership</Button>

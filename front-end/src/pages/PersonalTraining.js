@@ -14,7 +14,6 @@ const PersonalTraining = () => {
   const [trainerName, setTrainerName] = useState("");
   const [trainers, setTrainers] = useState([]);
 
-  //dropdown of clubs
   const getDropdownMemberships = () => {
     try {
       fetch("http://localhost:8080/api/membership", {

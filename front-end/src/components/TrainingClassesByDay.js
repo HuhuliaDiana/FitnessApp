@@ -4,7 +4,6 @@ import TrainingClass from "./TrainingClass";
 const TrainingClassesByDay = (props) => {
   const localDateOfClass = props.parentToChild.nameOfWeekDay.localDateOfClass;
   const data = props.parentToChild.data;
-  // console.log(data)
   const [classes, setClasses] = useState([]);
   const getClassesByDay = () => {
     const dataFiltered = data.filter((d) => {

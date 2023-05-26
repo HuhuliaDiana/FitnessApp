@@ -4,7 +4,6 @@ import MenuBar from "../components/MenuBar";
 import TrainingClassesByDay from "../components/TrainingClassesByDay";
 
 const ClassesSchedule = () => {
-  const accessToken = localStorage.getItem("accessToken");
   const [namesOfWeekDays, setNamesOfWeekDays] = useState([]);
   const [clubId, setClubId] = useState();
   const [typeId, setTypeId] = useState();
@@ -13,6 +12,8 @@ const ClassesSchedule = () => {
   const [nameDropdownClubs, setNameDropdownClubs] = useState("Select a club");
   const [nameDropdownTypes, setNameDropdownTypes] =
     useState("Select class type");
+  const accessToken = localStorage.getItem("accessToken");
+
   const [data, setData] = useState([]);
 
   const getSubscriptionOfUser = () => {
@@ -61,7 +62,6 @@ const ClassesSchedule = () => {
             newData = newData.filter((d) => d.club.id === clubId);
           }
           if (typeId) {
-            console.log("we have typeid " + typeId);
             newData = newData.filter(
               (d) => typeId === d.trainingClassHour.trainingClassType.id
             );

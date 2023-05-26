@@ -1,7 +1,27 @@
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu } from "antd";
+import {
+  FaAddressCard,
+  FaArrowCircleLeft,
+  FaCalendarCheck,
+  FaCalendarDay,
+  FaHistory,
+  FaLongArrowAltLeft,
+  FaHome,
+  FaRegArrowAltCircleLeft,
+  FaHouseUser,
+  FaIdCardAlt,
+  FaPeopleArrows,
+  FaSearch,
+  FaUserCircle,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-
+function MenuItem() {
+  return (
+    <Menu.Item>
+      <p>Fitness</p>
+    </Menu.Item>
+  );
+}
 const MenuBar = () => {
   const navigate = useNavigate();
   function getItem(label, key, icon, children, type) {
@@ -14,37 +34,49 @@ const MenuBar = () => {
     };
   }
   const items = [
-    getItem("Home", "/home", <HomeOutlined />),
-    getItem("Buy membership", "/buy-membership"),
-    getItem("Our clubs", "/clubs"),
-    getItem("Class schedule", "/schedule"),
-    getItem("Search classes", "/search-classes"),
-    getItem("Personal Training", "/training", null, [
-      getItem("Buy PT", "/personal-training"),
-      getItem("Book PT session", "/book-PT"),
-      getItem("Booked PT sessions", "/bookings-PT"),
-      getItem("PT sessions history", "/bookings-PT-history"),
+    getItem("Home", "/home", <FaHome />),
+    getItem("Buy membership", "/buy-membership", <FaAddressCard />),
+    getItem("Our clubs", "/clubs", <FaHouseUser />),
+    getItem("Class schedule", "/schedule", <FaCalendarDay />),
+    getItem("Search classes", "/search-classes", <FaSearch />),
+    getItem("Personal Training", null, <FaPeopleArrows />, [
+      getItem("Buy PT", "/personal-training", <FaAddressCard />),
+      getItem("Book PT session", "/book-PT", <FaAddressCard />),
+      getItem("Booked PT sessions", "/bookings-PT", <FaCalendarCheck />),
+      getItem("PT sessions history", "/bookings-PT-history", <FaHistory />),
     ]),
-    getItem("Your profile", null, <UserOutlined />, [
-      getItem("Contact", "/contact"),
-      getItem("Membership", "/membership"),
-      getItem("Bookings history", "/bookings-history"),
-      getItem("Booked classes", "/bookings"),
-      getItem("Log out", null),
+    getItem("Your profile", null, <FaUserCircle />, [
+      getItem("Contact", "/contact", <FaIdCardAlt />),
+      getItem("Membership", "/membership", <FaAddressCard />),
+      getItem("Bookings history", "/bookings-history", <FaHistory />),
+      getItem("Booked classes", "/bookings", <FaCalendarCheck />),
     ]),
   ];
   const onClick = (key) => {
     navigate(key.key);
   };
+
   return (
-    <div className="menu">
-      <Menu
-        onClick={onClick}
-        defaultSelectedKeys={["1"]}
-        mode="inline"
-        theme="light"
-        items={items}
-      />
+    <div className="menu" >
+      <div>
+        <div className="app-name-home">Fit & Repeat</div>
+        <Menu
+          onClick={onClick}
+          defaultSelectedKeys={["1"]}
+          mode="inline"
+          theme="light"
+          style={{ "margin-top": "10px" }}
+          items={items}
+        />
+      </div>
+      <div
+        className="log-out-menu"
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        <FaRegArrowAltCircleLeft style={{ fontSize: "30px" }} />
+      </div>
     </div>
   );
 };
