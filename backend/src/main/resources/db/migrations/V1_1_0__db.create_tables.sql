@@ -171,12 +171,15 @@ personal_training_id bigint,
 start_date date,
 personal_trainer_id bigint,
 no_sessions_left bigint,
-CONSTRAINT fk_trainer_personal_training
+CONSTRAINT fk_user_personal_training
       FOREIGN KEY(personal_training_id)
 	  REFERENCES personal_training(id),
-CONSTRAINT fk_trainer_personal_trainer
+CONSTRAINT fk_user_personal_training_personal_trainer
       FOREIGN KEY(personal_trainer_id)
-	  REFERENCES personal_trainer(id)
+	  REFERENCES personal_trainer(id),
+CONSTRAINT fk_user_personal_training_user
+      FOREIGN KEY(user_id)
+	  REFERENCES participant(id)
 
 );
 create table personal_training_session(
