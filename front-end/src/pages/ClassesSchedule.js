@@ -1,20 +1,45 @@
+import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space } from "antd";
+
 import { useEffect, useState } from "react";
 import MenuBar from "../components/MenuBar";
 import TrainingClassesByDay from "../components/TrainingClassesByDay";
 
 const ClassesSchedule = () => {
   const [namesOfWeekDays, setNamesOfWeekDays] = useState([]);
-  const [clubId, setClubId] = useState();
-  const [typeId, setTypeId] = useState();
+  const [clubId, setClubId] = useState(1);
+  const [typeId, setTypeId] = useState(4);
   const [clubItems, setClubItems] = useState();
   const [typeItems, setTypeItems] = useState();
   const [nameDropdownClubs, setNameDropdownClubs] = useState("Select a club");
-  const [nameDropdownTypes, setNameDropdownTypes] =
-    useState("Select class type");
+  const [nameDropdownTypes, setNameDropdownTypes] = useState("ANY TYPE");
   const accessToken = localStorage.getItem("accessToken");
 
   const [data, setData] = useState([]);
+  const getClubById = () => {
+    try {
+      fetch("http://localhost:8080/api/club/1", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        method: "get",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject("Cannot get first club.");
+        })
+        .then((data) => {
+          setNameDropdownClubs(data.name);
+          setClubId(data.id);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
   const getSubscriptionOfUser = () => {
     try {
@@ -61,7 +86,7 @@ const ClassesSchedule = () => {
           if (clubId) {
             newData = newData.filter((d) => d.club.id === clubId);
           }
-          if (typeId) {
+          if (typeId && typeId !== 4) {
             newData = newData.filter(
               (d) => typeId === d.trainingClassHour.trainingClassType.id
             );
@@ -159,12 +184,16 @@ const ClassesSchedule = () => {
           return Promise.reject("Cannot fetch clubs.");
         })
         .then((data) => {
-          const types = data.map((type) => {
-            return {
+          let types = [];
+          const anyType = { key: 4, label: "ANY TYPE" };
+          types.push(anyType);
+          data.forEach((type) => {
+            types.push({
               key: type.id,
               label: type.name,
-            };
+            });
           });
+
           setTypeItems(types);
         })
         .catch((err) => console.log(err));
@@ -181,6 +210,7 @@ const ClassesSchedule = () => {
   }, [data, setData]);
 
   useEffect(() => {
+    getClubById();
     getSubscriptionOfUser();
     getClubs();
     getTrainingClassTypes();
@@ -202,58 +232,165 @@ const ClassesSchedule = () => {
     setTypeId(idOfType);
   };
 
-  const menuPropsClubs = {
-    items: clubItems,
-    onClick: handleMenuClickClubs,
-  };
-  const menuPropsTypes = {
-    items: typeItems,
-    onClick: handleMenuClickTypes,
-  };
   return (
     <div className="parent">
       <MenuBar></MenuBar>
-      <div className="child">
-        <Space wrap>
-          <Dropdown.Button
-            menu={menuPropsClubs}
-            onClick={(e) => {
-              e.preventDefault();
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            "box-shadow": "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            padding: "3px",
+          }}
+        >
+          <p
+            style={{
+              "font-size": "120%",
+              "font-weight": "bold",
+              "margin-left": "15px",
             }}
           >
-            {nameDropdownClubs}
-          </Dropdown.Button>
-        </Space>
-        <Space wrap>
-          <Dropdown.Button
-            menu={menuPropsTypes}
-            onClick={(e) => {
-              e.preventDefault();
+            Welcome to Fit & Repeat
+          </p>
+        </div>
+
+        <div className="child">
+          <div
+            style={{
+              "box-shadow": "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+              display: "flex",
+              height: "50px",
+              "flex-direction": "row",
+              "justify-content": "space-between",
             }}
           >
-            {nameDropdownTypes}
-          </Dropdown.Button>
-        </Space>
-        {data !== [] &&
-          namesOfWeekDays !== [] &&
-          namesOfWeekDays.map((nameOfWeekDay) => {
-            return (
-              <div key={nameOfWeekDay.id}>
-                <p>
-                  <b>
-                    {nameOfWeekDay.nameOfWeekDay} - {nameOfWeekDay.dayOfMonth}{" "}
-                    {nameOfWeekDay.month}
-                  </b>
-                </p>
-                <TrainingClassesByDay
-                  parentToChild={{
-                    nameOfWeekDay,
-                    data,
+            <div
+              style={{
+                "margin-top": "auto",
+                "margin-bottom": "auto",
+                "margin-left": "20px",
+              }}
+            >
+              Book a class
+            </div>
+          </div>
+          <div
+            style={{
+              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              "margin-top": "50px",
+              display: "flex",
+              padding: "20px",
+              "flex-direction": "column",
+              width: "80%",
+              justifyContent: "center",
+              "margin-left": "10%",
+            }}
+          >
+            <div
+              style={{
+                width: "35%",
+                display: "flex",
+                "margin-left": "auto",
+                "margin-right": "auto",
+              }}
+            >
+              <Dropdown
+                menu={{ items: clubItems, onClick: handleMenuClickClubs }}
+              >
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
                   }}
-                />
-              </div>
-            );
-          })}
+                >
+                  <Space
+                    style={{
+                      "box-shadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                      padding: "8px",
+                      "margin-right": "30px",
+                    }}
+                  >
+                    {nameDropdownClubs}
+                    <DownOutlined style={{ width: "30px" }}></DownOutlined>
+                  </Space>
+                </a>
+              </Dropdown>
+
+              <Dropdown
+                menu={{ items: typeItems, onClick: handleMenuClickTypes }}
+              >
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <Space
+                    style={{
+                      "box-shadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                      padding: "8px",
+                    }}
+                  >
+                    {nameDropdownTypes}
+                    <DownOutlined
+                      style={{
+                        "margin-left": "30px",
+                      }}
+                    ></DownOutlined>
+                  </Space>
+                </a>
+              </Dropdown>
+            </div>
+            <div
+              style={{
+                "margin-top": "50px",
+                display: "flex",
+                "flex-direction": "row",
+                width: "100%",
+              }}
+            >
+              {data !== [] &&
+                namesOfWeekDays !== [] &&
+                namesOfWeekDays.map((nameOfWeekDay) => {
+                  return (
+                    <div
+                      key={nameOfWeekDay.id}
+                      style={{
+                        width: "200px",
+                        "margin-right": "20px",
+                      }}
+                    >
+                      <div
+                        style={{
+                          backgroundColor: "#B22727",
+                          color: "white",
+                          padding: "10px",
+                          "box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+                        }}
+                      >
+                        <text>
+                          <b>{nameOfWeekDay.nameOfWeekDay}</b>
+                        </text>
+                        <br></br>
+                        <text style={{ fontSize: "15px" }}>
+                          {nameOfWeekDay.dayOfMonth} {nameOfWeekDay.month}
+                        </text>
+                      </div>
+                      <TrainingClassesByDay
+                        parentToChild={{
+                          nameOfWeekDay,
+                          data,
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

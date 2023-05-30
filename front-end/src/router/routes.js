@@ -8,9 +8,11 @@ import BookedClassesHistory from "../pages/BookedClassesHistory";
 import BookingClasses from "../pages/BookingClasses";
 import BookingsPT from "../pages/BookingsPT";
 import BookingsPTHistory from "../pages/BookingsPTHistory";
+import BuyMembership from "../pages/BuyMembership";
 import BuyPersonalTraining from "../pages/BuyPersonalTraining";
 import ClassesSchedule from "../pages/ClassesSchedule";
 import ClubSubscriptions from "../pages/ClubSubscriptions";
+import Clubs from "../pages/Clubs";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import PersonalTraining from "../pages/PersonalTraining";
@@ -23,6 +25,7 @@ import TrainingClassDetails from "../pages/TrainingClassDetails";
 import UpgradeMembership from "../pages/UpgradeMembership";
 import UserContact from "../pages/UserContact";
 import UserMembership from "../pages/UserMembership";
+import UserPT from "../pages/UserPT";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +34,8 @@ const router = createBrowserRouter(
       <Route path="register" element={<Register />} />
       <Route path="buy-membership" exact element={<SelectClub />} />
       <Route path="club-subscriptions" exact element={<ClubSubscriptions />} />
+      <Route path="membership/:id/:clubId" exact element={<BuyMembership />} />
+      <Route path="clubs" exact element={<Clubs />} />
       <Route path="schedule">
         <Route path="" element={<ClassesSchedule />}></Route>
         <Route path=":id" exact element={<TrainingClassDetails />}></Route>
@@ -39,6 +44,7 @@ const router = createBrowserRouter(
       <Route path="/personal-training" element={<PersonalTraining />}></Route>
       <Route path="/trainer/:id" element={<TrainerPage />}></Route>
       <Route path="/buy-training" element={<BuyPersonalTraining />}></Route>
+      <Route path="/my-PT" element={<UserPT />}></Route>
       <Route
         path="/bookings-history"
         element={<BookedClassesHistory />}

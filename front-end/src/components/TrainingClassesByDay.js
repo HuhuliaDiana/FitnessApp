@@ -16,7 +16,7 @@ const TrainingClassesByDay = (props) => {
   }, [data]);
 
   return (
-    <div>
+    <div style={{}}>
       {classes !== [] &&
         classes.map((c) => {
           return <TrainingClass key={c.id} parentToChild={c} />;

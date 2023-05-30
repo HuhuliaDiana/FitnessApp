@@ -1,18 +1,16 @@
 import { Menu } from "antd";
 import {
   FaAddressCard,
-  FaArrowCircleLeft,
   FaCalendarCheck,
   FaCalendarDay,
   FaHistory,
-  FaLongArrowAltLeft,
   FaHome,
-  FaRegArrowAltCircleLeft,
   FaHouseUser,
   FaIdCardAlt,
   FaPeopleArrows,
+  FaRegArrowAltCircleLeft,
   FaSearch,
-  FaUserCircle,
+  FaUserCircle
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 function MenuItem() {
@@ -40,6 +38,7 @@ const MenuBar = () => {
     getItem("Class schedule", "/schedule", <FaCalendarDay />),
     getItem("Search classes", "/search-classes", <FaSearch />),
     getItem("Personal Training", null, <FaPeopleArrows />, [
+      getItem("My PT", "/my-PT", <FaAddressCard />),
       getItem("Buy PT", "/personal-training", <FaAddressCard />),
       getItem("Book PT session", "/book-PT", <FaAddressCard />),
       getItem("Booked PT sessions", "/bookings-PT", <FaCalendarCheck />),
@@ -57,7 +56,7 @@ const MenuBar = () => {
   };
 
   return (
-    <div className="menu" >
+    <div className="menu">
       <div>
         <div className="app-name-home">Fit & Repeat</div>
         <Menu
@@ -65,7 +64,7 @@ const MenuBar = () => {
           defaultSelectedKeys={["1"]}
           mode="inline"
           theme="light"
-          style={{ "margin-top": "10px" }}
+          style={{ marginTop: "10px" }}
           items={items}
         />
       </div>

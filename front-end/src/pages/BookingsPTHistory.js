@@ -38,11 +38,77 @@ const BookingsPTHistory = () => {
   return (
     <div className="parent">
       <MenuBar></MenuBar>
-      <div className="child">
-        {bookingsPT &&
-          bookingsPT.map((bookingPT) => {
-            return <PTSession key={bookingPT.id} parentToChild={bookingPT} />;
-          })}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            padding: "3px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "120%",
+              fontWeight: "bold",
+              marginLeft: "15px",
+            }}
+          >
+            Welcome to Fit & Repeat
+          </p>
+        </div>
+
+        <div className="child">
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+              display: "flex",
+              height: "50px",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginLeft: "20px",
+              }}
+            >
+              Personal Training history sessions
+            </div>
+          </div>
+          <div
+            style={{
+              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              "margin-top": "50px",
+              display: "flex",
+              padding: "20px",
+              "flex-direction": "column",
+              width: "80%",
+              justifyContent: "center",
+              "margin-left": "10%",
+            }}
+          >
+            <div>
+              <img
+                src="/booked.svg"
+                alt="image"
+                style={{ width: "20%" }}
+              ></img>
+            </div>
+            {bookingsPT &&
+              bookingsPT.map((bookingPT) => {
+                return (
+                  <PTSession key={bookingPT.id} parentToChild={bookingPT} />
+                );
+              })}
+          </div>
+        </div>
       </div>
     </div>
   );

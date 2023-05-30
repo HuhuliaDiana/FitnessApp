@@ -59,16 +59,29 @@ const TrainingClass = (props) => {
 
   return (
     <div
+      style={{
+        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+        padding: "5px",
+        fontSize: "15px",
+      }}
       onClick={() => {
         navigate(`/schedule/${trainingClass.id}`);
       }}
     >
-      <p>{trainingClass.trainerName}</p>
-      <p>{trainingClass.trainingClassHour.className}</p>
-      <b>{trainingClass.trainingClassHour.trainingClassType.name}</b>
       <p>
-        {beginningTimeString}-{endingTimeString}
+        <b>
+          {beginningTimeString} - {endingTimeString}
+        </b>
       </p>
+      <p style={{ color: "#EE5007" }}>
+        {trainingClass.trainingClassHour.className}
+      </p>
+      <p>{trainingClass.trainerName}</p>
+
+      <b style={{ color: "#006E7F" }}>
+        {trainingClass.trainingClassHour.trainingClassType.name}
+      </b>
+
       <p>{status}</p>
     </div>
   );

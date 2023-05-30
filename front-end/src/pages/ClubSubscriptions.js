@@ -84,7 +84,7 @@ function ClubSubscriptions() {
                 "margin-left": "20px",
               }}
             >
-              Choose a membership
+              Club memberships
             </div>
             <div
               style={{

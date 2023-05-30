@@ -187,94 +187,154 @@ const UserMembership = () => {
   return (
     <div className="parent">
       <MenuBar></MenuBar>
-      <div className="child">
-        {subscription && (
-          <p>
-            {subscription.subscription.membership.name} {subscriptionPeriodName}
-            <br />
-            Availability:{" "}
-            {`${subscription.startDate} to ${subscription.endDate}`}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            padding: "3px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "120%",
+              fontWeight: "bold",
+              marginLeft: "15px",
+            }}
+          >
+            Welcome to Fit & Repeat
           </p>
-        )}
-        <Button
-          onClick={() => {
-            navigate("/buy-membership");
-          }}
-        >
-          Buy membership
-        </Button>
-        <Button
-          onClick={() => {
-            navigate("/renew-membership");
-          }}
-        >
-          Renew membership
-        </Button>
-        <Button
-          onClick={() => {
-            navigate("/upgrade-membership");
-          }}
-        >
-          Upgrade membership
-        </Button>
-        <Button onClick={changeClubForMembership}>
-          Transfer membership to another club
-        </Button>
-        {transfer && (
-          <Dropdown menu={{ items: clubsDropdown, onClick }}>
-            <a
-              onClick={(e) => {
-                e.preventDefault();
+        </div>
+
+        <div className="child">
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+              display: "flex",
+              height: "50px",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginLeft: "20px",
               }}
             >
-              <Space>
-                {clubName}
-                <DownOutlined />
-              </Space>
-            </a>
-          </Dropdown>
-        )}
-        {club && (
-          <div>
-            <p>
-              {club.name} {club.address}
-            </p>
-            <Button onClick={handleOnClickTransfer}>
-              Transfer to {club.name}
+              Your membership
+            </div>
+          </div>
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              marginTop: "50px",
+              display: "flex",
+              padding: "20px",
+              flexDirection: "column",
+              width: "70%",
+              justifyContent: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            {subscription && (
+              <p>
+                {subscription.subscription.membership.name}{" "}
+                {subscriptionPeriodName}
+                <br />
+                Availability:{" "}
+                {`${subscription.startDate} to ${subscription.endDate}`}
+              </p>
+            )}
+            <Button
+              onClick={() => {
+                navigate("/buy-membership");
+              }}
+            >
+              Buy membership
             </Button>
-          </div>
-        )}
-        {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
-          <div>
-            <Button onClick={() => setOpenDatePickerToFreeze(true)}>
-              Choose to freeze membership
+            <Button
+              onClick={() => {
+                navigate("/renew-membership");
+              }}
+            >
+              Renew membership
             </Button>
+            <Button
+              onClick={() => {
+                navigate("/upgrade-membership");
+              }}
+            >
+              Upgrade membership
+            </Button>
+            <Button onClick={changeClubForMembership}>
+              Transfer membership to another club
+            </Button>
+            {transfer && (
+              <Dropdown menu={{ items: clubsDropdown, onClick }}>
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <Space>
+                    {clubName}
+                    <DownOutlined />
+                  </Space>
+                </a>
+              </Dropdown>
+            )}
+            {club && (
+              <div>
+                <p>
+                  {club.name} {club.address}
+                </p>
+                <Button onClick={handleOnClickTransfer}>
+                  Transfer to {club.name}
+                </Button>
+              </div>
+            )}
+            {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
+              <div>
+                <Button onClick={() => setOpenDatePickerToFreeze(true)}>
+                  Choose to freeze membership
+                </Button>
+              </div>
+            )}
+            {openDatePickerToFreeze === true && (
+              <div>
+                <Space direction="vertical">
+                  <DatePicker
+                    onChange={selectDateStartFreezing}
+                    disabledDate={(d) =>
+                      d.isBefore(new Date(startDayOfMembership)) ||
+                      (dataStartFreeze &&
+                        (d.isAfter(dataStartFreeze) ||
+                          d.isSame(dataStartFreeze)) &&
+                        dataEndFreeze &&
+                        (d.isBefore(dataEndFreeze) || d.isSame(dataEndFreeze)))
+                    }
+                  />
+                </Space>
+                <InputNumber
+                  min={1}
+                  max={30}
+                  defaultValue={1}
+                  onChange={selectNoDaysToFreeze}
+                />
+                ;<Button onClick={freezeMembership}>Freeze membership</Button>
+                {/* disable date till the beginning of subscription and already frozen days */}
+              </div>
+            )}
           </div>
-        )}
-        {openDatePickerToFreeze === true && (
-          <div>
-            <Space direction="vertical">
-              <DatePicker
-                onChange={selectDateStartFreezing}
-                disabledDate={(d) =>
-                  d.isBefore(new Date(startDayOfMembership)) ||
-                  (dataStartFreeze &&
-                    (d.isAfter(dataStartFreeze) || d.isSame(dataStartFreeze)) &&
-                    dataEndFreeze &&
-                    (d.isBefore(dataEndFreeze) || d.isSame(dataEndFreeze)))
-                }
-              />
-            </Space>
-            <InputNumber
-              min={1}
-              max={30}
-              defaultValue={1}
-              onChange={selectNoDaysToFreeze}
-            />
-            ;<Button onClick={freezeMembership}>Freeze membership</Button>
-            {/* disable date till the beginning of subscription and already frozen days */}
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ const TrainingType = (props) => {
   const navigate = useNavigate();
 
   const training = props.parentToChild.training;
-  const trainer= props.parentToChild.trainer;
+  const trainer = props.parentToChild.trainer;
   const [trainingName, setTrainingName] = useState("");
   useEffect(() => {
     const trainingName = training.personalTrainingType.name;
@@ -28,12 +28,28 @@ const TrainingType = (props) => {
     });
   };
   return (
-    <div>
+    <div
+      style={{
+        "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+        padding: "20px",
+      }}
+    >
       <p>
-        PERSONAL TRAINING {training.sessionsNumber} SESSIONS {trainingName}
+        PERSONAL TRAINING {training.sessionsNumber} SESSIONS <br />{" "}
+        {trainingName}
       </p>
       <p>{training.price} EUR</p>
-      <Button onClick={handleOnClickChoose}>Choose</Button>
+      <Button
+        style={{
+          backgroundColor: "#B22727",
+          color: "white",
+          "margin-top": "20px",
+          height: "35px",
+        }}
+        onClick={handleOnClickChoose}
+      >
+        Choose
+      </Button>
     </div>
   );
 };

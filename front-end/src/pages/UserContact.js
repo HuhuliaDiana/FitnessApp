@@ -11,6 +11,7 @@ const UserContact = () => {
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [disabled, setDisabled] = useState(true);
+  const [activeBtnStyle, setActiveBtnStyle] = useState(null);
   useEffect(() => {
     if (
       user &&
@@ -18,9 +19,16 @@ const UserContact = () => {
         lastname !== user.lastname ||
         phone !== user.phone ||
         email !== user.email)
-    )
+    ) {
+      setActiveBtnStyle({
+        "background-color": "#006E7F",
+        color: "white",
+      });
       setDisabled(false);
-    else setDisabled(true);
+    } else {
+      setDisabled(true);
+      setActiveBtnStyle(null);
+    }
   }, [firstname, lastname, email, phone]);
   const getCurrentUser = () => {
     try {
@@ -106,19 +114,84 @@ const UserContact = () => {
   return (
     <div className="parent">
       <MenuBar></MenuBar>
-      <div className="child">
-        <div className="contact">
-          {user && (
-            <Form
-              name="basic"
-              labelCol={{ span: 8 }}
-              wrapperCol={{ span: 16 }}
-              style={{ maxWidth: 600 }}
-              onFinish={onFinish}
-              autoComplete="off"
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            padding: "3px",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "120%",
+              fontWeight: "bold",
+              marginLeft: "15px",
+            }}
+          >
+            Welcome to Fit & Repeat
+          </p>
+        </div>
+
+        <div className="child">
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+              display: "flex",
+              height: "50px",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              style={{
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginLeft: "20px",
+              }}
             >
-              <Row gutter={24}>
-                <Col span={12}>
+              Update your contact data
+            </div>
+          </div>
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              marginTop: "50px",
+              display: "flex",
+              padding: "20px",
+              flexDirection: "column",
+              width: "30%",
+              justifyContent: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <div>
+              <img
+                alt="image"
+                src="/contact.svg"
+                style={{ width: "50%", padding: "20px" }}
+              ></img>
+            </div>
+            {user && (
+              <Form
+                name="basic"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+                style={{
+                  marginTop:"30px",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+                onFinish={onFinish}
+                autoComplete="off"
+              >
+                <Col style={{ border: "", width: "60%" }}>
                   <Form.Item
                     label="Firstname"
                     name="firstname"
@@ -184,25 +257,32 @@ const UserContact = () => {
                       onChange={(e) => setPhone(e.target.value)}
                     />
                   </Form.Item>
-                  <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                  <Form.Item
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      marginTop:"40px"
+                    }}
+                  >
                     <Button
                       disabled={disabled}
                       type="primary"
                       htmlType="submit"
+                      style={activeBtnStyle}
                     >
                       Update
                     </Button>
                   </Form.Item>
                 </Col>
-              </Row>
-            </Form>
-          )}
-        </div>
-        <div>
-          {clubsAllowAccess &&
-            clubsAllowAccess.map((club) => {
-              return <p key={club.id}>{club.name}</p>;
-            })}
+              </Form>
+            )}
+          </div>
+          <div>
+            {clubsAllowAccess &&
+              clubsAllowAccess.map((club) => {
+                return <p key={club.id}>{club.name}</p>;
+              })}
+          </div>
         </div>
       </div>
     </div>

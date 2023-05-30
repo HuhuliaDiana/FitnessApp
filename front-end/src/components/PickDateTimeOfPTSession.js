@@ -1,6 +1,7 @@
 import { Calendar } from "@progress/kendo-react-dateinputs";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { Button } from "antd";
 
 const allTimes = [
   "07:00 - 08:00",
@@ -29,14 +30,29 @@ const PickDateTimeOfPTSession = (props) => {
   }, [bookingDate]);
 
   const onDateChange = (e) => {
+    let bkgTimes = bookingTimes;
+    let timeSlot = selectedTimeSlot;
+
     if (bookingTimes.length == 0) {
       setBookingTimes(allTimes);
+      bkgTimes = allTimes;
     }
     setSelectedTimeSlot(null);
+    timeSlot = null;
     setLocalBookingDate(
       moment(e.value).add(1, "days").toISOString().split("T")[0]
     );
     setBookingDate(e.value);
+
+    props.onBookingTimes({
+      bookingTimes: bkgTimes,
+      selectedTimeSolt: timeSlot,
+      localBookingDate: moment(e.value)
+        .add(1, "days")
+        .toISOString()
+        .split("T")[0],
+      bookingDate: e.value,
+    });
   };
 
   const getPTSessionByTrainerId = () => {
@@ -99,7 +115,11 @@ const PickDateTimeOfPTSession = (props) => {
   }, [sessionHoursReserved]);
 
   useEffect(() => {
+    console.log("send info to parent");
+    console.log(localBookingDate);
+
     if (selectedTimeSlot !== null) {
+      console.log(selectedTimeSlot.split(" - ")[0]);
       props.onSelectDateTime({
         localDate: localBookingDate,
         localTime: selectedTimeSlot.split(" - ")[0],
@@ -109,36 +129,16 @@ const PickDateTimeOfPTSession = (props) => {
 
   return (
     <div className="k-my-8">
-      <div className="k-mb-4 k-font-weight-bold">Book driving slot</div>
-      <div className="k-flex k-display-flex k-mb-4">
-        <Calendar
-          value={bookingDate}
-          onChange={onDateChange}
-          min={minDate}
-          max={maxDate}
-        />
-        <div className="k-ml-4 k-display-flex k-flex-col">
-          {bookingTimes.map((time) => {
-            return (
-              <button
-                key={time}
-                className="k-button k-mb-4"
-                onClick={(e) => {
-                  setSelectedTimeSlot(time);
-                }}
-              >
-                {time}
-              </button>
-            );
-          })}
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <div className="k-flex k-display-flex k-mb-4">
+          <Calendar
+            value={bookingDate}
+            onChange={onDateChange}
+            min={minDate}
+            max={maxDate}
+          />
         </div>
       </div>
-
-      {bookingDate && selectedTimeSlot ? (
-        <div>
-          Selected slot: {bookingDate.toDateString()} at {selectedTimeSlot}
-        </div>
-      ) : null}
     </div>
   );
 };

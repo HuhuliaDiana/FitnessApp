@@ -1,25 +1,51 @@
+import { Button, DatePicker, Space } from "antd";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import MenuBar from "../components/MenuBar";
-import TrainingClassesByClub from "../components/TrainingClassesByClub";
-
-const BookingClasses = () => {
+const BuyMembership = () => {
+  const clubId = useParams().clubId;
   const accessToken = localStorage.getItem("accessToken");
-  // const [bookings, setBookings] = useState([]);
-  const [clubs, setClubs] = useState([]);
-  const [data, setData] = useState([]);
+  const [localDate, setLocalDate] = useState("");
 
-  const removeJSONDuplicatesClubs = (clubs) => {
-    var uniqueArray = [];
-    for (var i = 0; i < clubs.length; i++) {
-      if (!uniqueArray.find((x) => x.id === clubs[i].id)) {
-        uniqueArray.push(clubs[i]);
-      }
+  const id = useParams().id;
+  useEffect(() => {
+    getSubscriptionById();
+  }, [id]);
+
+  const buy = () => {
+    if (localDate !== "") {
+      buyMembership();
+    } else {
+      console.log("Pick a date!");
     }
-    return uniqueArray;
   };
-  const getBookingClasses = () => {
+  const buyMembership = () => {
     try {
-      fetch(`http://localhost:8080/api/class/booked/future`, {
+      console.log(localDate);
+      fetch(`http://localhost:8080/api/user-subscription/buy`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ id, localDate, clubId }),
+        method: "POST",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getSubscriptionById = () => {
+    try {
+      fetch(`http://localhost:8080/api/subscription/${id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -34,19 +60,22 @@ const BookingClasses = () => {
         })
         .then((data) => {
           console.log(data);
-          setData(data);
-          let clubs = data.map((d) => d.club);
-          setClubs(removeJSONDuplicatesClubs(clubs));
-          console.log(clubs);
+          const subPeriodName = data.subscriptionPeriod.name;
+          const array = subPeriodName.split("_");
+          let formattedSubscriptionPeriodName = "";
+          array.forEach((a) => {
+            formattedSubscriptionPeriodName += a + " ";
+          });
+          console.log(formattedSubscriptionPeriodName);
         })
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    getBookingClasses();
-  }, []);
+  const onChange = (dateString) => {
+    setLocalDate(new Date(dateString).toISOString().split("T")[0]);
+  };
   return (
     <div className="parent">
       <MenuBar></MenuBar>
@@ -91,7 +120,7 @@ const BookingClasses = () => {
                 marginLeft: "20px",
               }}
             >
-              Your future attendings to classes
+              Buy membership
             </div>
           </div>
           <div
@@ -106,31 +135,21 @@ const BookingClasses = () => {
               marginLeft: "10%",
             }}
           >
-            <div>
-              <img
-                alt="image"
-                src="/bookings-future-attendings.svg"
-                style={{ width: "13%" }}
-              ></img>
-            </div>
-            <div>
-              {clubs !== [] &&
-                clubs.map((club) => {
-                  return (
-                    <div
-                      key={club.id}
-                      style={{
-                        width: "100%",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <TrainingClassesByClub
-                        key={club.id}
-                        parentToChild={{ club, data }}
-                      />
-                    </div>
-                  );
-                })}
+            <div
+              style={{
+                width: "35%",
+                display: "flex",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              <Space direction="vertical">
+                <DatePicker
+                  onChange={onChange}
+                  disabledDate={(d) => !d || d.isBefore(new Date())}
+                />
+              </Space>
+              <Button onClick={buy}>Buy membership</Button>
             </div>
           </div>
         </div>
@@ -138,4 +157,4 @@ const BookingClasses = () => {
     </div>
   );
 };
-export default BookingClasses;
+export default BuyMembership;

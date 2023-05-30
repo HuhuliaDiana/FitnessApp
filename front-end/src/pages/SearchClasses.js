@@ -1,25 +1,28 @@
-import { Dropdown, Space, Input } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { Dropdown, Input, Space } from "antd";
 import { useEffect, useState } from "react";
-import TrainingClassesByClub from "../components/TrainingClassesByClub";
 import MenuBar from "../components/MenuBar";
+import TrainingClassesByClub from "../components/TrainingClassesByClub";
 
 const SearchClasses = () => {
   const { Search } = Input;
 
   const accessToken = localStorage.getItem("accessToken");
   const [clubs, setClubs] = useState([]);
-  const [typeId, setTypeId] = useState("");
+  const [typeId, setTypeId] = useState(4);
   const [typeItems, setTypeItems] = useState();
-  const [nameDropdownTypes, setNameDropdownTypes] =
-    useState("Select class type");
+  const [nameDropdownTypes, setNameDropdownTypes] = useState("ANY TYPE");
   const [data, setData] = useState([]);
   const [trainerName, setTrainerName] = useState("");
   const [inputValue, setInputValue] = useState("");
   useEffect(() => {
-    if (typeId !== "") {
+    if (typeId) {
       getClassesForNext7Days();
     }
   }, [typeId, setTypeId]);
+  useEffect(() => {
+    getClassesForNext7Days();
+  }, []);
   useEffect(() => {
     if (trainerName !== "") {
       getClassesForNext7Days();
@@ -41,11 +44,14 @@ const SearchClasses = () => {
           return Promise.reject("Cannot fetch clubs.");
         })
         .then((data) => {
-          const types = data.map((type) => {
-            return {
+          let types = [];
+          const anyType = { key: 4, label: "ANY TYPE" };
+          types.push(anyType);
+          data.forEach((type) => {
+            types.push({
               key: type.id,
               label: type.name,
-            };
+            });
           });
           setTypeItems(types);
         })
@@ -93,7 +99,7 @@ const SearchClasses = () => {
         })
         .then((data) => {
           let newData = data;
-          if (typeId !== "") {
+          if (typeId && typeId !== 4) {
             newData = newData.filter(
               (d) => typeId === d.trainingClassHour.trainingClassType.id
             );
@@ -106,7 +112,7 @@ const SearchClasses = () => {
           setData(newData);
           let clubs = newData.map((d) => d.club);
           setClubs(removeJSONDuplicatesClubs(clubs));
-          console.log(newData)
+          console.log(newData);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -114,47 +120,138 @@ const SearchClasses = () => {
     }
   };
   useEffect(() => {}, [nameDropdownTypes]);
-  const menuPropsTypes = {
-    items: typeItems,
-    onClick: handleMenuClickTypes,
-  };
+
   const onSearchByTrainer = (trainerName) => {
     setTrainerName(trainerName);
-    setTypeId("");
-    setNameDropdownTypes("Select class type");
+    setTypeId(null);
+    setNameDropdownTypes("ANY TYPE");
   };
   return (
     <div className="parent">
       <MenuBar></MenuBar>
-      <div className="child">
-        <Space wrap>
-          <Dropdown.Button
-            menu={menuPropsTypes}
-            onClick={(e) => {
-              e.preventDefault();
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "100%",
+        }}
+      >
+        <div
+          style={{
+            "box-shadow": "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+            padding: "3px",
+          }}
+        >
+          <p
+            style={{
+              "font-size": "120%",
+              "font-weight": "bold",
+              "margin-left": "15px",
             }}
           >
-            {nameDropdownTypes}
-          </Dropdown.Button>
-        </Space>
-        <Search
-          placeholder="search by trainer"
-          onSearch={onSearchByTrainer}
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          style={{ width: 200 }}
-        />
-        {clubs !== [] &&
-          clubs.map((club) => {
-            return (
-              <div key={club.id}>
-                <TrainingClassesByClub
-                  key={club.id}
-                  parentToChild={{ club, data }}
-                />
-              </div>
-            );
-          })}
+            Welcome to Fit & Repeat
+          </p>
+        </div>
+        <div className="child">
+          <div
+            style={{
+              "box-shadow": "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+              display: "flex",
+              height: "50px",
+              "flex-direction": "row",
+              "justify-content": "space-between",
+            }}
+          >
+            <div
+              style={{
+                "margin-top": "auto",
+                "margin-bottom": "auto",
+                "margin-left": "20px",
+              }}
+            >
+              Search for a class
+            </div>
+          </div>
+          <div
+            style={{
+              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              "margin-top": "50px",
+              display: "flex",
+              padding: "20px",
+              "flex-direction": "column",
+              width: "80%",
+              justifyContent: "center",
+              "margin-left": "10%",
+            }}
+          >
+            <div
+              style={{
+                width: "30%",
+                display: "flex",
+                display: "flex",
+                "margin-left": "auto",
+                "margin-right": "auto",
+              }}
+            >
+              <Dropdown
+                menu={{ items: typeItems, onClick: handleMenuClickTypes }}
+              >
+                <a
+                  onClick={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <Space
+                    style={{
+                      "box-shadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                      padding: "8px",
+                      "margin-right": "30px",
+                    }}
+                  >
+                    {nameDropdownTypes}
+                    <DownOutlined style={{ width: "30px" }}></DownOutlined>
+                  </Space>
+                </a>
+              </Dropdown>
+              <Search
+                placeholder="search by trainer"
+                onSearch={onSearchByTrainer}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                style={{
+                  width: 200,
+                  "margin-top": "auto",
+                  "margin-bottom": "auto",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                "margin-top": "30px",
+                display: "flex",
+                "flex-direction": "column",
+              }}
+            >
+              {clubs !== [] &&
+                clubs.map((club) => {
+                  return (
+                    <div
+                      key={club.id}
+                      style={{
+                        width: "100%",
+                        "margin-right": "20px",
+                      }}
+                    >
+                      <TrainingClassesByClub
+                        key={club.id}
+                        parentToChild={{ club, data }}
+                      />
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
