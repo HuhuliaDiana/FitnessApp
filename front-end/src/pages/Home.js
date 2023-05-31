@@ -6,32 +6,33 @@ import { Carousel } from "react-carousel-minimal";
 const data = [
   {
     image: "/indoor-bike.svg",
-    caption: "Gym equipment",
+    caption: "Discover our professional gym equipment",
   },
   {
     image: "/stability-ball.svg",
-    caption: "Stability",
-  },
-  {
-    image: "/current-location.svg",
-    caption: "Find closest club to you",
-  },
-  {
-    image: "/workout.svg",
-    caption: "Go on",
-  },
-  {
-    image: "/mindfulness.svg",
-    caption: "Get your mind together",
+    caption: "Find your balance",
   },
   {
     image: "/pt-history.svg",
-    caption: "Train with our trainers",
+    caption: "Get help from our trainers",
+  },
+  {
+    image: "/current-location.svg",
+    caption: "Find the nearest club to you",
+  },
+  {
+    image: "/mindfulness.svg",
+    caption: "Relax your mind",
+  },
+  {
+    image: "/workout.svg",
+    caption: "Enjoy the workout",
   },
 ];
 
 const captionStyle = {
-  fontSize: "20px",
+  fontSize: "25px",
+  color:""
 };
 
 const Home = () => {
@@ -87,7 +88,7 @@ const Home = () => {
                 // slideNumberStyle={slideNumberStyle}
                 captionPosition="bottom"
                 automatic={true}
-                dots={true}
+                // dots={true}
                 // pauseIconColor="white"
                 // pauseIconSize="40px"
                 // slideBackgroundColor="darkgrey"

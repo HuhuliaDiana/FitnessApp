@@ -294,7 +294,7 @@ const BookPTSession = () => {
                 >
                   <img
                     alt="image"
-                    src="select-date.svg"
+                    src="/calendar.svg"
                     style={{
                       width: "70%",
                       margin: "auto",
