@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import MenuBar from "../components/MenuBar";
 
 import moment from "moment";
+import RenewMembership from "./RenewMembership";
+import UpgradeMembership from "./UpgradeMembership";
 const UserMembership = () => {
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const UserMembership = () => {
   const [startDayOfMembership, setStartDayOfMembership] = useState();
   const [dataStartFreeze, setDataStartFreeze] = useState();
   const [dataEndFreeze, setDataEndFreeze] = useState();
+  const [option, setOption] = useState();
 
   const getUserSubscription = () => {
     try {
@@ -129,6 +132,7 @@ const UserMembership = () => {
   }, [transfer, setTransfer]);
 
   const changeClubForMembership = () => {
+    setOption("transfer");
     setTransfer(true);
   };
   const onClick = ({ key }) => {
@@ -184,6 +188,20 @@ const UserMembership = () => {
   const selectNoDaysToFreeze = (value) => {
     setNumberOfDays(value);
   };
+  const styleBtn = {
+    width: "200px",
+    color: "white",
+    backgroundColor: "#006E7F",
+    fontFamily: "'Montserrat', sans-serif",
+    padding: "8px",
+    height: "100%",
+  };
+  const styleP = {
+    fontSize: "20px",
+    marginBottom: "60px",
+    color: "#006E7F",
+    fontWeight: "bold",
+  };
   return (
     <div className="parent">
       <MenuBar></MenuBar>
@@ -210,7 +228,6 @@ const UserMembership = () => {
             Welcome to Fit & Repeat
           </p>
         </div>
-
         <div className="child">
           <div
             style={{
@@ -238,103 +255,322 @@ const UserMembership = () => {
               display: "flex",
               padding: "20px",
               flexDirection: "column",
-              width: "70%",
+              width: "60%",
               justifyContent: "center",
               marginLeft: "auto",
               marginRight: "auto",
             }}
           >
             {subscription && (
-              <p>
-                {subscription.subscription.membership.name}{" "}
-                {subscriptionPeriodName}
-                <br />
-                Availability:{" "}
-                {`${subscription.startDate} to ${subscription.endDate}`}
-              </p>
-            )}
-            <Button
-              onClick={() => {
-                navigate("/buy-membership");
-              }}
-            >
-              Buy membership
-            </Button>
-            <Button
-              onClick={() => {
-                navigate("/renew-membership");
-              }}
-            >
-              Renew membership
-            </Button>
-            <Button
-              onClick={() => {
-                navigate("/upgrade-membership");
-              }}
-            >
-              Upgrade membership
-            </Button>
-            <Button onClick={changeClubForMembership}>
-              Transfer membership to another club
-            </Button>
-            {transfer && (
-              <Dropdown menu={{ items: clubsDropdown, onClick }}>
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
+              <div style={{ border: "", display: "flex" }}>
+                <div
+                  style={{
+                    border: "",
+                    width: "60%",
+                    margin: "auto",
+                    backgroundColor: "",
+                    color: "",
                   }}
                 >
-                  <Space>
-                    {clubName}
-                    <DownOutlined />
-                  </Space>
-                </a>
-              </Dropdown>
-            )}
-            {club && (
-              <div>
-                <p>
-                  {club.name} {club.address}
-                </p>
-                <Button onClick={handleOnClickTransfer}>
-                  Transfer to {club.name}
-                </Button>
+                  <p
+                    style={{
+                      fontSize: "25px",
+                      fontWeight: "bold",
+                      color: "#006E7F",
+                    }}
+                  >
+                    {subscription.subscription.membership.name}{" "}
+                    {subscriptionPeriodName}
+                  </p>
+                  <p style={{}}>
+                    Available from{" "}
+                    <b style={{ color: "#006E7F" }}>{subscription.startDate}</b>{" "}
+                    to{" "}
+                    <b style={{ color: "#006E7F" }}>{subscription.endDate}</b>
+                  </p>
+                </div>
+                <div>
+                  <img
+                    alt="image"
+                    src="membership.svg"
+                    style={{ width: "50%", padding: "20px" }}
+                  ></img>
+                </div>
               </div>
             )}
-            {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
-              <div>
-                <Button onClick={() => setOpenDatePickerToFreeze(true)}>
-                  Choose to freeze membership
-                </Button>
-              </div>
-            )}
-            {openDatePickerToFreeze === true && (
-              <div>
-                <Space direction="vertical">
-                  <DatePicker
-                    onChange={selectDateStartFreezing}
-                    disabledDate={(d) =>
-                      d.isBefore(new Date(startDayOfMembership)) ||
-                      (dataStartFreeze &&
-                        (d.isAfter(dataStartFreeze) ||
-                          d.isSame(dataStartFreeze)) &&
-                        dataEndFreeze &&
-                        (d.isBefore(dataEndFreeze) || d.isSame(dataEndFreeze)))
-                    }
-                  />
-                </Space>
-                <InputNumber
-                  min={1}
-                  max={30}
-                  defaultValue={1}
-                  onChange={selectNoDaysToFreeze}
-                />
-                ;<Button onClick={freezeMembership}>Freeze membership</Button>
-                {/* disable date till the beginning of subscription and already frozen days */}
-              </div>
-            )}
+            <div
+              style={{
+                border: "",
+                marginTop: "50px",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Button
+                style={styleBtn}
+                onClick={() => {
+                  navigate("/buy-membership");
+                }}
+              >
+                Buy membership
+              </Button>
+              <Button style={styleBtn} onClick={() => setOption("renew")}>
+                Renew membership
+              </Button>
+              <Button style={styleBtn} onClick={() => setOption("upgrade")}>
+                Upgrade membership
+              </Button>
+              <Button style={styleBtn} onClick={changeClubForMembership}>
+                Transfer membership
+              </Button>
+              {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
+                <div>
+                  <Button onClick={() => setOption("freeze")} style={styleBtn}>
+                    Freeze membership
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
+          {option && (
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                marginTop: "40px",
+                display: "flex",
+                padding: "20px",
+                flexDirection: "column",
+                width: "60%",
+                justifyContent: "center",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              {/* transfer */}
+              {option === "transfer" && (
+                <div style={{ border: "", display: "flex" }}>
+                  <div style={{ width: "50%", margin: "auto" }}>
+                    <img
+                      src="transfer.svg"
+                      alt="image"
+                      style={{ width: "40%", padding: "10px" }}
+                    ></img>
+                  </div>
+                  <div
+                    style={{
+                      width: "50%",
+                      border: "",
+                      margin: "auto",
+                      border: "",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontSize: "20px",
+                        marginBottom: "40px",
+                        color: "#006E7F",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Transfer memership to another club
+                    </div>
+                    <div
+                      style={{
+                        width: "60%",
+                        margin: "auto",
+                        boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                        padding: "10px",
+                      }}
+                    >
+                      <Dropdown menu={{ items: clubsDropdown, onClick }}>
+                        <a
+                          onClick={(e) => {
+                            e.preventDefault();
+                          }}
+                        >
+                          <Space
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            {clubName}
+                            <DownOutlined />
+                          </Space>
+                        </a>
+                      </Dropdown>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* finish transfer */}
+
+              {/* freeze membership */}
+              {option === "freeze" && (
+                <div>
+                  <div style={{ border: "", display: "flex", padding: "20px" }}>
+                    <div style={{ width: "50%", margin: "auto" }}>
+                      <img
+                        src="freeze.svg"
+                        alt="image"
+                        style={{ width: "70%" }}
+                      ></img>
+                    </div>
+                    <div
+                      style={{
+                        border: "",
+                        width: "60%",
+                        margin: "auto",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontSize: "20px",
+                          marginBottom: "30px",
+                          color: "#006E7F",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Freeze membership
+                      </p>
+                      <div
+                        style={{
+                          border: "",
+                          display: "flex",
+                          border: "",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <p style={{ border: "" }}>Pick a start date:</p>
+                        <Space
+                          direction="vertical"
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginLeft: "80px",
+                          }}
+                        >
+                          <DatePicker
+                            onChange={selectDateStartFreezing}
+                            disabledDate={(d) =>
+                              d.isBefore(new Date(startDayOfMembership)) ||
+                              (dataStartFreeze &&
+                                (d.isAfter(dataStartFreeze) ||
+                                  d.isSame(dataStartFreeze)) &&
+                                dataEndFreeze &&
+                                (d.isBefore(dataEndFreeze) ||
+                                  d.isSame(dataEndFreeze)))
+                            }
+                          />
+                        </Space>
+                      </div>
+                      <div
+                        style={{
+                          border: "",
+                          display: "flex",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <p>Enter number of days to freeze:</p>
+                        <InputNumber
+                          style={{
+                            height: "100%",
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "auto",
+                            marginLeft: "30px",
+                            marginBottom: "auto",
+                          }}
+                          min={1}
+                          max={30}
+                          defaultValue={1}
+                          onChange={selectNoDaysToFreeze}
+                        />
+                      </div>
+                      <div>
+                        <Button
+                          onClick={freezeMembership}
+                          style={{
+                            width: "180px",
+                            "background-color": "#006E7F",
+                            fontFamily: "'Montserrat', sans-serif",
+                            marginTop: "40px",
+                            color: "white",
+                          }}
+                        >
+                          Freeze membership
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* disable date till the beginning of subscription and already frozen days */}
+                </div>
+              )}
+              {/* finish freeze membership */}
+
+              {/* upgrade */}
+              {option === "upgrade" && (
+                <div>
+                  <p style={styleP}>
+                    Choose memership to upgrade the current one
+                  </p>
+                  <UpgradeMembership />
+                </div>
+              )}
+              {/* finishupgrade */}
+              {/* renew */}
+              {option === "renew" && (
+                <div>
+                  <p style={styleP}>
+                    Choose memership to renew the current one
+                  </p>
+                  <RenewMembership />
+                </div>
+              )}
+              {/* finish renew */}
+            </div>
+          )}
         </div>
+
+        {option === "transfer" && club && (
+          <div
+            style={{
+              width: "20%",
+              textAlign: "center",
+              marginTop: "40px",
+              padding: "20px",
+              backgroundColor: "white",
+              color: "#006E7F",
+              "margin-left": "auto",
+              "margin-right": "auto",
+              // marginBottom: "50px",
+              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+            }}
+          >
+            {/* <div>
+              <img
+                alt="image"
+                src="current_location.svg"
+                style={{ width: "50%" }}
+              ></img>
+            </div> */}
+            <p>{club.name}</p>
+            <p> {club.address}</p>
+            <Button
+              onClick={handleOnClickTransfer}
+              style={{
+                backgroundColor: "#006E7F",
+                color: "white",
+                marginTop: "20px",
+                fontFamily: "'Montserrat', sans-serif",
+              }}
+            >
+              Transfer to {club.name}
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );

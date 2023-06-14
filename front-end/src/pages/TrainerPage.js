@@ -125,7 +125,7 @@ const TrainerPage = () => {
                   fontSize: "25px",
                 }}
               >
-                {trainer && <p>{trainer.name}</p>}
+                {trainer && <p style={{color:"#006E7F"}}>{trainer.name}</p>}
               </div>
               <div
                 style={{

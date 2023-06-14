@@ -96,6 +96,7 @@ const UserPT = () => {
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "50px",
+                marginBottom:"auto",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",

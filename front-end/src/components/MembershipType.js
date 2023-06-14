@@ -19,6 +19,7 @@ const MembershipType = (props) => {
         width: "25%",
         "margin-bottom": "50px",
         padding: "20px",
+        
       }}
     >
       <p>{subscription.membership.name}</p>
@@ -30,6 +31,7 @@ const MembershipType = (props) => {
           color: "white",
           "margin-top": "20px",
           height: "35px",
+          fontFamily: "'Montserrat', sans-serif",
         }}
         onClick={() => {
           navigate(`/membership/${id}/${clubId}`);

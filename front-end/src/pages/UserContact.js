@@ -4,7 +4,6 @@ import MenuBar from "../components/MenuBar";
 
 const UserContact = () => {
   const accessToken = localStorage.getItem("accessToken");
-  const [clubsAllowAccess, setClubsAllowAccess] = useState([]);
   const [user, setUser] = useState();
   const [phone, setPhone] = useState();
   const [email, setEmail] = useState();
@@ -23,11 +22,14 @@ const UserContact = () => {
       setActiveBtnStyle({
         "background-color": "#006E7F",
         color: "white",
+        fontFamily: "'Montserrat',sans-serif",
       });
       setDisabled(false);
     } else {
       setDisabled(true);
-      setActiveBtnStyle(null);
+      setActiveBtnStyle({
+        fontFamily: "'Montserrat',sans-serif",
+      });
     }
   }, [firstname, lastname, email, phone]);
   const getCurrentUser = () => {
@@ -59,29 +61,6 @@ const UserContact = () => {
     }
   };
 
-  const getClubsAllowAccess = () => {
-    try {
-      fetch(`http://localhost:8080/api/club/available`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        method: "get",
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          return Promise.reject("Cannot fetch clubs.");
-        })
-        .then((data) => {
-          setClubsAllowAccess(data);
-        })
-        .catch((err) => console.log(err));
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const onFinish = () => {
     try {
       fetch(`http://localhost:8080/api/user`, {
@@ -107,7 +86,6 @@ const UserContact = () => {
     }
   };
   useEffect(() => {
-    getClubsAllowAccess();
     getCurrentUser();
   }, []);
 
@@ -184,7 +162,7 @@ const UserContact = () => {
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 style={{
-                  marginTop:"30px",
+                  marginTop: "30px",
                   display: "flex",
                   justifyContent: "center",
                 }}
@@ -204,6 +182,7 @@ const UserContact = () => {
                     ]}
                   >
                     <Input
+                      style={{ fontFamily: "'Montserrat',sans-serif" }}
                       defaultValue={firstname}
                       onChange={(e) => setFirstname(e.target.value)}
                     />
@@ -220,6 +199,7 @@ const UserContact = () => {
                   >
                     <Input
                       defaultValue={lastname}
+                      style={{ fontFamily: "'Montserrat',sans-serif" }}
                       onChange={(e) => setLastname(e.target.value)}
                     />
                   </Form.Item>
@@ -232,6 +212,7 @@ const UserContact = () => {
                   >
                     <Input
                       defaultValue={email}
+                      style={{ fontFamily: "'Montserrat',sans-serif" }}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </Form.Item>
@@ -254,6 +235,7 @@ const UserContact = () => {
                   >
                     <Input
                       defaultValue={phone}
+                      style={{ fontFamily: "'Montserrat',sans-serif" }}
                       onChange={(e) => setPhone(e.target.value)}
                     />
                   </Form.Item>
@@ -261,7 +243,7 @@ const UserContact = () => {
                     style={{
                       display: "flex",
                       justifyContent: "center",
-                      marginTop:"40px"
+                      marginTop: "40px",
                     }}
                   >
                     <Button
@@ -276,12 +258,6 @@ const UserContact = () => {
                 </Col>
               </Form>
             )}
-          </div>
-          <div>
-            {clubsAllowAccess &&
-              clubsAllowAccess.map((club) => {
-                return <p key={club.id}>{club.name}</p>;
-              })}
           </div>
         </div>
       </div>

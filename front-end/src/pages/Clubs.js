@@ -1,7 +1,7 @@
-import { DownOutlined } from "@ant-design/icons";
-import { Button, DatePicker, Dropdown, InputNumber, Space } from "antd";
+import { Button } from "antd";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FaMapMarkerAlt } from "react-icons/fa";
+import { useNavigate, Link } from "react-router-dom";
 import MenuBar from "../components/MenuBar";
 const Clubs = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -10,6 +10,9 @@ const Clubs = () => {
   const [clubs, setClubs] = useState([]);
   const [clubSelected, setClubSelected] = useState(null);
   const navigate = useNavigate();
+  const [citySelected, setCitySelected] = useState();
+  const [clubsAllowAccess, setClubsAllowAccess] = useState([]);
+  const [pressMark, setPressMark] = useState(false);
 
   const onOpenBuyMembershipPage = (id) => {
     navigate("/club-subscriptions", {
@@ -37,6 +40,7 @@ const Clubs = () => {
         .then((data) => {
           console.log(data);
           setClubs(data);
+          setCitySelected(data[0].city.name);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -67,9 +71,60 @@ const Clubs = () => {
       console.log(err);
     }
   };
-  const getClubById = () => {
+  useEffect(() => {
+    getAllCities();
+  }, []);
+  useEffect(() => {
+    if (cityId) getClubsByCityId();
+  }, [cityId, setCityId]);
+  useEffect(() => {});
+  const style = (id) => {
+    if (id % 2 == 0)
+      return {
+        color: "#B22727",
+        marginBottom: "20px",
+        padding: "5px",
+        width: "130px",
+        height: "100%",
+        marginRight: "20px",
+      };
+    else
+      return {
+        color: "#006E7F",
+        padding: "5px",
+        width: "130px",
+        height: "100%",
+        marginRight: "20px",
+      };
+  };
+  const mapMarkerStyle = (id) => {
+    if (id % 2 == 0) return { color: "#006E7F", marginRight: "10px" };
+    else return { color: "#B22727", marginRight: "10px" };
+  };
+  const styleBtnClub = (id) => {
+    if (pressMark === true && clubsAllowAccess.includes(id))
+      return {
+        color: "white",
+        marginRight: "10px",
+        backgroundColor: "#006E7F",
+        fontFamily: "'Montserrat', sans-serif",
+        padding: "8px",
+        width: "250px",
+        height: "100%",
+      };
+    else
+      return {
+        color: "#006E7F",
+        marginRight: "10px",
+        fontFamily: "'Montserrat', sans-serif",
+        width: "250px",
+        padding: "8px",
+        height: "100%",
+      };
+  };
+  const getClubsAllowAccess = () => {
     try {
-      fetch(`http://localhost:8080/api/city`, {
+      fetch(`http://localhost:8080/api/club/available`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -80,24 +135,19 @@ const Clubs = () => {
           if (response.ok) {
             return response.json();
           }
-          return Promise.reject("Cannot get club by id.");
+          return Promise.reject("Cannot fetch clubs.");
         })
         .then((data) => {
-          console.log(data);
-          setClubSelected(data);
+          const ids = data.map((d) => d.id);
+          setPressMark(true);
+          setClubsAllowAccess(ids);
         })
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {
-    getAllCities();
-  }, []);
-  useEffect(() => {
-    if (cityId) getClubsByCityId();
-  }, [cityId, setCityId]);
-  useEffect(() => {});
+
   return (
     <div className="parent">
       <MenuBar></MenuBar>
@@ -143,6 +193,41 @@ const Clubs = () => {
             >
               See our clubs
             </div>
+            <div
+              style={{
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginRight: "20px",
+              }}
+            >
+              {pressMark === false ? (
+                <Link
+                  style={{
+                    "margin-top": "auto",
+                    textDecoration: "none",
+                    "margin-bottom": "auto",
+                    "margin-left": "20px",
+                    "margin-right": "20px",
+                  }}
+                  onClick={getClubsAllowAccess}
+                >
+                  Mark subscription-based accessable clubs
+                </Link>
+              ) : (
+                <Link
+                  style={{
+                    "margin-top": "auto",
+                    textDecoration: "none",
+                    "margin-bottom": "auto",
+                    "margin-left": "20px",
+                    "margin-right": "20px",
+                  }}
+                  onClick={() => setPressMark(false)}
+                >
+                  Disable mark on subscription-based accessable clubs
+                </Link>
+              )}
+            </div>
           </div>
           <div
             style={{
@@ -167,18 +252,49 @@ const Clubs = () => {
                 <img
                   src="/locations.svg"
                   alt="image"
-                  style={{ width: "50%", padding: "20px" }}
+                  style={{ width: "43%", padding: "20px" }}
                 ></img>
               </div>
               {cities.length > 0 && (
-                <div style={{ width: "70%", margin: "auto" }}>
-                  {cities.map((city) => {
-                    return (
-                      <Button onClick={() => setCityId(city.id)} key={city.id}>
-                        {city.name}
-                      </Button>
-                    );
-                  })}
+                <div
+                  style={{
+                    border: "",
+                    width: "70%",
+                    margin: "auto",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: "25px",
+                      color: "#006E7F",
+                      marginBottom: "50px",
+                      // fontWeight:"bold"
+                    }}
+                  >
+                    Choose your city
+                  </p>
+                  <div
+                    style={{
+                      margin: "auto",
+                      display: "flex",
+                      width: "80%",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {cities.map((city) => {
+                      return (
+                        <Button
+                          style={style(city.id)}
+                          onClick={() => setCityId(city.id)}
+                          key={city.id}
+                        >
+                          <FaMapMarkerAlt style={mapMarkerStyle(city.id)} />{" "}
+                          {city.name}
+                        </Button>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -188,21 +304,36 @@ const Clubs = () => {
           <div
             style={{
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
+              marginTop: "30px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",
               width: "70%",
-              justifyContent: "center",
               marginLeft: "auto",
               marginRight: "auto",
             }}
           >
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <p
+              style={{
+                marginBottom: "40px",
+                fontSize: "20px",
+                color: "#006E7F",
+                // fontWeight: "bold",
+                textAlign: "center",
+              }}
+            >
+              Fit & Repeat clubs in <b>{citySelected}</b>
+            </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               {clubs.map((club) => {
                 return (
                   <Button
-                    style={{ marginRight: "10px", width: "300px" }}
+                    style={styleBtnClub(club.id)}
                     onClick={() => setClubSelected(club)}
                     key={club.id}
                   >
@@ -213,38 +344,44 @@ const Clubs = () => {
             </div>
           </div>
         )}
+
         {clubSelected && (
-          <div>
-            {clubSelected && (
-              <div
-                style={{
-                  width: "20%",
-                  "text-align": "center",
-                  "margin-top": "50px",
-                  padding: "20px",
-                  backgroundColor: "white",
-                  color: "#006E7F",
-                  "margin-left": "auto",
-                  "margin-right": "auto",
-                  "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                }}
-              >
-                <p>{clubSelected.name}</p>
-                <p>{clubSelected.address}</p>
-                <Button
-                  style={{
-                    backgroundColor: "#B22727",
-                    color: "white",
-                    "margin-top": "20px",
-                    "font-size": "100%",
-                    height: "100%",
-                  }}
-                  onClick={onOpenBuyMembershipPage}
-                >
-                  Continue
-                </Button>
-              </div>
-            )}
+          <div
+            style={{
+              width: "20%",
+              "text-align": "center",
+              "margin-top": "30px",
+              padding: "20px",
+              backgroundColor: "white",
+              color: "#006E7F",
+              "margin-left": "auto",
+              "margin-right": "auto",
+              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+            }}
+          >
+            <div>
+              <img
+                alt="image"
+                src="current_location.svg"
+                style={{ width: "50%" }}
+              ></img>
+            </div>
+            <p style={{ fontWeight: "bold", fontSize: "18px" }}>
+              {clubSelected.name}
+            </p>
+            <p>{clubSelected.address}</p>
+            <Button
+              style={{
+                backgroundColor: "#006E7Fcc",
+                color: "white",
+                "margin-top": "20px",
+                "font-size": "100%",
+                height: "40px",
+              }}
+              onClick={onOpenBuyMembershipPage}
+            >
+              Continue
+            </Button>
           </div>
         )}
       </div>

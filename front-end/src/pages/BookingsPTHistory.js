@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import PTSession from "../components/PTSession";
 import MenuBar from "../components/MenuBar";
+import PTSession from "../components/PTSession";
 
 const BookingsPTHistory = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [bookingsPT, setBookingsPT] = useState();
-
   const getBookingsPTHistory = () => {
     try {
       fetch(`http://localhost:8080/api/pt-session/bookings-history`, {
@@ -25,6 +24,7 @@ const BookingsPTHistory = () => {
           );
         })
         .then((data) => {
+          console.log(data)
           setBookingsPT(data);
         })
         .catch((err) => console.log(err));
@@ -84,29 +84,35 @@ const BookingsPTHistory = () => {
           </div>
           <div
             style={{
-              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "50px",
+              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              marginTop: "50px",
               display: "flex",
               padding: "20px",
-              "flex-direction": "column",
-              width: "80%",
+              flexDirection: "column",
+              width: "70%",
               justifyContent: "center",
-              "margin-left": "10%",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
             <div>
-              <img
-                src="/booked.svg"
-                alt="image"
-                style={{ width: "20%" }}
-              ></img>
+              <img src="/booked.svg" alt="image" style={{ width: "25%" }}></img>
             </div>
-            {bookingsPT &&
-              bookingsPT.map((bookingPT) => {
-                return (
-                  <PTSession key={bookingPT.id} parentToChild={bookingPT} />
-                );
-              })}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                marginTop: "50px",
+              }}
+            >
+              {bookingsPT &&
+                bookingsPT.map((bookingPT) => {
+                  return (
+                    <PTSession key={bookingPT.id} parentToChild={bookingPT} />
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

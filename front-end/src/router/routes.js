@@ -43,7 +43,7 @@ const router = createBrowserRouter(
       <Route path="/bookings" element={<BookingClasses />}></Route>
       <Route path="/personal-training" element={<PersonalTraining />}></Route>
       <Route path="/trainer/:id" element={<TrainerPage />}></Route>
-      <Route path="/buy-training" element={<BuyPersonalTraining />}></Route>
+      <Route path="/buy-training/:trainingId/:trainerId" element={<BuyPersonalTraining />}></Route>
       <Route path="/my-PT" element={<UserPT />}></Route>
       <Route
         path="/bookings-history"

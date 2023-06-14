@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import MenuBar from "../components/MenuBar";
 import PTSession from "../components/PTSession";
-
 const BookingsPT = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [bookingsPT, setBookingsPT] = useState();
@@ -87,24 +86,34 @@ const BookingsPT = () => {
               display: "flex",
               padding: "20px",
               "flex-direction": "column",
-              width: "80%",
+              width: "70%",
               justifyContent: "center",
-              "margin-left": "10%",
+              marginLeft: "auto",
+              marginRight: "auto",
             }}
           >
             <div>
               <img
                 src="/pt-history.svg"
                 alt="image"
-                style={{ width: "20%" }}
+                style={{ width: "25%" }}
               ></img>
             </div>
-            {bookingsPT &&
-              bookingsPT.map((bookingPT) => {
-                return (
-                  <PTSession key={bookingPT.id} parentToChild={bookingPT} />
-                );
-              })}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexWrap: "wrap",
+                marginTop: "50px",
+              }}
+            >
+              {bookingsPT &&
+                bookingsPT.map((bookingPT) => {
+                  return (
+                    <PTSession key={bookingPT.id} parentToChild={bookingPT} />
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

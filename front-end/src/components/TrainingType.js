@@ -19,13 +19,7 @@ const TrainingType = (props) => {
     }
   }, []);
   const handleOnClickChoose = () => {
-    navigate("/buy-training", {
-      state: {
-        trainingId: training.id,
-        trainerName: trainer.name,
-        trainerId: trainer.id,
-      },
-    });
+    navigate(`/buy-training/${training.id}/${trainer.id}`);
   };
   return (
     <div
@@ -41,9 +35,9 @@ const TrainingType = (props) => {
       <p>{training.price} EUR</p>
       <Button
         style={{
-          backgroundColor: "#B22727",
+          backgroundColor: "#006E7F",
           color: "white",
-          "margin-top": "20px",
+          marginTop: "20px",
           height: "35px",
         }}
         onClick={handleOnClickChoose}

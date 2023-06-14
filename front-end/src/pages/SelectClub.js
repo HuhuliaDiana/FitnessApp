@@ -127,7 +127,7 @@ function SelectClub() {
             "margin-left": "10%",
             height: "40vh",
             width: "80%",
-            "margin-top": "10%",
+            "margin-top": "100px",
           }}
         >
           <div style={{ width: "30%", margin: "auto" }}>
@@ -150,10 +150,9 @@ function SelectClub() {
             >
               <p
                 style={{
-                  margin: "auto",
-                  "margin-top": "50px",
-                  width: "50%",
+                  marginTop: "70px",
                   color: "white",
+                  fontSize: "23px",
                 }}
               >
                 Here is your first step to a healthy life!
@@ -164,10 +163,11 @@ function SelectClub() {
                   margin: "auto",
                   "margin-top": "30px",
                   color: "white",
+                  fontSize: "17px",
                 }}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Empower your journey, unleash your potential and transform your
+                life!
               </p>
             </div>
             <div>
@@ -186,7 +186,7 @@ function SelectClub() {
                       padding: "8px",
                       backgroundColor: "white",
                       width: "40%",
-                      "margin-top": "50px",
+                      marginTop: "80px",
                       justifyContent: "space-between",
                     }}
                   >
@@ -211,17 +211,26 @@ function SelectClub() {
                 "margin-top": "50px",
                 padding: "20px",
                 backgroundColor: "white",
-                color:"#006E7F",
+                color: "#006E7F",
                 "margin-left": "auto",
                 "margin-right": "auto",
                 "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               }}
             >
-              <p>{clubSelected.name}</p>
+              <div>
+                <img
+                  alt="image"
+                  src="current_location.svg"
+                  style={{ width: "50%" }}
+                ></img>
+              </div>
+              <p style={{ fontWeight: "bold", fontSize: "20px" }}>
+                {clubSelected.name}
+              </p>
               <p>{clubSelected.address}</p>
               <Button
                 style={{
-                  backgroundColor: "#B22727",
+                  backgroundColor: "#006E7F",
                   color: "white",
                   "margin-top": "20px",
                   "font-size": "100%",

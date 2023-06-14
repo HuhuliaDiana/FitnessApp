@@ -65,7 +65,7 @@ const Home = () => {
         <div className="child">
           <div
             style={{
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              // boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               marginTop: "50px",
               display: "flex",
               padding: "20px",
@@ -110,3 +110,4 @@ const Home = () => {
   );
 };
 export default Home;
+//motto: Empower Your Fitness Journey

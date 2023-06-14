@@ -95,7 +95,7 @@ const BookPTSession = () => {
           return Promise.reject("Cannot get PT of current user.");
         })
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           const endDate = moment(new Date(data.startDate))
             .add(data.personalTraining.noDaysValidity, "days")
             .toISOString()
@@ -112,7 +112,7 @@ const BookPTSession = () => {
     }
   };
   useEffect(() => {
-    console.log("selectedtimeslot " + selectedTimeSlot);
+    // console.log("selectedtimeslot " + selectedTimeSlot);
     if (selectedTimeSlot) {
       setLocalDate(localBookingDate);
       setLocalTime(selectedTimeSlot.split(" - ")[0]);
@@ -120,7 +120,6 @@ const BookPTSession = () => {
   }, [selectedTimeSlot]);
   const bookPTSession = () => {
     try {
-      console.log("in book session: " + localBookingDate + " - " + localTime);
       fetch(`http://localhost:8080/api/pt-session`, {
         headers: {
           "Content-Type": "application/json",
@@ -142,7 +141,7 @@ const BookPTSession = () => {
   };
 
   const onBookingTimes = (data) => {
-    console.log(data);
+    console.log(data.localBookingDate);
     setBookingTimes(data.bookingTimes);
     setBookingDate(data.bookingDate);
     setSelectedTimeSlot(data.selectedTimeSlot);
@@ -199,54 +198,9 @@ const BookPTSession = () => {
                 marginLeft: "20px",
               }}
             >
-              Book a date for a PT session
+              Book a personal training session
             </div>
           </div>
-          {/* {userPT && (
-            <div
-              style={{
-                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "50px",
-                display: "flex",
-                padding: "20px",
-                flexDirection: "column",
-                width: "60%",
-                justifyContent: "center",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                <div style={{ width: "70%", margin: "auto" }}>
-                  <p>
-                    PERSONAL TRAINING:{" "}
-                    {userPT.personalTraining.personalTrainingType.name}
-                  </p>
-                  <p>
-                    Sessions to use: {userPT.personalTraining.sessionsNumber}
-                  </p>
-                  <p>
-                    Available from {userPT.startDate} to {endDatePT}
-                  </p>
-                  <p>Trainer: {userPT.personalTrainer.name}</p>
-                  <p>Club: WORLD CLASS PARKLAKE</p>
-                  <p>Sessions left: {userPT.noSessionsLeft}</p>
-                </div>
-                <div style={{ margin: "auto" }}>
-                  <img
-                    alt="image"
-                    src="pt-booked.svg"
-                    style={{ width: "50%", padding: "20px" }}
-                  ></img>
-                </div>
-              </div>
-            </div>
-          )} */}
           {userPT && (
             <div
               style={{
@@ -255,29 +209,16 @@ const BookPTSession = () => {
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
-                width: "60%",
+                width: "45%",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
-                marginBottom:"150px"
               }}
             >
-              <div>
+              <div style={{ color: "#006E7F", fontSize: "20px" }}>
                 Start your personal training with{" "}
                 <b>{userPT.personalTrainer.name}</b>
                 <br></br> at WORLD CLASS PARKLAKE
-              </div>
-              <div
-                className="k-mb-4 k-font-weight-bold"
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-start",
-                  border: "2px solid green",
-                  marginTop: "30px",
-                  padding: "10px",
-                }}
-              >
-                Pick a date
               </div>
               <div
                 style={{
@@ -288,86 +229,152 @@ const BookPTSession = () => {
               >
                 <div
                   style={{
-                    width: "50%",
+                    width: "90%",
                     display: "flex",
+                    border: "",
                   }}
                 >
                   <img
                     alt="image"
                     src="/calendar.svg"
                     style={{
-                      width: "70%",
+                      width: "65%",
                       margin: "auto",
+                      padding: "50px",
                     }}
                   ></img>
                 </div>
                 <div
                   style={{
-                    marginLeft: "10%",
-                    width: "50%",
+                    // marginLeft: "10%",
+                    display: "flex",
+                    flexDirection: "column",
+                    margin: "auto",
+                    border: "",
+                    width: "100%",
                   }}
                 >
-                  <PickDateTimeOfPTSession
-                    onBookingTimes={onBookingTimes}
-                    parentToChild={{ trainerId, startDateOfPT, noDaysValidity }}
-                  />
+                  <p
+                    style={{
+                      textAlign: "center",
+                      fontSize: "20px",
+                      color: "#006E7F",
+                      // fontWeight: "bold",
+                      marginBottom: "30px",
+                    }}
+                  >
+                    Pick a start date
+                  </p>
+                  <div
+                    style={{
+                      justifyContent: "center",
+                    }}
+                  >
+                    <PickDateTimeOfPTSession
+                      onBookingTimes={onBookingTimes}
+                      parentToChild={{
+                        trainerId,
+                        startDateOfPT,
+                        noDaysValidity,
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-              <div>
-                {bookingTimes.length > 0 && (
-                  <div>
-                    <div
-                      className="k-mb-4 k-font-weight-bold"
-                      style={{
-                        border: "2px solid green",
-                        display: "flex",
-                        justifyContent: "flex-start",
-                        padding:"10px"
-                      }}
-                    >
-                      Select a time slot
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        width: "60%",
-                      }}
-                    >
-                      {bookingTimes.map((time) => {
-                        return (
-                          <Button
-                            style={{ backgroundColor: "", color: "" }}
-                            key={time}
-                            className="k-button k-mb-4"
-                            onClick={(e) => {
-                              setSelectedTimeSlot(time);
-                            }}
-                          >
-                            {time}
-                          </Button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
-                {bookingDate && selectedTimeSlot ? (
-                  <div>
-                    Date and time slot selected:
-                    <p>
-                      {bookingDate.toDateString()} at {selectedTimeSlot}
-                    </p>
-                  </div>
-                ) : null}
-              </div>
-              {localTime && (
-                <div>
-                  <Button onClick={bookPTSession}>Book PT </Button>
-                  {errMsg && <p style={{color:"red"}}>{errMsg}</p>}
-                </div>
-              )}
             </div>
           )}
+        </div>
+        {bookingTimes.length > 0 && (
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              marginTop: "40px",
+              display: "flex",
+              padding: "20px",
+              flexDirection: "column",
+              width: "45%",
+              justifyContent: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            <div
+              style={{
+                border: "",
+                display: "flex",
+                // justifyContent:"center",
+                padding: "10px",
+                marginBottom: "30px",
+                fontSize: "20px",
+                color: "#006E7F",
+              }}
+            >
+              Select a time slot
+            </div>
+            <div
+              style={{
+                display: "flex",
+              }}
+            >
+              {bookingTimes.map((time) => {
+                return (
+                  <Button
+                    style={{
+                      border: "1px solid #006E7F",
+                      // width: "140px",
+                      marginRight: "20px",
+                    }}
+                    key={time}
+                    className="k-button k-mb-4"
+                    onClick={(e) => {
+                      setSelectedTimeSlot(time);
+                    }}
+                  >
+                    {time}
+                  </Button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {bookingDate && selectedTimeSlot && (
+          <div
+            style={{
+              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              marginTop: "40px",
+              display: "flex",
+              padding: "20px",
+              flexDirection: "column",
+              width: "20%",
+              justifyContent: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+              textAlign: "center",
+              color: "#006E7F",
+            }}
+          >
+            <p>Date and time slot selected:</p>
+            {bookingDate.toDateString()} at {selectedTimeSlot}
+            {localTime && (
+              <div>
+                <Button
+                  style={{
+                    backgroundColor: "#006E7F",
+                    color: "white",
+                    fontFamily: "'Montserrat',sans-serif",
+                    marginTop: "30px",
+                  }}
+                  onClick={bookPTSession}
+                >
+                  Book PT{" "}
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+        <div style={{ textAlign: "center" }}>
+          {errMsg && <p style={{ color: "#B22727" }}>{errMsg}</p>}
         </div>
       </div>
     </div>

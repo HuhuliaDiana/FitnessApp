@@ -154,9 +154,10 @@ const BuyMembership = () => {
               display: "flex",
               padding: "20px",
               flexDirection: "column",
-              width: "50%",
+              width: "44%",
               justifyContent: "center",
-              marginLeft: "25%",
+              marginLeft: "28%",
+
             }}
           >
             <div
@@ -174,7 +175,14 @@ const BuyMembership = () => {
                   marginBottom: "auto",
                 }}
               >
-                <div style={{ marginBottom: "5%", fontSize: "20px" }}>
+                <div
+                  style={{
+                    marginBottom: "5%",
+                    fontSize: "18px",
+                    color: "#006E7F",
+                    fontWeight: "bold",
+                  }}
+                >
                   Pick a date to start your subscription
                 </div>
                 <div style={{}}>
@@ -198,13 +206,14 @@ const BuyMembership = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                marginTop: "40px",
               }}
             >
-              <div style={{ width: "50%", padding: "20px" }}>
+              <div style={{ width: "30%" ,margin:"auto"}}>
                 <img
                   src="/info-invoice.svg"
                   alt="image"
-                  style={{ width: "70%" }}
+                  style={{ width: "100%" }}
                 ></img>
               </div>
               <div
@@ -217,8 +226,15 @@ const BuyMembership = () => {
                 }}
               >
                 {user && (
-                  <div>
-                    <p style={{ marginBottom: "50px", fontSize: "20px" }}>
+                  <div style={{}}>
+                    <p
+                      style={{
+                        marginBottom: "50px",
+                        fontSize: "18px",
+                        color: "#006E7F",
+                        fontWeight: "bold",
+                      }}
+                    >
                       Invoice details
                     </p>
                     <Form
@@ -290,6 +306,7 @@ const BuyMembership = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
+                marginTop: "40px",
               }}
             >
               <div
@@ -300,7 +317,14 @@ const BuyMembership = () => {
                 }}
               >
                 <div>
-                  <p style={{ marginBottom: "50px", fontSize: "20px" }}>
+                  <p
+                    style={{
+                      marginBottom: "50px",
+                      fontSize: "18px",
+                      color: "#006E7F",
+                      fontWeight: "bold",
+                    }}
+                  >
                     Payment
                   </p>
                 </div>
@@ -334,7 +358,13 @@ const BuyMembership = () => {
                 </div>
                 <div>
                   <Button
-                    style={{ backgroundColor: "#B22727", color: "white",padding:"8px",height:"100%",width:"150px" }}
+                    style={{
+                      backgroundColor: "#006E7F",
+                      color: "white",
+                      padding: "8px",
+                      height: "100%",
+                      width: "150px",
+                    }}
                     onClick={buy}
                   >
                     Go to payment

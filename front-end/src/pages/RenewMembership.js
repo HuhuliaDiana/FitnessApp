@@ -60,19 +60,23 @@ const RenewMembership = () => {
     getMembershipsForRenew();
   }, []);
   return (
-    <div className="parent">
-      <MenuBar></MenuBar>
-      <div className="child">
-        {memberships &&
-          memberships.map((membership) => {
-            return (
-              <MembershipType
-                key={membership.id}
-                parentToChild={{ subscription: membership, clubId: clubId }}
-              />
-            );
-          })}
-      </div>
+    <div
+      style={{
+        border: "",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+      }}
+    >
+      {memberships &&
+        memberships.map((membership) => {
+          return (
+            <MembershipType
+              key={membership.id}
+              parentToChild={{ subscription: membership, clubId: clubId }}
+            />
+          );
+        })}
     </div>
   );
 };

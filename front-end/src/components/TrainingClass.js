@@ -13,21 +13,26 @@ const TrainingClass = (props) => {
   const [beginningTimeString, setBeginningTimeString] = useState("");
   const getHour = () => {
     const beginningTime = new Date(trainingClass.classDate);
-    const beginningTimeHour = beginningTime.getUTCHours();
+    let beginningTimeHour = beginningTime.getUTCHours();
 
-    const beginningTimeMinutes = beginningTime.getUTCMinutes();
+    let beginningTimeMinutes = beginningTime.getUTCMinutes();
+    if (beginningTimeHour.toString().length === 1)
+      beginningTimeHour = "0" + beginningTimeHour;
 
+    if (beginningTimeMinutes === 0) beginningTimeMinutes += "0";
     const beginningTimeString = beginningTimeHour + ":" + beginningTimeMinutes;
-    if (beginningTimeMinutes === 0)
-      setBeginningTimeString(beginningTimeString + "0");
-    else setBeginningTimeString(beginningTimeString);
 
-    const endingTime = new Date(beginningTime.getTime() + 60000 * duration);
-    const endingTimeHour = endingTime.getUTCHours();
-    const endingTimeMinutes = endingTime.getUTCMinutes();
+    setBeginningTimeString(beginningTimeString);
+
+    let endingTime = new Date(beginningTime.getTime() + 60000 * duration);
+    let endingTimeHour = endingTime.getUTCHours();
+    let endingTimeMinutes = endingTime.getUTCMinutes();
+    if (endingTimeMinutes === 0) endingTimeMinutes += "0";
+    if (endingTimeHour.toString().length === 1)
+      endingTimeHour = "0" + endingTimeHour;
     const endingTimeString = endingTimeHour + ":" + endingTimeMinutes;
-    if (endingTimeMinutes === 0) setEndingTimeString(endingTimeString + "0");
-    else setEndingTimeString(endingTimeString);
+
+    setEndingTimeString(endingTimeString);
   };
   useEffect(() => {
     getHour();
@@ -49,7 +54,9 @@ const TrainingClass = (props) => {
           return Promise.reject("Cannot get status of class by id.");
         })
         .then((data) => {
-          setStatus(data.message);
+          if (data.message.includes("You already booked"))
+            setStatus(data.message.split(":")[0]);
+          else setStatus(data.message);
         })
         .catch((err) => console.log(err));
     } catch (err) {

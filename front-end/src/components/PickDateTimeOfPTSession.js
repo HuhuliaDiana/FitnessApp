@@ -1,7 +1,6 @@
-import { Calendar } from "@progress/kendo-react-dateinputs";
+import { DatePicker } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { Button } from "antd";
 
 const allTimes = [
   "07:00 - 08:00",
@@ -16,7 +15,7 @@ const PickDateTimeOfPTSession = (props) => {
   const trainerId = props.parentToChild.trainerId;
   const startDateOfPT = props.parentToChild.startDateOfPT;
   const noDaysValidity = props.parentToChild.noDaysValidity;
-  const [bookingDate, setBookingDate] = useState(null);
+  const [bookingDate, setBookingDate] = useState();
   const [minDate, setMinDate] = useState(new Date());
   const [maxDate, setMaxDate] = useState(new Date());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
@@ -26,10 +25,13 @@ const PickDateTimeOfPTSession = (props) => {
   const [localBookingDate, setLocalBookingDate] = useState();
 
   useEffect(() => {
+    console.log("booking date has changed");
     getPTSessionByTrainerId();
   }, [bookingDate]);
 
   const onDateChange = (e) => {
+    console.log("bookingTimes");
+    console.log(bookingTimes);
     let bkgTimes = bookingTimes;
     let timeSlot = selectedTimeSlot;
 
@@ -40,18 +42,18 @@ const PickDateTimeOfPTSession = (props) => {
     setSelectedTimeSlot(null);
     timeSlot = null;
     setLocalBookingDate(
-      moment(e.value).add(1, "days").toISOString().split("T")[0]
+      moment(new Date(e)).add(1, "days").toISOString().split("T")[0]
     );
-    setBookingDate(e.value);
+    setBookingDate(new Date(e));
 
     props.onBookingTimes({
       bookingTimes: bkgTimes,
       selectedTimeSolt: timeSlot,
-      localBookingDate: moment(e.value)
+      localBookingDate: moment(new Date(e))
         .add(1, "days")
         .toISOString()
         .split("T")[0],
-      bookingDate: e.value,
+      bookingDate: new Date(e),
     });
   };
 
@@ -80,6 +82,8 @@ const PickDateTimeOfPTSession = (props) => {
           const array = dataFilteredByChosenDate.map(
             (d) => d.startSessionTime + " - " + d.endSessionTime
           );
+          console.log("session hours reserved ");
+          console.log(array);
           setSessionHoursReserved(array);
         })
         .catch((err) => console.log(err));
@@ -88,6 +92,7 @@ const PickDateTimeOfPTSession = (props) => {
     }
   };
   useEffect(() => {
+    console.log(new Date(moment()));
     if (startDateOfPT) {
       const min =
         new Date(startDateOfPT) > new Date(moment())
@@ -95,6 +100,7 @@ const PickDateTimeOfPTSession = (props) => {
           : new Date(moment());
       setMinDate(min);
     }
+
     if (noDaysValidity) {
       const max = new Date(moment(minDate).add(4, "days"));
       const finishDateOfPT = new Date(
@@ -111,15 +117,18 @@ const PickDateTimeOfPTSession = (props) => {
     if (sessionHoursReserved.length !== 0) {
       const extract = allTimes.filter((t) => !sessionHoursReserved.includes(t));
       setBookingTimes(extract.sort());
+      console.log("booking times");
+      console.log(extract.sort());
+    } else {
+      setBookingTimes(allTimes.sort());
     }
   }, [sessionHoursReserved]);
 
   useEffect(() => {
-    console.log("send info to parent");
-    console.log(localBookingDate);
+    // console.log(localBookingDate);
 
     if (selectedTimeSlot !== null) {
-      console.log(selectedTimeSlot.split(" - ")[0]);
+      // console.log(selectedTimeSlot.split(" - ")[0]);
       props.onSelectDateTime({
         localDate: localBookingDate,
         localTime: selectedTimeSlot.split(" - ")[0],
@@ -128,17 +137,14 @@ const PickDateTimeOfPTSession = (props) => {
   }, [selectedTimeSlot]);
 
   return (
-    <div className="k-my-8">
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div className="k-flex k-display-flex k-mb-4">
-          <Calendar
-            value={bookingDate}
-            onChange={onDateChange}
-            min={minDate}
-            max={maxDate}
-          />
-        </div>
-      </div>
+    <div>
+      <DatePicker
+        defaultValue={bookingDate}
+        onChange={onDateChange}
+        // min={minDate}
+        // max={maxDate}
+        disabledDate={(d) => d.isBefore(minDate) || d.isAfter(maxDate)}
+      />
     </div>
   );
 };
