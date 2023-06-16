@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TrainingClassesByDay from "../components/TrainingClassesByDay";
 
-const TrainingClassesByClub = (props) => {
+const TrainingClassesByClubAndDate = (props) => {
   const [data, setData] = useState([]);
   const [namesOfWeekDays, setNamesOfWeekDays] = useState([]);
 
@@ -45,13 +45,15 @@ const TrainingClassesByClub = (props) => {
     return uniqueArray;
   };
   return (
-    <div key={club.id} style={{}}>
+    <div key={club.id}>
       <p
         style={{
-          padding: "10px",
+          padding: "15px",
           backgroundColor: "#006E7F",
           color: "white",
-          fontSize: "17px",
+          fontSize: "20px",
+          marginBottom: "0px",
+          fontWeight: "bold",
         }}
       >
         {club.name}
@@ -63,27 +65,28 @@ const TrainingClassesByClub = (props) => {
               <div
                 key={nameOfWeekDay.id}
                 style={{
-                  "margin-right": "20px",
-                  width: "200px",
+                  width: "100%",
                 }}
               >
                 <div
                   style={{
-                    backgroundColor: "#B22727",
+                    backgroundColor: "#EE5007",
                     color: "white",
                     padding: "10px",
                     "box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+                    marginBottom: "30px",
                   }}
                 >
                   <text>
-                    <b>{nameOfWeekDay.nameOfWeekDay}</b>
-                  </text>
-                  <br></br>
-                  <text style={{ fontSize: "15px" }}>
-                    {nameOfWeekDay.dayOfMonth} {nameOfWeekDay.month}
+                    <b>
+                      {nameOfWeekDay.nameOfWeekDay} - {nameOfWeekDay.dayOfMonth}{" "}
+                      {nameOfWeekDay.month}
+                    </b>
                   </text>
                 </div>
-                <TrainingClassesByDay parentToChild={{ nameOfWeekDay, data }} />
+                <TrainingClassesByDay
+                  parentToChild={{ id: 1, nameOfWeekDay, data }}
+                />
               </div>
             );
           })}
@@ -91,4 +94,4 @@ const TrainingClassesByClub = (props) => {
     </div>
   );
 };
-export default TrainingClassesByClub;
+export default TrainingClassesByClubAndDate;

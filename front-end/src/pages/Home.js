@@ -57,6 +57,8 @@ const Home = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat

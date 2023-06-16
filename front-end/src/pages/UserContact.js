@@ -110,6 +110,8 @@ const UserContact = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -139,7 +141,7 @@ const UserContact = () => {
           <div
             style={{
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
+              marginTop: "100px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",
@@ -153,7 +155,7 @@ const UserContact = () => {
               <img
                 alt="image"
                 src="/contact.svg"
-                style={{ width: "50%", padding: "20px" }}
+                style={{ width: "60%", padding: "20px" }}
               ></img>
             </div>
             {user && (

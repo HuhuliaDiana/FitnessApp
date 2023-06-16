@@ -132,9 +132,6 @@ const PersonalTraining = () => {
     getTrainers();
   }, []);
 
-  // const onSearch = (value) => {
-  //   setTrainerName(value);
-  // };
 
   const getTrainers = () => {
     try {
@@ -184,10 +181,6 @@ const PersonalTraining = () => {
     getTrainers();
   }, [clubId, setClubId, trainerName, setTrainerName]);
 
-  // const handleOnClickCancel = () => {
-  //   setTrainerName("");
-  // };
-
   return (
     <div className="parent">
       <MenuBar></MenuBar>
@@ -210,6 +203,8 @@ const PersonalTraining = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat

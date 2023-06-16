@@ -53,6 +53,8 @@ const BookingsPT = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -82,7 +84,7 @@ const BookingsPT = () => {
           <div
             style={{
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "50px",
+              "margin-top": "100px",
               display: "flex",
               padding: "20px",
               "flex-direction": "column",

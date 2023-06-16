@@ -5,10 +5,12 @@ const TrainingClass = (props) => {
   const trainingClass = props.parentToChild;
   const navigate = useNavigate();
 
+  const [className, setClassName] = useState("");
+
   const duration = Number(trainingClass.trainingClassHour.timerDuration);
   const [endingTimeString, setEndingTimeString] = useState("");
   const accessToken = localStorage.getItem("accessToken");
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState("");
 
   const [beginningTimeString, setBeginningTimeString] = useState("");
   const getHour = () => {
@@ -37,6 +39,17 @@ const TrainingClass = (props) => {
   useEffect(() => {
     getHour();
     getStatusOfClass();
+    const trainingClassName = trainingClass.trainingClassHour.className;
+    if (trainingClassName.includes("_")) {
+      let className = "";
+      const array = trainingClassName.split("_");
+      array.forEach((a) => {
+        className += a + " ";
+      });
+      setClassName(className);
+    } else {
+      setClassName(trainingClassName);
+    }
   });
   const getStatusOfClass = () => {
     try {
@@ -63,33 +76,53 @@ const TrainingClass = (props) => {
       console.log(err);
     }
   };
+  const styleStatus = () => {
+    if (status.includes("available")) {
+      return { color: "#006E7F" };
+    }
+    return { color: "#EE5007" };
+  };
 
   return (
     <div
       style={{
-        boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+        boxShadow:
+          "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
         padding: "5px",
         fontSize: "15px",
+        fontWeight: "bold",
+        height: "20vh",
+        //puse pt pagina booked classes
+        marginRight:"20px",
+        width: "200px"
+        //
       }}
       onClick={() => {
         navigate(`/schedule/${trainingClass.id}`);
       }}
     >
-      <p>
-        <b>
+      <div>
+        <p style={{ color: "#006E7F" }}>
           {beginningTimeString} - {endingTimeString}
-        </b>
-      </p>
-      <p style={{ color: "#EE5007" }}>
-        {trainingClass.trainingClassHour.className}
-      </p>
-      <p>{trainingClass.trainerName}</p>
-
-      <b style={{ color: "#006E7F" }}>
-        {trainingClass.trainingClassHour.trainingClassType.name}
-      </b>
-
-      <p>{status}</p>
+        </p>
+        {className && <p style={{ color: "#B22727" }}>{className}</p>}
+        <p style={{ color: "#EE5007" }}>
+          {trainingClass.trainingClassHour.trainingClassType.name}
+        </p>
+        <p style={{ color: "#006E7F", fontSize: "14px" }}>
+          {trainingClass.trainerName}
+        </p>
+      </div>
+      <div
+        style={{
+          height: "30%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <p style={styleStatus()}>{status}</p>
+      </div>
     </div>
   );
 };

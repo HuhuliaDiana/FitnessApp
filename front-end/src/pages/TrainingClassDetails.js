@@ -24,7 +24,6 @@ const TrainingClassDetails = () => {
   const [className, setClassName] = useState("");
   const [trainingType, setTrainingType] = useState([]);
   const [equipment, setEquipment] = useState([]);
-  // const classDetails = ClassDetails;
 
   const getStatusOfClass = () => {
     try {
@@ -247,6 +246,8 @@ const TrainingClassDetails = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -416,6 +417,7 @@ const TrainingClassDetails = () => {
                       fontSize: "20px",
                       display: "flex",
                       justifyContent: "flex-start",
+                      fontWeight:"bold"
                     }}
                   >
                     Type of training
@@ -436,8 +438,8 @@ const TrainingClassDetails = () => {
                               marginRight: "30px",
                               backgroundColor: "#F8CB2E",
                               fontSize: "17px",
-                              color: "#B22727",
-                              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                              color: "#006E7F",
+                              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
                             }}
                           >
                             {type}
@@ -459,6 +461,8 @@ const TrainingClassDetails = () => {
                       fontSize: "20px",
                       display: "flex",
                       justifyContent: "flex-start",
+                      fontWeight:"bold"
+
                     }}
                   >
                     Equipment used
@@ -479,7 +483,7 @@ const TrainingClassDetails = () => {
                               padding: "5px 22px 5px 22px",
                               color: "white",
                               marginRight: "30px",
-                              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
                             }}
                           >
                             {type}
@@ -496,6 +500,8 @@ const TrainingClassDetails = () => {
                     marginTop: "50px",
                     color: "#006E7F",
                     fontSize: "22px",
+                    fontWeight:"bold"
+
                   }}
                 >
                   {status}

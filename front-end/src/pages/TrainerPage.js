@@ -69,6 +69,8 @@ const TrainerPage = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -91,13 +93,13 @@ const TrainerPage = () => {
                 "margin-left": "20px",
               }}
             >
-              Choose a personal training
+              Choose a Personal Training
             </div>
           </div>
           <div
             style={{
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "50px",
+              "margin-top": "100px",
               display: "flex",
               width: "80%",
               "margin-left": "10%",
@@ -125,14 +127,14 @@ const TrainerPage = () => {
                   fontSize: "25px",
                 }}
               >
-                {trainer && <p style={{color:"#006E7F"}}>{trainer.name}</p>}
+                {trainer && <p style={{ color: "#006E7F",fontWeight:"bold" }}>{trainer.name}</p>}
               </div>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   "flex-wrap": "wrap",
-                  padding:"40px"
+                  padding: "40px",
                 }}
               >
                 {trainings.length !== 0 &&

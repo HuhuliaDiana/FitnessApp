@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import MenuBar from "../components/MenuBar";
 
 import moment from "moment";
-import RenewMembership from "./RenewMembership";
-import UpgradeMembership from "./UpgradeMembership";
+import RenewMembership from "../components/RenewMembership";
+import UpgradeMembership from "../components/UpgradeMembership";
 const UserMembership = () => {
   const accessToken = localStorage.getItem("accessToken");
   const navigate = useNavigate();
@@ -223,6 +223,8 @@ const UserMembership = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color: "#006E7F",
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -545,18 +547,10 @@ const UserMembership = () => {
               color: "#006E7F",
               "margin-left": "auto",
               "margin-right": "auto",
-              // marginBottom: "50px",
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
             }}
           >
-            {/* <div>
-              <img
-                alt="image"
-                src="current_location.svg"
-                style={{ width: "50%" }}
-              ></img>
-            </div> */}
-            <p>{club.name}</p>
+            <p style={{ fontSize: "20px", fontWeight: "bold" }}>{club.name}</p>
             <p> {club.address}</p>
             <Button
               onClick={handleOnClickTransfer}

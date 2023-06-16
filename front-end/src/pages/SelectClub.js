@@ -113,135 +113,164 @@ function SelectClub() {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color: "#006E7F",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
           </p>
         </div>
-        <div
-          className="child"
-          style={{
-            "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-            display: "flex",
-            "justify-content": "center",
-            "margin-left": "10%",
-            height: "40vh",
-            width: "80%",
-            "margin-top": "100px",
-          }}
-        >
-          <div style={{ width: "30%", margin: "auto" }}>
-            <img src="/select_club.svg" alt="image" style={{ width: "90%" }} />
-          </div>
+        <div className="child">
           <div
             style={{
-              width: "60%",
+              boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
               display: "flex",
-              "flex-direction": "column",
-              "box-shadow":
-                "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
+              height: "50px",
+              flexDirection: "row",
+              justifyContent: "space-between",
             }}
           >
             <div
               style={{
-                backgroundColor: "#006E7F",
-                height: "50%",
+                marginTop: "auto",
+                marginBottom: "auto",
+                marginLeft: "20px",
+                // color:"#B22727"
+                // fontSize:"20px"
               }}
             >
-              <p
-                style={{
-                  marginTop: "70px",
-                  color: "white",
-                  fontSize: "23px",
-                }}
-              >
-                Here is your first step to a healthy life!
-              </p>
-              <p
-                style={{
-                  width: "80%",
-                  margin: "auto",
-                  "margin-top": "30px",
-                  color: "white",
-                  fontSize: "17px",
-                }}
-              >
-                Empower your journey, unleash your potential and transform your
-                life!
-              </p>
-            </div>
-            <div>
-              <Dropdown
-                menu={{ items: clubsDropdown, onClick }}
-                style={{ width: "10px" }}
-              >
-                <a
-                  onClick={(e) => {
-                    e.preventDefault();
-                  }}
-                >
-                  <Space
-                    style={{
-                      "box-shadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                      padding: "8px",
-                      backgroundColor: "white",
-                      width: "40%",
-                      marginTop: "80px",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    {clubName}
-                    <DownOutlined
-                      style={{
-                        "margin-left": "100px",
-                      }}
-                    ></DownOutlined>
-                  </Space>
-                </a>
-              </Dropdown>
+              Select a club
             </div>
           </div>
-        </div>
-        <div>
-          {clubSelected && (
+          <div
+            style={{
+              "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+              display: "flex",
+              "justify-content": "center",
+              "margin-left": "10%",
+              height: "40vh",
+              width: "80%",
+              marginTop: "100px",
+            }}
+          >
+            <div style={{ width: "30%", margin: "auto" }}>
+              <img
+                src="/select_club.svg"
+                alt="image"
+                style={{ width: "90%" }}
+              />
+            </div>
             <div
               style={{
-                width: "20%",
-                "text-align": "center",
-                "margin-top": "50px",
-                padding: "20px",
-                backgroundColor: "white",
-                color: "#006E7F",
-                "margin-left": "auto",
-                "margin-right": "auto",
-                "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                width: "60%",
+                display: "flex",
+                "flex-direction": "column",
+                "box-shadow":
+                  "rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px",
               }}
             >
-              <div>
-                <img
-                  alt="image"
-                  src="current_location.svg"
-                  style={{ width: "50%" }}
-                ></img>
-              </div>
-              <p style={{ fontWeight: "bold", fontSize: "20px" }}>
-                {clubSelected.name}
-              </p>
-              <p>{clubSelected.address}</p>
-              <Button
+              <div
                 style={{
                   backgroundColor: "#006E7F",
-                  color: "white",
-                  "margin-top": "20px",
-                  "font-size": "100%",
-                  height: "100%",
+                  height: "50%",
                 }}
-                onClick={onOpenBuyMembershipPage}
               >
-                Continue
-              </Button>
+                <p
+                  style={{
+                    marginTop: "70px",
+                    color: "white",
+                    fontSize: "23px",
+                  }}
+                >
+                  Here is your first step to a healthy life!
+                </p>
+                <p
+                  style={{
+                    width: "80%",
+                    margin: "auto",
+                    marginTop: "30px",
+                    color: "white",
+                    fontSize: "17px",
+                  }}
+                >
+                  Empower your journey, unleash your potential and transform
+                  your life!
+                </p>
+              </div>
+              <div>
+                <Dropdown
+                  menu={{ items: clubsDropdown, onClick }}
+                  style={{ width: "10px" }}
+                >
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    <Space
+                      style={{
+                        "box-shadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                        padding: "8px",
+                        backgroundColor: "white",
+                        width: "40%",
+                        marginTop: "80px",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      {clubName}
+                      <DownOutlined
+                        style={{
+                          "margin-left": "100px",
+                        }}
+                      ></DownOutlined>
+                    </Space>
+                  </a>
+                </Dropdown>
+              </div>
             </div>
-          )}
+          </div>
+          <div>
+            {clubSelected && (
+              <div
+                style={{
+                  width: "20%",
+                  "text-align": "center",
+                  "margin-top": "35px",
+                  padding: "20px",
+                  backgroundColor: "white",
+                  color: "#006E7F",
+                  "margin-left": "auto",
+                  "margin-right": "auto",
+                  "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                }}
+              >
+                <div>
+                  <img
+                    alt="image"
+                    src="current_location.svg"
+                    style={{ width: "50%" }}
+                  ></img>
+                </div>
+                <p style={{ fontWeight: "bold", fontSize: "20px" }}>
+                  {clubSelected.name}
+                </p>
+                <p>{clubSelected.address}</p>
+                <Button
+                  style={{
+                    backgroundColor: "#006E7F",
+                    color: "white",
+                    "margin-top": "20px",
+                    "font-size": "100%",
+                    height: "100%",
+                  }}
+                  onClick={onOpenBuyMembershipPage}
+                >
+                  Continue
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

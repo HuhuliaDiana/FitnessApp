@@ -175,6 +175,8 @@ const BookPTSession = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -215,9 +217,17 @@ const BookPTSession = () => {
                 marginRight: "auto",
               }}
             >
-              <div style={{ color: "#006E7F", fontSize: "20px" }}>
+              <div
+                style={{
+                  color: "#006E7F",
+                  fontSize: "20px",
+                  fontWeight: "bold",
+                }}
+              >
                 Start your personal training with{" "}
-                <b>{userPT.personalTrainer.name}</b>
+                <b style={{ color: "#EE5007" }}>
+                  {userPT.personalTrainer.name}
+                </b>
                 <br></br> at WORLD CLASS PARKLAKE
               </div>
               <div
@@ -259,7 +269,7 @@ const BookPTSession = () => {
                       textAlign: "center",
                       fontSize: "20px",
                       color: "#006E7F",
-                      // fontWeight: "bold",
+                      fontWeight: "bold",
                       marginBottom: "30px",
                     }}
                   >
@@ -305,6 +315,7 @@ const BookPTSession = () => {
                 // justifyContent:"center",
                 padding: "10px",
                 marginBottom: "30px",
+                fontWeight: "bold",
                 fontSize: "20px",
                 color: "#006E7F",
               }}
@@ -355,12 +366,12 @@ const BookPTSession = () => {
             }}
           >
             <p>Date and time slot selected:</p>
-            {bookingDate.toDateString()} at {selectedTimeSlot}
+            <b>{bookingDate.toDateString()} at {selectedTimeSlot}</b>
             {localTime && (
               <div>
                 <Button
                   style={{
-                    backgroundColor: "#006E7F",
+                    backgroundColor: "#EE5007",
                     color: "white",
                     fontFamily: "'Montserrat',sans-serif",
                     marginTop: "30px",

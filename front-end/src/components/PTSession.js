@@ -1,3 +1,9 @@
+import {
+  FaCalendarDay,
+  FaClock,
+  FaLocationArrow,
+  FaUserAlt,
+} from "react-icons/fa";
 const PTSession = (props) => {
   const ptSession = props.parentToChild;
   const trainerName = ptSession.userPersonalTraining.personalTrainer.name;
@@ -8,14 +14,15 @@ const PTSession = (props) => {
         width: "250px",
         padding: "15px",
         marginRight: "30px",
-        marginBottom:"30px"
+        fontWeight: "bold",
+        marginBottom: "30px",
       }}
     >
-      <p>{trainerName}</p>
-      <p>
+      <p style={{ color: "#EE5007" }}>{trainerName}</p>
+      <p style={{ color: "#006E7F" }}>
         {ptSession.startSessionTime} - {ptSession.endSessionTime}
       </p>
-      <p>{ptSession.sessionDate}</p>
+      <p style={{ color: "#006E7F" }}>{ptSession.sessionDate}</p>
     </div>
   );
 };

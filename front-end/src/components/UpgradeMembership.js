@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import MembershipType from "../components/MembershipType";
-import MenuBar from "../components/MenuBar";
+import MembershipType from "./MembershipType";
+import MenuBar from "./MenuBar";
 
 const UpgradeMembership = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -62,7 +62,6 @@ const UpgradeMembership = () => {
   return (
     <div
       style={{
-        
         border: "",
         display: "flex",
         flexWrap: "wrap",

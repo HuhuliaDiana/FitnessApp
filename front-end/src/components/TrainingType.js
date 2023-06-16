@@ -26,19 +26,24 @@ const TrainingType = (props) => {
       style={{
         "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
         padding: "20px",
+        fontWeight:"bold"
       }}
     >
-      <p>
+      <p style={{ color: "#006E7F" }}>
         PERSONAL TRAINING {training.sessionsNumber} SESSIONS <br />{" "}
         {trainingName}
       </p>
-      <p>{training.price} EUR</p>
+      <p style={{ color: "#B22727", fontWeight: "bold" }}>
+        {training.price} EUR
+      </p>
       <Button
         style={{
-          backgroundColor: "#006E7F",
+          backgroundColor: "#EE5007",
           color: "white",
           marginTop: "20px",
+          fontFamily: "'Montserrat',sans-serif",
           height: "35px",
+          fontSize:"15px"
         }}
         onClick={handleOnClickChoose}
       >

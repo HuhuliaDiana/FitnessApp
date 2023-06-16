@@ -65,6 +65,8 @@ const UserPT = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -95,12 +97,12 @@ const UserPT = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "50px",
+                marginTop: "100px",
                 marginBottom:"auto",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
-                width: "60%",
+                width: "65%",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -110,28 +112,110 @@ const UserPT = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
+                  fontSize: "20px",
+                  color: "#006E7F",
                 }}
               >
-                <div style={{ width: "70%", margin: "auto" }}>
-                  <p>
-                    PERSONAL TRAINING:{" "}
-                    {userPT.personalTraining.personalTrainingType.name}
-                  </p>
-                  <p>
-                    Sessions to use: {userPT.personalTraining.sessionsNumber}
-                  </p>
-                  <p>
-                    Available from {userPT.startDate} to {endDatePT}
-                  </p>
-                  <p>Trainer: {userPT.personalTrainer.name}</p>
-                  <p>Club: WORLD CLASS PARKLAKE</p>
-                  <p>Sessions left: {userPT.noSessionsLeft}</p>
+                <div
+                  style={{
+                    width: "70%",
+                    height: "200px",
+                    margin: "auto",
+                    display: "flex",
+                    justifyContent: "space-around",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80%",
+                      margin: "auto",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <text>Personal Training: </text>
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      {userPT.personalTraining.personalTrainingType.name}
+                    </text>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80%",
+                      margin: "auto",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <text>Sessions to use: </text>
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      {userPT.personalTraining.sessionsNumber}
+                    </text>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80%",
+                      margin: "auto",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Valadity:{" "}
+                    <div>
+                      <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                        {userPT.startDate}
+                      </text>{" "}
+                      to{" "}
+                      <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                        {endDatePT}
+                      </text>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80%",
+                      margin: "auto",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Trainer:{" "}
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      {userPT.personalTrainer.name}
+                    </text>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80%",
+                      margin: "auto",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Club:{" "}
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      WORLD CLASS PARKLAKE
+                    </text>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      width: "80%",
+                      margin: "auto",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    Sessions left:{" "}
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      {userPT.noSessionsLeft}
+                    </text>
+                  </div>
                 </div>
                 <div style={{ margin: "auto" }}>
                   <img
                     alt="image"
                     src="pt-booked.svg"
-                    style={{ width: "50%", padding: "20px" }}
+                    style={{ width: "70%", padding: "20px" }}
                   ></img>
                 </div>
               </div>

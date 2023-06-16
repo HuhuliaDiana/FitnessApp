@@ -63,6 +63,8 @@ function ClubSubscriptions() {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -92,7 +94,7 @@ function ClubSubscriptions() {
               }}
             >
               <p>
-                You chose <b>{name}</b>
+                You chose <b style={{color:"#006E7F"}}>{name}</b>
               </p>
               <Link
                 style={{
@@ -112,7 +114,7 @@ function ClubSubscriptions() {
           <div
             style={{
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "50px",
+              "margin-top": "100px",
               display: "flex",
               width: "80%",
               "margin-left": "10%",
@@ -149,12 +151,14 @@ function ClubSubscriptions() {
           </div>
           <Button
             style={{
-              backgroundColor: "#006E7F",
+              backgroundColor: "#EE5007",
               color: "white",
               "margin-top": "40px",
-              "margin-bottom":"40px",
+              "margin-bottom": "40px",
               "font-size": "100%",
-              height: "40px",
+              height: "45px",
+              fontFamily:"'Montserrat',sans-serif",
+              fontSize: "17px",
             }}
             onClick={() => {
               if (expandList) {

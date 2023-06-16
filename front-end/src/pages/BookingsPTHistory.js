@@ -56,6 +56,8 @@ const BookingsPTHistory = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat

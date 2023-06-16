@@ -26,10 +26,10 @@ const Trainer = (props) => {
         width: "18%",
       }}
     >
-      <div style={{}}>
+      <div>
         <img src={srcImg} alt="image" style={{ width: "90%" }} />
       </div>
-      <p>{trainer.name}</p>
+      <p style={{ color: "#006E7F", fontSize: "20px" }}>{trainer.name}</p>
       <Button
         style={{
           backgroundColor: "#006E7F",
@@ -37,6 +37,7 @@ const Trainer = (props) => {
           "margin-top": "20px",
           "margin-bottom": "15px",
           "font-size": "100%",
+          width: "100px",
           height: "38px",
         }}
         onClick={() => {

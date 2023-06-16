@@ -78,29 +78,7 @@ const Clubs = () => {
     if (cityId) getClubsByCityId();
   }, [cityId, setCityId]);
   useEffect(() => {});
-  const style = (id) => {
-    if (id % 2 == 0)
-      return {
-        color: "#B22727",
-        marginBottom: "20px",
-        padding: "5px",
-        width: "130px",
-        height: "100%",
-        marginRight: "20px",
-      };
-    else
-      return {
-        color: "#006E7F",
-        padding: "5px",
-        width: "130px",
-        height: "100%",
-        marginRight: "20px",
-      };
-  };
-  const mapMarkerStyle = (id) => {
-    if (id % 2 == 0) return { color: "#006E7F", marginRight: "10px" };
-    else return { color: "#B22727", marginRight: "10px" };
-  };
+
   const styleBtnClub = (id) => {
     if (pressMark === true && clubsAllowAccess.includes(id))
       return {
@@ -110,7 +88,8 @@ const Clubs = () => {
         fontFamily: "'Montserrat', sans-serif",
         padding: "8px",
         width: "250px",
-        height: "100%",
+        marginBottom: "10px",
+        height: "40px",
       };
     else
       return {
@@ -119,7 +98,8 @@ const Clubs = () => {
         fontFamily: "'Montserrat', sans-serif",
         width: "250px",
         padding: "8px",
-        height: "100%",
+        marginBottom: "10px",
+        height: "40px",
       };
   };
   const getClubsAllowAccess = () => {
@@ -169,6 +149,7 @@ const Clubs = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -268,7 +249,7 @@ const Clubs = () => {
                       fontSize: "25px",
                       color: "#006E7F",
                       marginBottom: "50px",
-                      // fontWeight:"bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Choose your city
@@ -285,11 +266,20 @@ const Clubs = () => {
                     {cities.map((city) => {
                       return (
                         <Button
-                          style={style(city.id)}
+                          style={{
+                            color: "#006E7F",
+                            padding: "5px",
+                            width: "130px",
+                            marginBottom: "20px",
+                            height: "100%",
+                            marginRight: "20px",
+                          }}
                           onClick={() => setCityId(city.id)}
                           key={city.id}
                         >
-                          <FaMapMarkerAlt style={mapMarkerStyle(city.id)} />{" "}
+                          <FaMapMarkerAlt
+                            style={{ color: "#B22727", marginRight: "10px" }}
+                          />{" "}
                           {city.name}
                         </Button>
                       );
@@ -318,16 +308,18 @@ const Clubs = () => {
                 marginBottom: "40px",
                 fontSize: "20px",
                 color: "#006E7F",
-                // fontWeight: "bold",
+                fontWeight: "bold",
                 textAlign: "center",
               }}
             >
-              Fit & Repeat clubs in <b>{citySelected}</b>
+              Fit & Repeat clubs in{" "}
+              <b style={{ color: "#B22727" }}>{citySelected}</b>
             </p>
             <div
               style={{
                 display: "flex",
                 justifyContent: "center",
+                flexWrap: "wrap",
               }}
             >
               {clubs.map((club) => {

@@ -253,6 +253,7 @@ const ClassesSchedule = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -365,10 +366,11 @@ const ClassesSchedule = () => {
                     >
                       <div
                         style={{
-                          backgroundColor: "#B22727",
+                          backgroundColor: "#006E7F",
                           color: "white",
                           padding: "10px",
-                          "box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px",
+                          boxShadow:
+                            "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
                         }}
                       >
                         <text>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import TrainingClass from "../components/TrainingClass";
 import MenuBar from "../components/MenuBar";
 import TrainingClassesByClub from "../components/TrainingClassesByClub";
+import TrainingClassesByClubAndDate from "../components/TrainingClassesByClubAndDate";
 
 const BookedClassesHistory = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -33,10 +34,7 @@ const BookedClassesHistory = () => {
           return Promise.reject("Cannot get history of booked classes.");
         })
         .then((data) => {
-          // console.log("booked classes: ");
-          // console.log(data);
-
-          // setBookedClasses(data);
+         
           console.log(data);
           setData(data);
           let clubs = data.map((d) => d.club);
@@ -52,23 +50,7 @@ const BookedClassesHistory = () => {
     getBookedClassesHistory();
   }, []);
   return (
-    // <div className="parent">
-    //   <MenuBar></MenuBar>
-    //   <div className="child">
-    //     {bookedClasses.length !== 0 &&
-    //       bookedClasses.map((trainingClass) => {
-    //         return (
-    //           <TrainingClass
-    //             key={trainingClass.id}
-    //             parentToChild={trainingClass}
-    //           />
-    //         );
-    //       })}
-    //     {bookedClasses.length == 0 && (
-    //       <p>You haven't attended any booked class yet.</p>
-    //     )}
-    //   </div>
-    // </div>
+   
     <div className="parent">
       <MenuBar></MenuBar>
       <div
@@ -89,6 +71,7 @@ const BookedClassesHistory = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
             }}
           >
             Welcome to Fit & Repeat
@@ -131,16 +114,10 @@ const BookedClassesHistory = () => {
               <img
                 alt="image"
                 src="/online_calendar.svg"
-                style={{ width: "13%" }}
+                style={{ width: "20%" }}
               ></img>
             </div>
             <div>
-              {/* {bookings !== [] &&
-                bookings.map((booking) => {
-                  return (
-                    <TrainingClass key={booking.id} parentToChild={booking} />
-                  );
-                })} */}
               {clubs !== [] &&
                 clubs.map((club) => {
                   return (

@@ -13,7 +13,7 @@ const BuyPersonalTraining = () => {
 
   const trainingId = useParams().trainingId;
   const trainerId = useParams().trainerId;
-  console.log(typeof trainerId)
+  console.log(typeof trainerId);
   useEffect(() => {
     getPTById();
   }, [trainingId]);
@@ -70,7 +70,7 @@ const BuyPersonalTraining = () => {
           return Promise.reject("Cannot get current user.");
         })
         .then((data) => {
-          console.log(data)
+          console.log(data);
           setTrainerName(data.name);
         })
         .catch((err) => console.log(err));
@@ -153,6 +153,8 @@ const BuyPersonalTraining = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -177,7 +179,7 @@ const BuyPersonalTraining = () => {
                   marginLeft: "20px",
                 }}
               >
-                Get personal training with <b>{trainerName}</b>
+                Get your personal training with <b>{trainerName}</b>
               </div>
             )}
           </div>
@@ -286,14 +288,20 @@ const BuyPersonalTraining = () => {
                             <Input
                               defaultValue={name}
                               disabled={true}
-                              style={{ color: "black" }}
+                              style={{
+                                color: "black",
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
                           <Form.Item label="Email">
                             <Input
                               defaultValue={user.email}
                               disabled={true}
-                              style={{ color: "black" }}
+                              style={{
+                                color: "black",
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
                           <Form.Item
@@ -313,20 +321,29 @@ const BuyPersonalTraining = () => {
                               },
                             ]}
                           >
-                            <Input defaultValue={user.phone} />
+                            <Input
+                              defaultValue={user.phone}
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                         </Col>
                       </Row>
                       <Row style={{ marginLeft: "10%" }}>
                         <Col>
                           <Form.Item label="City">
-                            <Input />
+                            <Input
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                           <Form.Item label="Address">
-                            <Input />
+                            <Input
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                           <Form.Item label="County">
-                            <Input />
+                            <Input
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                         </Col>
                       </Row>
@@ -373,7 +390,9 @@ const BuyPersonalTraining = () => {
                   }}
                 >
                   <div>Subscription price:</div>
-                  <div>{price}</div>
+                  <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                    {price} EUR
+                  </div>
                 </div>
                 <div
                   style={{
@@ -387,16 +406,19 @@ const BuyPersonalTraining = () => {
                   }}
                 >
                   <div>Total payment:</div>
-                  <div>{price}</div>
+                  <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                    {price} EUR
+                  </div>
                 </div>
                 <div>
                   <Button
                     style={{
-                      backgroundColor: "#006E7F",
+                      backgroundColor: "#EE5007",
                       color: "white",
                       padding: "8px",
                       height: "100%",
                       width: "150px",
+                      fontFamily: "'Montserrat',sans-serif",
                     }}
                     onClick={buy}
                   >

@@ -121,6 +121,7 @@ const BuyMembership = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
             }}
           >
             Welcome to Fit & Repeat
@@ -157,7 +158,6 @@ const BuyMembership = () => {
               width: "44%",
               justifyContent: "center",
               marginLeft: "28%",
-
             }}
           >
             <div
@@ -209,7 +209,7 @@ const BuyMembership = () => {
                 marginTop: "40px",
               }}
             >
-              <div style={{ width: "30%" ,margin:"auto"}}>
+              <div style={{ width: "30%", margin: "auto" }}>
                 <img
                   src="/info-invoice.svg"
                   alt="image"
@@ -253,14 +253,20 @@ const BuyMembership = () => {
                             <Input
                               defaultValue={name}
                               disabled={true}
-                              style={{ color: "black" }}
+                              style={{
+                                color: "black",
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
                           <Form.Item label="Email">
                             <Input
                               defaultValue={user.email}
                               disabled={true}
-                              style={{ color: "black" }}
+                              style={{
+                                color: "black",
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
                           <Form.Item
@@ -280,20 +286,29 @@ const BuyMembership = () => {
                               },
                             ]}
                           >
-                            <Input defaultValue={user.phone} />
+                            <Input
+                              defaultValue={user.phone}
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                         </Col>
                       </Row>
                       <Row style={{ marginLeft: "10%" }}>
                         <Col>
                           <Form.Item label="City">
-                            <Input />
+                            <Input
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                           <Form.Item label="Address">
-                            <Input />
+                            <Input
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                           <Form.Item label="County">
-                            <Input />
+                            <Input
+                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                            />
                           </Form.Item>
                         </Col>
                       </Row>
@@ -340,7 +355,9 @@ const BuyMembership = () => {
                   }}
                 >
                   <div>Subscription price:</div>
-                  <div>{price}</div>
+                  <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                    {price} EUR
+                  </div>
                 </div>
                 <div
                   style={{
@@ -354,16 +371,19 @@ const BuyMembership = () => {
                   }}
                 >
                   <div>Total payment:</div>
-                  <div>{price}</div>
+                  <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                    {price} EUR
+                  </div>
                 </div>
                 <div>
                   <Button
                     style={{
-                      backgroundColor: "#006E7F",
+                      backgroundColor: "#EE5007",
                       color: "white",
                       padding: "8px",
                       height: "100%",
                       width: "150px",
+                      fontFamily:"'Montserrat',sans-serif"
                     }}
                     onClick={buy}
                   >

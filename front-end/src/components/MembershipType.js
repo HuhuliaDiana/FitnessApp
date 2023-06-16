@@ -19,15 +19,15 @@ const MembershipType = (props) => {
         width: "25%",
         "margin-bottom": "50px",
         padding: "20px",
-        
+        fontWeight: "bold",
       }}
     >
-      <p>{subscription.membership.name}</p>
-      <p>{formattedSubscriptionPeriodName}</p>
-      <p>{subscription.price}</p>
+      <p style={{ color: "#B22727",fontSize:"20px" }}>{subscription.membership.name}</p>
+      <p style={{ color: "#006E7F" }}>{formattedSubscriptionPeriodName}</p>
+      <p style={{ color: "#EE5007",fontSize:"20px"  }}>{subscription.price} EUR</p>
       <Button
         style={{
-          backgroundColor: "#B22727",
+          backgroundColor: "#006E7F",
           color: "white",
           "margin-top": "20px",
           height: "35px",

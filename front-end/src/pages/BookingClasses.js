@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import MenuBar from "../components/MenuBar";
 import TrainingClassesByClub from "../components/TrainingClassesByClub";
+import TrainingClassesByClubAndDate from "../components/TrainingClassesByClubAndDate";
 
 const BookingClasses = () => {
   const accessToken = localStorage.getItem("accessToken");
-  // const [bookings, setBookings] = useState([]);
   const [clubs, setClubs] = useState([]);
   const [data, setData] = useState([]);
 
@@ -68,6 +68,8 @@ const BookingClasses = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
+              color:"#006E7F"
+
             }}
           >
             Welcome to Fit & Repeat
@@ -101,16 +103,16 @@ const BookingClasses = () => {
               display: "flex",
               padding: "20px",
               flexDirection: "column",
-              width: "80%",
+              width: "60%",
               justifyContent: "center",
-              marginLeft: "10%",
+              marginLeft: "19%",
             }}
           >
             <div>
               <img
                 alt="image"
                 src="/bookings-future-attendings.svg"
-                style={{ width: "13%" }}
+                style={{ width: "20%" }}
               ></img>
             </div>
             <div>
@@ -124,7 +126,7 @@ const BookingClasses = () => {
                         marginRight: "20px",
                       }}
                     >
-                      <TrainingClassesByClub
+                      <TrainingClassesByClubAndDate
                         key={club.id}
                         parentToChild={{ club, data }}
                       />
