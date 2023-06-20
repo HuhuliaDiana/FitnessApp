@@ -7,6 +7,8 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MenuBar from "../components/MenuBar";
 import ClassDetails from "../utils/ClassDetails";
 const TrainingClassDetails = () => {
@@ -24,6 +26,7 @@ const TrainingClassDetails = () => {
   const [className, setClassName] = useState("");
   const [trainingType, setTrainingType] = useState([]);
   const [equipment, setEquipment] = useState([]);
+  const [msgCannotCancel, setMsgCannotCancel] = useState("");
 
   const getStatusOfClass = () => {
     try {
@@ -64,11 +67,13 @@ const TrainingClassDetails = () => {
       })
         .then((response) => {
           if (response.ok) {
-            return "Successfully booked!";
-          }
-          return Promise.reject("Cannot book class by id.");
+            toast.success("Successfully booked class!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
+          } else return Promise.reject("Cannot book class by id.");
         })
-        .then((data) => {
+        .then(() => {
           getStatusOfClass();
           isClassCancelableByUser();
         })
@@ -110,8 +115,8 @@ const TrainingClassDetails = () => {
           }
           const duration = Number(data.trainingClassHour.timerDuration);
           const beginningTime = new Date(data.classDate);
-          let beginningTimeHour = beginningTime.getUTCHours();
-          let beginningTimeMinutes = beginningTime.getUTCMinutes();
+          let beginningTimeHour = beginningTime.getHours();
+          let beginningTimeMinutes = beginningTime.getMinutes();
 
           if (beginningTimeMinutes === 0) beginningTimeMinutes += "0";
           if (beginningTimeHour.toString().length === 1)
@@ -124,8 +129,8 @@ const TrainingClassDetails = () => {
           const endingTime = new Date(
             beginningTime.getTime() + 60000 * duration
           );
-          let endingTimeHour = endingTime.getUTCHours();
-          let endingTimeMinutes = endingTime.getUTCMinutes();
+          let endingTimeHour = endingTime.getHours();
+          let endingTimeMinutes = endingTime.getMinutes();
 
           if (endingTimeMinutes === 0) endingTimeMinutes += "0";
           if (endingTimeHour.toString().length === 1)
@@ -173,11 +178,13 @@ const TrainingClassDetails = () => {
       })
         .then((response) => {
           if (response.ok) {
-            return "Successfully canceled!";
-          }
-          return Promise.reject("Cannot cancel class by id.");
+            toast.success("Successfully canceled class!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
+          } else return Promise.reject("Cannot cancel class by id.");
         })
-        .then((data) => {
+        .then(() => {
           getStatusOfClass();
           isClassCancelableByUser();
         })
@@ -199,6 +206,9 @@ const TrainingClassDetails = () => {
     }
     if (status === "You booked this class" && isCancelable == false) {
       setDisplayBtn(false);
+      setMsgCannotCancel(
+        "You can not cancel this class. Time limit has expired."
+      );
     }
   }, [status, setStatus]);
 
@@ -224,6 +234,29 @@ const TrainingClassDetails = () => {
       console.log(err);
     }
   };
+  const styleStatus = () => {
+    if (status.includes("Booking available")) {
+      return {
+        color: "#006E7F",
+        marginTop: "50px",
+        fontSize: "22px",
+        fontWeight: "bold",
+      };
+    } else if (status.includes("You booked this class")) {
+      return {
+        color: "#EE5007",
+        marginTop: "50px",
+        fontSize: "22px",
+        fontWeight: "bold",
+      };
+    }
+    return {
+      color: "red",
+      marginTop: "50px",
+      fontSize: "22px",
+      fontWeight: "bold",
+    };
+  };
 
   return (
     <div className="parent">
@@ -246,8 +279,7 @@ const TrainingClassDetails = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -417,7 +449,7 @@ const TrainingClassDetails = () => {
                       fontSize: "20px",
                       display: "flex",
                       justifyContent: "flex-start",
-                      fontWeight:"bold"
+                      fontWeight: "bold",
                     }}
                   >
                     Type of training
@@ -439,7 +471,8 @@ const TrainingClassDetails = () => {
                               backgroundColor: "#F8CB2E",
                               fontSize: "17px",
                               color: "#006E7F",
-                              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
+                              boxShadow:
+                                "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                             }}
                           >
                             {type}
@@ -461,8 +494,7 @@ const TrainingClassDetails = () => {
                       fontSize: "20px",
                       display: "flex",
                       justifyContent: "flex-start",
-                      fontWeight:"bold"
-
+                      fontWeight: "bold",
                     }}
                   >
                     Equipment used
@@ -483,7 +515,8 @@ const TrainingClassDetails = () => {
                               padding: "5px 22px 5px 22px",
                               color: "white",
                               marginRight: "30px",
-                              boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px"
+                              boxShadow:
+                                "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
                             }}
                           >
                             {type}
@@ -494,19 +527,7 @@ const TrainingClassDetails = () => {
                 </div>
               </div>
 
-              {status && (
-                <p
-                  style={{
-                    marginTop: "50px",
-                    color: "#006E7F",
-                    fontSize: "22px",
-                    fontWeight:"bold"
-
-                  }}
-                >
-                  {status}
-                </p>
-              )}
+              {status && <p style={styleStatus()}>{status}</p>}
               {displayBtn && (
                 <div style={{ marginTop: "10px", marginBottom: "20px" }}>
                   <Button
@@ -525,13 +546,12 @@ const TrainingClassDetails = () => {
                   </Button>
                 </div>
               )}
-              {isCancelable == false && status == "You booked this class" && (
-                <p style={{ color: "red" }}>
-                  You can not cancel this class. Time limit has expired.
-                </p>
+              {msgCannotCancel !== "" && (
+                <p style={{ color: "red" }}>{msgCannotCancel}</p>
               )}
             </div>
           )}
+          <ToastContainer style={{ marginLeft: "120px" }} />
         </div>
       </div>
     </div>

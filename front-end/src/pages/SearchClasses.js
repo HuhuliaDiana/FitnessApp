@@ -182,6 +182,7 @@ const SearchClasses = () => {
               padding: "20px",
               "flex-direction": "column",
               width: "80%",
+              marginBottom:"50px",
               justifyContent: "center",
               "margin-left": "10%",
             }}

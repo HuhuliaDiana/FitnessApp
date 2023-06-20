@@ -13,6 +13,31 @@ const Clubs = () => {
   const [citySelected, setCitySelected] = useState();
   const [clubsAllowAccess, setClubsAllowAccess] = useState([]);
   const [pressMark, setPressMark] = useState(false);
+  const [subscription, setSubscription] = useState();
+
+  const getUserSubscription = () => {
+    try {
+      fetch(`http://localhost:8080/api/user-subscription`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        method: "get",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject("Cannot fetch user subscription.");
+        })
+        .then((data) => {
+          setSubscription(data);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const onOpenBuyMembershipPage = (id) => {
     navigate("/club-subscriptions", {
@@ -72,12 +97,12 @@ const Clubs = () => {
     }
   };
   useEffect(() => {
+    getUserSubscription();
     getAllCities();
   }, []);
   useEffect(() => {
     if (cityId) getClubsByCityId();
   }, [cityId, setCityId]);
-  useEffect(() => {});
 
   const styleBtnClub = (id) => {
     if (pressMark === true && clubsAllowAccess.includes(id))
@@ -174,41 +199,43 @@ const Clubs = () => {
             >
               See our clubs
             </div>
-            <div
-              style={{
-                marginTop: "auto",
-                marginBottom: "auto",
-                marginRight: "20px",
-              }}
-            >
-              {pressMark === false ? (
-                <Link
-                  style={{
-                    "margin-top": "auto",
-                    textDecoration: "none",
-                    "margin-bottom": "auto",
-                    "margin-left": "20px",
-                    "margin-right": "20px",
-                  }}
-                  onClick={getClubsAllowAccess}
-                >
-                  Mark subscription-based accessable clubs
-                </Link>
-              ) : (
-                <Link
-                  style={{
-                    "margin-top": "auto",
-                    textDecoration: "none",
-                    "margin-bottom": "auto",
-                    "margin-left": "20px",
-                    "margin-right": "20px",
-                  }}
-                  onClick={() => setPressMark(false)}
-                >
-                  Disable mark on subscription-based accessable clubs
-                </Link>
-              )}
-            </div>
+            {subscription && (
+              <div
+                style={{
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  marginRight: "20px",
+                }}
+              >
+                {pressMark === false ? (
+                  <Link
+                    style={{
+                      "margin-top": "auto",
+                      textDecoration: "none",
+                      "margin-bottom": "auto",
+                      "margin-left": "20px",
+                      "margin-right": "20px",
+                    }}
+                    onClick={getClubsAllowAccess}
+                  >
+                    Mark subscription-based accessable clubs
+                  </Link>
+                ) : (
+                  <Link
+                    style={{
+                      "margin-top": "auto",
+                      textDecoration: "none",
+                      "margin-bottom": "auto",
+                      "margin-left": "20px",
+                      "margin-right": "20px",
+                    }}
+                    onClick={() => setPressMark(false)}
+                  >
+                    Disable mark on subscription-based accessable clubs
+                  </Link>
+                )}
+              </div>
+            )}
           </div>
           <div
             style={{

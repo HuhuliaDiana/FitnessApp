@@ -71,7 +71,8 @@ const TrainingClassesByClub = (props) => {
                   style={{
                     backgroundColor: "#B22727",
                     color: "white",
-                    padding: "10px",
+                    padding: "10px 5px 10px 5px",
+                    width: "200px",
                     "box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px",
                   }}
                 >

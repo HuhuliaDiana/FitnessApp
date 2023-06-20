@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import MenuBar from "../components/MenuBar";
-import TrainingClassesByClub from "../components/TrainingClassesByClub";
 import TrainingClassesByClubAndDate from "../components/TrainingClassesByClubAndDate";
 
 const BookingClasses = () => {
@@ -68,8 +67,7 @@ const BookingClasses = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -96,45 +94,66 @@ const BookingClasses = () => {
               Your future attendings to classes
             </div>
           </div>
-          <div
-            style={{
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
-              display: "flex",
-              padding: "20px",
-              flexDirection: "column",
-              width: "60%",
-              justifyContent: "center",
-              marginLeft: "19%",
-            }}
-          >
-            <div>
+          {data.length !== 0 ? (
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                marginTop: "50px",
+                display: "flex",
+                padding: "20px",
+                flexDirection: "column",
+                width: "60%",
+                marginBottom: "50px",
+                justifyContent: "center",
+                marginLeft: "19%",
+              }}
+            >
+              <div>
+                <img
+                  alt="image"
+                  src="/bookings-future-attendings.svg"
+                  style={{ width: "20%" }}
+                ></img>
+              </div>
+              <div>
+                {clubs !== [] &&
+                  clubs.map((club) => {
+                    return (
+                      <div
+                        key={club.id}
+                        style={{
+                          width: "100%",
+                          marginRight: "20px",
+                        }}
+                      >
+                        <TrainingClassesByClubAndDate
+                          key={club.id}
+                          parentToChild={{ club, data }}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          ) : (
+            <div style={{ marginTop: "100px" }}>
+              <p
+                style={{
+                  fontSize: "30px",
+                  color: "#006E7F",
+                  fontWeight: "bold",
+                  marginBottom: "150px",
+                }}
+              >
+                You haven't booked any class yet.
+              </p>
               <img
                 alt="image"
-                src="/bookings-future-attendings.svg"
-                style={{ width: "20%" }}
+                src="void.svg"
+                style={{ width: "18%" }}
               ></img>
             </div>
-            <div>
-              {clubs !== [] &&
-                clubs.map((club) => {
-                  return (
-                    <div
-                      key={club.id}
-                      style={{
-                        width: "100%",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <TrainingClassesByClubAndDate
-                        key={club.id}
-                        parentToChild={{ club, data }}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

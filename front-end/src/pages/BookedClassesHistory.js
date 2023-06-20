@@ -34,8 +34,6 @@ const BookedClassesHistory = () => {
           return Promise.reject("Cannot get history of booked classes.");
         })
         .then((data) => {
-         
-          console.log(data);
           setData(data);
           let clubs = data.map((d) => d.club);
           setClubs(removeJSONDuplicatesClubs(clubs));
@@ -50,7 +48,6 @@ const BookedClassesHistory = () => {
     getBookedClassesHistory();
   }, []);
   return (
-   
     <div className="parent">
       <MenuBar></MenuBar>
       <div
@@ -71,7 +68,7 @@ const BookedClassesHistory = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -98,45 +95,66 @@ const BookedClassesHistory = () => {
               Booked classes history
             </div>
           </div>
-          <div
-            style={{
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
-              display: "flex",
-              padding: "20px",
-              flexDirection: "column",
-              width: "80%",
-              justifyContent: "center",
-              marginLeft: "10%",
-            }}
-          >
-            <div>
+          {data.length !== 0 ? (
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                marginTop: "50px",
+                display: "flex",
+                padding: "20px",
+                marginBottom: "50px",
+                flexDirection: "column",
+                width: "80%",
+                justifyContent: "center",
+                marginLeft: "10%",
+              }}
+            >
+              <div>
+                <img
+                  alt="image"
+                  src="/online_calendar.svg"
+                  style={{ width: "20%" }}
+                ></img>
+              </div>
+              <div>
+                {clubs !== [] &&
+                  clubs.map((club) => {
+                    return (
+                      <div
+                        key={club.id}
+                        style={{
+                          width: "100%",
+                          marginRight: "20px",
+                        }}
+                      >
+                        <TrainingClassesByClub
+                          key={club.id}
+                          parentToChild={{ club, data }}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          ) : (
+            <div style={{ marginTop: "100px" }}>
+              <p
+                style={{
+                  fontSize: "30px",
+                  color: "#006E7F",
+                  fontWeight: "bold",
+                  marginBottom: "150px",
+                }}
+              >
+                You haven't attended any class yet.
+              </p>
               <img
                 alt="image"
-                src="/online_calendar.svg"
-                style={{ width: "20%" }}
+                src="void.svg"
+                style={{ width: "18%" }}
               ></img>
             </div>
-            <div>
-              {clubs !== [] &&
-                clubs.map((club) => {
-                  return (
-                    <div
-                      key={club.id}
-                      style={{
-                        width: "100%",
-                        marginRight: "20px",
-                      }}
-                    >
-                      <TrainingClassesByClub
-                        key={club.id}
-                        parentToChild={{ club, data }}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

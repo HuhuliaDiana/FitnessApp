@@ -48,17 +48,17 @@ const TrainingClassesByClubAndDate = (props) => {
     <div key={club.id}>
       <p
         style={{
-          padding: "15px",
+          padding: "10px",
           backgroundColor: "#006E7F",
           color: "white",
-          fontSize: "20px",
+          fontSize: "18px",
           marginBottom: "0px",
           fontWeight: "bold",
         }}
       >
         {club.name}
       </p>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", flexDirection: "column" }}>
         {namesOfWeekDays !== [] &&
           namesOfWeekDays.map((nameOfWeekDay) => {
             return (
@@ -72,7 +72,7 @@ const TrainingClassesByClubAndDate = (props) => {
                   style={{
                     backgroundColor: "#EE5007",
                     color: "white",
-                    padding: "10px",
+                    padding: "5px",
                     "box-shadow": "rgba(0, 0, 0, 0.16) 0px 1px 4px",
                     marginBottom: "30px",
                   }}

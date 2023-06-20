@@ -1,5 +1,7 @@
+import { Button, Col, Form, Input } from "antd";
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MenuBar from "../components/MenuBar";
 
 const UserContact = () => {
@@ -73,12 +75,14 @@ const UserContact = () => {
       })
         .then((response) => {
           if (response.ok) {
-            return response.json();
-          }
-          return Promise.reject("Cannot get current user.");
-        })
-        .then((data) => {
-          console.log(data);
+            toast.success("Successfully updated personal data!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 2000);
+          } else return Promise.reject("Cannot get current user.");
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -110,8 +114,7 @@ const UserContact = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -261,6 +264,7 @@ const UserContact = () => {
               </Form>
             )}
           </div>
+          <ToastContainer style={{ marginLeft: "120px" }} />
         </div>
       </div>
     </div>

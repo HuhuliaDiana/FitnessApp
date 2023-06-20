@@ -10,6 +10,9 @@ const BuyPersonalTraining = () => {
   const [name, setName] = useState();
   const [price, setPrice] = useState();
   const [trainerName, setTrainerName] = useState();
+  const [city, setCity] = useState("");
+  const [address, setAddress] = useState("");
+  const [county, setCounty] = useState("");
 
   const trainingId = useParams().trainingId;
   const trainerId = useParams().trainerId;
@@ -20,13 +23,7 @@ const BuyPersonalTraining = () => {
   useEffect(() => {
     getPersonalTrainerById();
   }, [trainerId]);
-  const buy = () => {
-    if (date !== "") {
-      buyTraining();
-    } else {
-      console.log("Pick a date!");
-    }
-  };
+
   useEffect(() => {
     getCurrentUser();
   }, []);
@@ -78,7 +75,7 @@ const BuyPersonalTraining = () => {
       console.log(err);
     }
   };
-  const buyTraining = () => {
+  const buyTraining = async () => {
     try {
       fetch(`http://localhost:8080/api/user-training`, {
         headers: {
@@ -153,8 +150,7 @@ const BuyPersonalTraining = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -183,106 +179,119 @@ const BuyPersonalTraining = () => {
               </div>
             )}
           </div>
-          <div
+          <Form
+            name="basic"
+            labelCol={{ span: 8 }}
+            wrapperCol={{ span: 30 }}
             style={{
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
-              display: "flex",
-              padding: "20px",
-              flexDirection: "column",
-              width: "44%",
-              justifyContent: "center",
-              marginLeft: "28%",
+              fontFamily: "'Montserrat',sans-serif",
             }}
+            autoComplete="off"
+            onFinish={buyTraining}
           >
             <div
               style={{
+                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                marginTop: "40px",
                 display: "flex",
-                justifyContent: "space-between",
+                padding: "20px",
+                flexDirection: "column",
+                width: "44%",
+                justifyContent: "center",
+                marginLeft: "28%",
               }}
             >
               <div
                 style={{
-                  width: "55%",
                   display: "flex",
-                  flexDirection: "column",
-                  marginTop: "auto",
-                  marginBottom: "auto",
+                  justifyContent: "space-between",
                 }}
               >
                 <div
                   style={{
-                    marginBottom: "5%",
-                    fontSize: "18px",
-                    color: "#006E7F",
-                    fontWeight: "bold",
+                    width: "55%",
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: "auto",
+                    marginBottom: "auto",
                   }}
                 >
-                  Pick a date to start your PT
+                  <div
+                    style={{
+                      marginBottom: "5%",
+                      fontSize: "18px",
+                      color: "#006E7F",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Pick a date to start your PT
+                  </div>
+                  <div>
+                    <Form.Item
+                      validateFirst={true}
+                      name="date"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please select a date!",
+                        },
+                      ]}
+                    >
+                      <DatePicker
+                        onChange={onChange}
+                        disabledDate={(d) => !d || d.isBefore(new Date())}
+                      />
+                    </Form.Item>
+                  </div>
                 </div>
-                <div style={{}}>
-                  <Space>
-                    <DatePicker
-                      onChange={onChange}
-                      disabledDate={(d) => !d || d.isBefore(new Date())}
-                    />
-                  </Space>
+                <div style={{ width: "40%", padding: "20px" }}>
+                  <img
+                    src="/select-date.svg"
+                    alt="image"
+                    style={{ width: "70%" }}
+                  ></img>
                 </div>
-              </div>
-              <div style={{ width: "40%", padding: "20px" }}>
-                <img
-                  src="/select-date.svg"
-                  alt="image"
-                  style={{ width: "70%" }}
-                ></img>
-              </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "40px",
-              }}
-            >
-              <div style={{ width: "30%", margin: "auto" }}>
-                <img
-                  src="/info-invoice.svg"
-                  alt="image"
-                  style={{ width: "100%" }}
-                ></img>
               </div>
               <div
                 style={{
-                  width: "55%",
                   display: "flex",
-                  flexDirection: "column",
-                  marginTop: "auto",
-                  marginBottom: "auto",
+                  justifyContent: "space-between",
+                  marginTop: "40px",
                 }}
               >
-                {user && (
-                  <div style={{}}>
-                    <p
-                      style={{
-                        marginBottom: "50px",
-                        fontSize: "18px",
-                        color: "#006E7F",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Invoice details
-                    </p>
-                    <Form
-                      name="basic"
-                      labelCol={{ span: 8 }}
-                      wrapperCol={{ span: 30 }}
-                      style={{
-                        marginTop: "30px",
-                        display: "flex",
-                      }}
-                      autoComplete="off"
-                    >
-                      <Row>
+                <div style={{ width: "30%", margin: "auto" }}>
+                  <img
+                    src="/info-invoice.svg"
+                    alt="image"
+                    style={{ width: "100%" }}
+                  ></img>
+                </div>
+                <div
+                  style={{
+                    width: "55%",
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                  }}
+                >
+                  {user && (
+                    <div style={{}}>
+                      <p
+                        style={{
+                          marginBottom: "50px",
+                          fontSize: "18px",
+                          color: "#006E7F",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Invoice details
+                      </p>
+                      <div
+                        style={{
+                          display: "flex",
+                        }}
+                      >
                         <Col>
                           <Form.Item label="Name">
                             <Input
@@ -323,115 +332,155 @@ const BuyPersonalTraining = () => {
                           >
                             <Input
                               defaultValue={user.phone}
-                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                              style={{
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
                         </Col>
-                      </Row>
-                      <Row style={{ marginLeft: "10%" }}>
                         <Col>
-                          <Form.Item label="City">
+                          <Form.Item
+                            label="City"
+                            name="city"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input city!",
+                              },
+                            ]}
+                          >
                             <Input
-                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                              style={{
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
-                          <Form.Item label="Address">
+                          <Form.Item
+                            label="Address"
+                            name="address"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input address!",
+                              },
+                            ]}
+                          >
                             <Input
-                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                              style={{
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
-                          <Form.Item label="County">
+                          <Form.Item
+                            label="County"
+                            name="county"
+                            rules={[
+                              {
+                                required: true,
+                                message: "Please input county!",
+                              },
+                            ]}
+                          >
                             <Input
-                              style={{ fontFamily: "'Montserrat',sans-serif" }}
+                              style={{
+                                fontFamily: "'Montserrat',sans-serif",
+                              }}
                             />
                           </Form.Item>
                         </Col>
-                      </Row>
-                    </Form>
-                  </div>
-                )}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "40px",
-              }}
-            >
               <div
                 style={{
-                  width: "100%",
-                  marginTop: "auto",
-                  marginBottom: "auto",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "40px",
                 }}
               >
-                <div>
-                  <p
+                <div
+                  style={{
+                    width: "100%",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                  }}
+                >
+                  <div>
+                    <p
+                      style={{
+                        marginBottom: "50px",
+                        fontSize: "18px",
+                        color: "#006E7F",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Payment
+                    </p>
+                  </div>
+                  <div
                     style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                      width: "80%",
+                      marginBottom: "10px",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <div>Subscription price:</div>
+                    <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                      {price} EUR
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                      width: "80%",
                       marginBottom: "50px",
-                      fontSize: "18px",
-                      color: "#006E7F",
-                      fontWeight: "bold",
+                      justifyContent: "space-between",
                     }}
                   >
-                    Payment
-                  </p>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                    width: "80%",
-                    marginBottom: "10px",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>Subscription price:</div>
-                  <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                    {price} EUR
+                    <div>Total payment:</div>
+                    <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                      {price} EUR
+                    </div>
+                  </div>
+                  <div>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{
+                          backgroundColor: "#EE5007",
+                          color: "white",
+                          padding: "8px",
+                          height: "100%",
+                          width: "150px",
+                          fontFamily: "'Montserrat',sans-serif",
+                        }}
+                      >
+                        Go to payment
+                      </Button>
+                    </Form.Item>
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                    width: "80%",
-                    marginBottom: "50px",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <div>Total payment:</div>
-                  <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                    {price} EUR
-                  </div>
-                </div>
-                <div>
-                  <Button
-                    style={{
-                      backgroundColor: "#EE5007",
-                      color: "white",
-                      padding: "8px",
-                      height: "100%",
-                      width: "150px",
-                      fontFamily: "'Montserrat',sans-serif",
-                    }}
-                    onClick={buy}
-                  >
-                    Go to payment
-                  </Button>
-                </div>
-              </div>
 
-              <div style={{ width: "70%", padding: "20px" }}>
-                <img src="/card.svg" alt="image" style={{ width: "70%" }}></img>
+                <div style={{ width: "70%", padding: "20px" }}>
+                  <img
+                    src="/card.svg"
+                    alt="image"
+                    style={{ width: "70%" }}
+                  ></img>
+                </div>
               </div>
             </div>
-          </div>
+          </Form>
         </div>
       </div>
     </div>

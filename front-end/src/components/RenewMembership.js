@@ -62,7 +62,6 @@ const RenewMembership = () => {
   return (
     <div
       style={{
-        border: "",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",

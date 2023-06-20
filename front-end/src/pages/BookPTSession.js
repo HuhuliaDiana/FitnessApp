@@ -2,8 +2,11 @@ import "@progress/kendo-theme-default/dist/all.css";
 import { Button } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MenuBar from "../components/MenuBar";
 import PickDateTimeOfPTSession from "../components/PickDateTimeOfPTSession";
+
 const allTimes = [
   "07:00 - 08:00",
   "08:00 - 09:00",
@@ -20,7 +23,7 @@ const BookPTSession = () => {
 
   const [noDaysValidity, setNoDaysValidity] = useState();
 
-  const [errMsg, setErrMsg] = useState();
+  const [errMsg, setErrMsg] = useState("");
   const [bookingTimes, setBookingTimes] = useState([]);
 
   const [startDateOfPT, setStartDateOfPT] = useState();
@@ -30,6 +33,7 @@ const BookPTSession = () => {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [sessionHoursReserved, setSessionHoursReserved] = useState([]);
   const [localBookingDate, setLocalBookingDate] = useState();
+  const [trainerClub, setTrainerClub] = useState("");
 
   useEffect(() => {
     getPTSessionByTrainerId();
@@ -95,7 +99,6 @@ const BookPTSession = () => {
           return Promise.reject("Cannot get PT of current user.");
         })
         .then((data) => {
-          // console.log(data);
           const endDate = moment(new Date(data.startDate))
             .add(data.personalTraining.noDaysValidity, "days")
             .toISOString()
@@ -105,6 +108,8 @@ const BookPTSession = () => {
           setTrainerId(data.personalTrainer.id);
           setStartDateOfPT(data.startDate);
           setNoDaysValidity(data.personalTraining.noDaysValidity);
+          const trainerClub = data.personalTrainer.clubs[0].name;
+          setTrainerClub(trainerClub);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -112,7 +117,6 @@ const BookPTSession = () => {
     }
   };
   useEffect(() => {
-    // console.log("selectedtimeslot " + selectedTimeSlot);
     if (selectedTimeSlot) {
       setLocalDate(localBookingDate);
       setLocalTime(selectedTimeSlot.split(" - ")[0]);
@@ -129,12 +133,25 @@ const BookPTSession = () => {
         body: JSON.stringify({ localDate: localBookingDate, localTime }),
       })
         .then((response) => {
-          return response.json();
+          if (response.status === 406) {
+            return response.json();
+          } else if (response.ok) {
+            toast.success("Successfully booked session!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
+            setTimeout(() => {
+              window.location.reload(false);
+            }, 2000);
+          }
         })
         .then((data) => {
-          setErrMsg(data.message);
+          toast.error(data.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 3000,
+          });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err.message));
     } catch (err) {
       console.log(err);
     }
@@ -146,9 +163,10 @@ const BookPTSession = () => {
     setBookingDate(data.bookingDate);
     setSelectedTimeSlot(data.selectedTimeSlot);
     setLocalBookingDate(data.localBookingDate);
+    setErrMsg("");
   };
   useEffect(() => {
-    setErrMsg(null);
+    setErrMsg("");
   }, [localDate, localTime]);
   useEffect(() => {
     getPTOfCurrentUser();
@@ -175,8 +193,7 @@ const BookPTSession = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -228,7 +245,7 @@ const BookPTSession = () => {
                 <b style={{ color: "#EE5007" }}>
                   {userPT.personalTrainer.name}
                 </b>
-                <br></br> at WORLD CLASS PARKLAKE
+                <br></br> at {trainerClub}
               </div>
               <div
                 style={{
@@ -256,7 +273,6 @@ const BookPTSession = () => {
                 </div>
                 <div
                   style={{
-                    // marginLeft: "10%",
                     display: "flex",
                     flexDirection: "column",
                     margin: "auto",
@@ -312,7 +328,6 @@ const BookPTSession = () => {
               style={{
                 border: "",
                 display: "flex",
-                // justifyContent:"center",
                 padding: "10px",
                 marginBottom: "30px",
                 fontWeight: "bold",
@@ -332,7 +347,6 @@ const BookPTSession = () => {
                   <Button
                     style={{
                       border: "1px solid #006E7F",
-                      // width: "140px",
                       marginRight: "20px",
                     }}
                     key={time}
@@ -366,7 +380,9 @@ const BookPTSession = () => {
             }}
           >
             <p>Date and time slot selected:</p>
-            <b>{bookingDate.toDateString()} at {selectedTimeSlot}</b>
+            <b>
+              {bookingDate.toDateString()} at {selectedTimeSlot}
+            </b>
             {localTime && (
               <div>
                 <Button
@@ -378,16 +394,24 @@ const BookPTSession = () => {
                   }}
                   onClick={bookPTSession}
                 >
-                  Book PT{" "}
+                  Book PT
                 </Button>
               </div>
             )}
           </div>
         )}
-        <div style={{ textAlign: "center" }}>
+        {/* <div style={{ textAlign: "center" }}>
           {errMsg && <p style={{ color: "#B22727" }}>{errMsg}</p>}
-        </div>
+        </div> */}
       </div>
+      {/* <Modal
+        title="You booked"
+        centered
+        open={modal2Open}
+        onOk={() => setModal2Open(false)}`
+        onCancel={() => setModal2Open(false)}
+      ></Modal> */}
+      <ToastContainer style={{ marginLeft: "120px" }} />
     </div>
   );
 };

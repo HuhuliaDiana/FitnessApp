@@ -24,7 +24,6 @@ const BookingsPTHistory = () => {
           );
         })
         .then((data) => {
-          console.log(data)
           setBookingsPT(data);
         })
         .catch((err) => console.log(err));
@@ -56,8 +55,7 @@ const BookingsPTHistory = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -84,38 +82,58 @@ const BookingsPTHistory = () => {
               Personal Training history sessions
             </div>
           </div>
-          <div
-            style={{
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
-              display: "flex",
-              padding: "20px",
-              flexDirection: "column",
-              width: "70%",
-              justifyContent: "center",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <div>
-              <img src="/booked.svg" alt="image" style={{ width: "25%" }}></img>
-            </div>
+          {bookingsPT ? (
             <div
               style={{
-                display: "flex",
-                justifyContent: "center",
-                flexWrap: "wrap",
+                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "50px",
+                display: "flex",
+                padding: "20px",
+                flexDirection: "column",
+                width: "70%",
+                justifyContent: "center",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
-              {bookingsPT &&
-                bookingsPT.map((bookingPT) => {
-                  return (
-                    <PTSession key={bookingPT.id} parentToChild={bookingPT} />
-                  );
-                })}
+              <div>
+                <img
+                  src="/booked.svg"
+                  alt="image"
+                  style={{ width: "25%" }}
+                ></img>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  flexWrap: "wrap",
+                  marginTop: "50px",
+                }}
+              >
+                {bookingsPT &&
+                  bookingsPT.map((bookingPT) => {
+                    return (
+                      <PTSession key={bookingPT.id} parentToChild={bookingPT} />
+                    );
+                  })}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div style={{ marginTop: "100px" }}>
+              <p
+                style={{
+                  fontSize: "30px",
+                  color: "#006E7F",
+                  fontWeight: "bold",
+                  marginBottom: "150px",
+                }}
+              >
+                You haven't booked any personal training session yet.
+              </p>
+              <img alt="image" src="void.svg" style={{ width: "18%" }}></img>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
-import MenuBar from "../components/MenuBar";
 import "@progress/kendo-theme-default/dist/all.css";
-import { Button } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import MenuBar from "../components/MenuBar";
 
 const UserPT = () => {
   const [userPT, setUserPT] = useState();
   const [endDatePT, setEndDatePT] = useState();
   const accessToken = localStorage.getItem("accessToken");
+  const [trainingName, setTrainingName] = useState("");
+  const [trainerClub, setTrainerClub] = useState("");
 
   const getPTOfCurrentUser = () => {
     try {
@@ -22,19 +23,28 @@ const UserPT = () => {
           if (response.ok) {
             return response.json();
           }
-          if (response.status === 404) {
-            return Promise.reject("PT user was not found.");
-          }
           return Promise.reject("Cannot get PT of current user.");
         })
         .then((data) => {
-          console.log(data);
           const endDate = moment(new Date(data.startDate))
             .add(data.personalTraining.noDaysValidity, "days")
             .toISOString()
             .split("T")[0];
           setEndDatePT(endDate);
           setUserPT(data);
+          const trainingName = data.personalTraining.personalTrainingType.name;
+          let ptName = "";
+          if (trainingName.includes("_")) {
+            const array = trainingName.split("_");
+            array.forEach((a) => {
+              ptName += a + " ";
+            });
+            setTrainingName(ptName);
+          } else {
+            setTrainingName(trainingName);
+          }
+          const trainerClub = data.personalTrainer.clubs[0].name;
+          setTrainerClub(trainerClub);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -65,8 +75,6 @@ const UserPT = () => {
               fontSize: "120%",
               fontWeight: "bold",
               marginLeft: "15px",
-              color:"#006E7F"
-
             }}
           >
             Welcome to Fit & Repeat
@@ -93,16 +101,16 @@ const UserPT = () => {
               About your PT
             </div>
           </div>
-          {userPT && (
+          {userPT ? (
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "100px",
-                marginBottom:"auto",
+                marginBottom: "auto",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
-                width: "65%",
+                width: "60%",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -112,113 +120,87 @@ const UserPT = () => {
                 style={{
                   display: "flex",
                   justifyContent: "center",
-                  fontSize: "20px",
-                  color: "#006E7F",
                 }}
               >
                 <div
                   style={{
                     width: "70%",
-                    height: "200px",
                     margin: "auto",
-                    display: "flex",
-                    justifyContent: "space-around",
-                    flexDirection: "column",
+                    fontSize: "20px",
+                    color: "#006E7F",
                   }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "80%",
-                      margin: "auto",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  <p>
                     <text>Personal Training: </text>
-                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
-                      {userPT.personalTraining.personalTrainingType.name}
-                    </text>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "80%",
-                      margin: "auto",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                    {trainingName !== "" && (
+                      <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                        {trainingName}
+                      </text>
+                    )}
+                  </p>
+                  <p>
                     <text>Sessions to use: </text>
                     <text style={{ color: "#EE5007", fontWeight: "bold" }}>
                       {userPT.personalTraining.sessionsNumber}
                     </text>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "80%",
-                      margin: "auto",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    Valadity:{" "}
-                    <div>
-                      <text style={{ color: "#EE5007", fontWeight: "bold" }}>
-                        {userPT.startDate}
-                      </text>{" "}
-                      to{" "}
-                      <text style={{ color: "#EE5007", fontWeight: "bold" }}>
-                        {endDatePT}
-                      </text>
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "80%",
-                      margin: "auto",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  </p>
+                  <p>
+                    Available from:{" "}
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      {userPT.startDate}
+                    </text>{" "}
+                    to{" "}
+                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                      {endDatePT}
+                    </text>
+                  </p>
+                  <p>
                     Trainer:{" "}
                     <text style={{ color: "#EE5007", fontWeight: "bold" }}>
                       {userPT.personalTrainer.name}
                     </text>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "80%",
-                      margin: "auto",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    Club:{" "}
-                    <text style={{ color: "#EE5007", fontWeight: "bold" }}>
-                      WORLD CLASS PARKLAKE
-                    </text>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      width: "80%",
-                      margin: "auto",
-                      justifyContent: "space-between",
-                    }}
-                  >
+                  </p>
+                  {trainerClub !== "" && (
+                    <p>
+                      Club:{" "}
+                      <text style={{ color: "#EE5007", fontWeight: "bold" }}>
+                        {trainerClub}
+                      </text>
+                    </p>
+                  )}
+                  <p>
                     Sessions left:{" "}
                     <text style={{ color: "#EE5007", fontWeight: "bold" }}>
                       {userPT.noSessionsLeft}
                     </text>
-                  </div>
+                  </p>
                 </div>
                 <div style={{ margin: "auto" }}>
                   <img
                     alt="image"
                     src="pt-booked.svg"
-                    style={{ width: "70%", padding: "20px" }}
+                    style={{ width: "60%", padding: "20px" }}
                   ></img>
                 </div>
               </div>
+            </div>
+          ) : (
+            <div style={{ marginTop: "100px" }}>
+              <p
+                style={{
+                  fontSize: "30px",
+                  color: "#006E7F",
+                  fontWeight: "bold",
+                  marginBottom: "150px",
+                }}
+              >
+                Buy sessions of personal training.
+              </p>
+              <img
+                alt="image"
+                src="void.svg"
+                style={{ width: "18%" }}
+              ></img>
             </div>
           )}
         </div>

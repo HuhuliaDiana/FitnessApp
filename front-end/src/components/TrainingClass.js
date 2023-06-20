@@ -15,9 +15,9 @@ const TrainingClass = (props) => {
   const [beginningTimeString, setBeginningTimeString] = useState("");
   const getHour = () => {
     const beginningTime = new Date(trainingClass.classDate);
-    let beginningTimeHour = beginningTime.getUTCHours();
+    let beginningTimeHour = beginningTime.getHours();
 
-    let beginningTimeMinutes = beginningTime.getUTCMinutes();
+    let beginningTimeMinutes = beginningTime.getMinutes();
     if (beginningTimeHour.toString().length === 1)
       beginningTimeHour = "0" + beginningTimeHour;
 
@@ -27,8 +27,8 @@ const TrainingClass = (props) => {
     setBeginningTimeString(beginningTimeString);
 
     let endingTime = new Date(beginningTime.getTime() + 60000 * duration);
-    let endingTimeHour = endingTime.getUTCHours();
-    let endingTimeMinutes = endingTime.getUTCMinutes();
+    let endingTimeHour = endingTime.getHours();
+    let endingTimeMinutes = endingTime.getMinutes();
     if (endingTimeMinutes === 0) endingTimeMinutes += "0";
     if (endingTimeHour.toString().length === 1)
       endingTimeHour = "0" + endingTimeHour;
@@ -77,10 +77,12 @@ const TrainingClass = (props) => {
     }
   };
   const styleStatus = () => {
-    if (status.includes("available")) {
+    if (status.includes("Booking available")) {
       return { color: "#006E7F" };
+    } else if (status.includes("You booked this class")) {
+      return { color: "#EE5007" };
     }
-    return { color: "#EE5007" };
+    return { color: "red" };
   };
 
   return (
@@ -93,8 +95,8 @@ const TrainingClass = (props) => {
         fontWeight: "bold",
         height: "20vh",
         //puse pt pagina booked classes
-        marginRight:"20px",
-        width: "200px"
+        marginRight: "20px",
+        width: "200px",
         //
       }}
       onClick={() => {

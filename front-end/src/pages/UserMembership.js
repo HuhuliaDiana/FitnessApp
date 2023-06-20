@@ -2,6 +2,8 @@ import { DownOutlined } from "@ant-design/icons";
 import { Button, DatePicker, Dropdown, InputNumber, Space } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import MenuBar from "../components/MenuBar";
 
 import moment from "moment";
@@ -18,8 +20,8 @@ const UserMembership = () => {
   const [clubSelected, setClubSelected] = useState();
   const [club, setClub] = useState();
   const [daysToFreeze, setDaysToFreeze] = useState(0);
+
   const [firstDayOfFreeze, setFirstDayOfFreeze] = useState();
-  const [openDatePickerToFreeze, setOpenDatePickerToFreeze] = useState(false);
   const [numberOfDays, setNumberOfDays] = useState(0);
   const [noDaysLeftToFreeze, setNoDaysLeftToFreeze] = useState(0);
   const [startDayOfMembership, setStartDayOfMembership] = useState();
@@ -43,7 +45,6 @@ const UserMembership = () => {
           return Promise.reject("Cannot get user subscription.");
         })
         .then((data) => {
-          console.log(data);
           setDataStartFreeze(data.startFreeze);
           setDataEndFreeze(data.endFreeze);
           setStartDayOfMembership(data.startDate);
@@ -153,9 +154,14 @@ const UserMembership = () => {
     )
       .then((response) => {
         if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject("Cannot get club.");
+          toast.success("Successfully transfered membership!", {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1500,
+          });
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 2000);
+        } else return Promise.reject("Cannot get club.");
       })
       .then((data) => {
         console.log(data);
@@ -172,9 +178,14 @@ const UserMembership = () => {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject("Cannot freeze membership.");
+          toast.success("Successfully freezed membership!", {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1500,
+          });
+          setTimeout(() => {
+            window.location.reload(false);
+          }, 2000);
+        } else return Promise.reject("Cannot freeze membership.");
       })
       .then((data) => {
         console.log(data);
@@ -250,99 +261,121 @@ const UserMembership = () => {
               Your membership
             </div>
           </div>
-          <div
-            style={{
-              boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
-              display: "flex",
-              padding: "20px",
-              flexDirection: "column",
-              width: "60%",
-              justifyContent: "center",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            {subscription && (
-              <div style={{ border: "", display: "flex" }}>
-                <div
-                  style={{
-                    border: "",
-                    width: "60%",
-                    margin: "auto",
-                    backgroundColor: "",
-                    color: "",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize: "25px",
-                      fontWeight: "bold",
-                      color: "#006E7F",
-                    }}
-                  >
-                    {subscription.subscription.membership.name}{" "}
-                    {subscriptionPeriodName}
-                  </p>
-                  <p style={{}}>
-                    Available from{" "}
-                    <b style={{ color: "#006E7F" }}>{subscription.startDate}</b>{" "}
-                    to{" "}
-                    <b style={{ color: "#006E7F" }}>{subscription.endDate}</b>
-                  </p>
-                </div>
-                <div>
-                  <img
-                    alt="image"
-                    src="membership.svg"
-                    style={{ width: "50%", padding: "20px" }}
-                  ></img>
-                </div>
-              </div>
-            )}
-            <div
-              style={{
-                border: "",
-                marginTop: "50px",
-                display: "flex",
-                justifyContent: "space-between",
-              }}
-            >
-              <Button
-                style={styleBtn}
-                onClick={() => {
-                  navigate("/buy-membership");
-                }}
-              >
-                Buy membership
-              </Button>
-              <Button style={styleBtn} onClick={() => setOption("renew")}>
-                Renew membership
-              </Button>
-              <Button style={styleBtn} onClick={() => setOption("upgrade")}>
-                Upgrade membership
-              </Button>
-              <Button style={styleBtn} onClick={changeClubForMembership}>
-                Transfer membership
-              </Button>
-              {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
-                <div>
-                  <Button onClick={() => setOption("freeze")} style={styleBtn}>
-                    Freeze membership
-                  </Button>
-                </div>
-              )}
-            </div>
-          </div>
-          {option && (
+          {subscription ? (
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "40px",
+                marginTop: "50px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
                 width: "60%",
+                justifyContent: "center",
+                marginLeft: "auto",
+                marginRight: "auto",
+              }}
+            >
+              {subscription && (
+                <div style={{ border: "", display: "flex" }}>
+                  <div
+                    style={{
+                      border: "",
+                      width: "60%",
+                      margin: "auto",
+                      backgroundColor: "",
+                      color: "",
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: "25px",
+                        fontWeight: "bold",
+                        color: "#006E7F",
+                      }}
+                    >
+                      {subscription.subscription.membership.name}{" "}
+                      {subscriptionPeriodName}
+                    </p>
+                    <p style={{}}>
+                      Available from{" "}
+                      <b style={{ color: "#006E7F" }}>
+                        {subscription.startDate}
+                      </b>{" "}
+                      to{" "}
+                      <b style={{ color: "#006E7F" }}>{subscription.endDate}</b>
+                    </p>
+                  </div>
+                  <div>
+                    <img
+                      alt="image"
+                      src="membership.svg"
+                      style={{ width: "50%", padding: "20px" }}
+                    ></img>
+                  </div>
+                </div>
+              )}
+              <div
+                style={{
+                  border: "",
+                  marginTop: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button
+                  style={styleBtn}
+                  onClick={() => {
+                    navigate("/buy-membership");
+                  }}
+                >
+                  Buy membership
+                </Button>
+                <Button style={styleBtn} onClick={() => setOption("renew")}>
+                  Renew membership
+                </Button>
+                <Button style={styleBtn} onClick={() => setOption("upgrade")}>
+                  Upgrade membership
+                </Button>
+                <Button style={styleBtn} onClick={changeClubForMembership}>
+                  Transfer membership
+                </Button>
+                {daysToFreeze !== 0 && noDaysLeftToFreeze !== 0 && (
+                  <div>
+                    <Button
+                      onClick={() => setOption("freeze")}
+                      style={styleBtn}
+                    >
+                      Freeze membership
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ) : (
+            <div style={{ marginTop: "100px" }}>
+              <p
+                style={{
+                  fontSize: "30px",
+                  color: "#006E7F",
+                  fontWeight: "bold",
+                  marginBottom: "150px",
+                }}
+              >
+                Buy membership.
+              </p>
+              <img alt="image" src="void.svg" style={{ width: "18%" }}></img>
+            </div>
+          )}
+          {option && (
+            <div
+              style={{
+                boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
+                marginTop: "25px",
+                display: "flex",
+                padding: "20px",
+                flexDirection: "column",
+                width: "60%",
+                marginBottom: "25px",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -495,10 +528,12 @@ const UserMembership = () => {
                           onClick={freezeMembership}
                           style={{
                             width: "180px",
-                            "background-color": "#006E7F",
+                            backgroundColor: "#006E7F",
                             fontFamily: "'Montserrat', sans-serif",
                             marginTop: "40px",
                             color: "white",
+                            padding: "5px",
+                            height: "100%",
                           }}
                         >
                           Freeze membership
@@ -541,7 +576,6 @@ const UserMembership = () => {
             style={{
               width: "20%",
               textAlign: "center",
-              marginTop: "40px",
               padding: "20px",
               backgroundColor: "white",
               color: "#006E7F",
@@ -565,6 +599,7 @@ const UserMembership = () => {
             </Button>
           </div>
         )}
+        <ToastContainer style={{ marginLeft: "120px" }} />
       </div>
     </div>
   );

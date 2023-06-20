@@ -288,6 +288,7 @@ const ClassesSchedule = () => {
               padding: "20px",
               "flex-direction": "column",
               width: "80%",
+              marginBottom: "50px",
               justifyContent: "center",
               "margin-left": "10%",
             }}
@@ -368,7 +369,8 @@ const ClassesSchedule = () => {
                         style={{
                           backgroundColor: "#006E7F",
                           color: "white",
-                          padding: "10px",
+                          padding: "10px 5px 10px 5px",
+                          width: "200px",
                           boxShadow:
                             "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px",
                         }}
