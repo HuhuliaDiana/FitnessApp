@@ -285,7 +285,6 @@ const Clubs = () => {
                     style={{
                       margin: "auto",
                       display: "flex",
-                      width: "80%",
                       flexWrap: "wrap",
                       justifyContent: "center",
                     }}
@@ -374,6 +373,7 @@ const Clubs = () => {
               backgroundColor: "white",
               color: "#006E7F",
               "margin-left": "auto",
+              marginBottom:"50px",
               "margin-right": "auto",
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
             }}
@@ -391,7 +391,7 @@ const Clubs = () => {
             <p>{clubSelected.address}</p>
             <Button
               style={{
-                backgroundColor: "#006E7Fcc",
+                backgroundColor: "#006E7FCC",
                 color: "white",
                 "margin-top": "20px",
                 "font-size": "100%",

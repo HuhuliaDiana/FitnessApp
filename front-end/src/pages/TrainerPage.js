@@ -134,7 +134,9 @@ const TrainerPage = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   "flex-wrap": "wrap",
-                  padding: "40px",
+                  marginTop:"auto",
+                  marginBottom:"auto",
+                  padding: "30px",
                 }}
               >
                 {trainings.length !== 0 &&

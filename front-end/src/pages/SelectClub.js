@@ -136,8 +136,6 @@ function SelectClub() {
                 marginTop: "auto",
                 marginBottom: "auto",
                 marginLeft: "20px",
-                // color:"#B22727"
-                // fontSize:"20px"
               }}
             >
               Select a club
@@ -151,7 +149,7 @@ function SelectClub() {
               "margin-left": "10%",
               height: "40vh",
               width: "80%",
-              marginTop: "100px",
+              marginTop: "3%",
             }}
           >
             <div style={{ width: "30%", margin: "auto" }}>
@@ -213,7 +211,7 @@ function SelectClub() {
                         "box-shadow": " rgba(0, 0, 0, 0.24) 0px 3px 8px",
                         padding: "8px",
                         backgroundColor: "white",
-                        width: "40%",
+                        width: "48%",
                         marginTop: "80px",
                         justifyContent: "space-between",
                       }}
@@ -236,7 +234,7 @@ function SelectClub() {
                 style={{
                   width: "20%",
                   "text-align": "center",
-                  "margin-top": "35px",
+                  "margin-top": "30px",
                   padding: "20px",
                   backgroundColor: "white",
                   color: "#006E7F",
@@ -260,7 +258,7 @@ function SelectClub() {
                   style={{
                     backgroundColor: "#006E7F",
                     color: "white",
-                    "margin-top": "20px",
+                    marginTop: "15px",
                     "font-size": "100%",
                     height: "100%",
                   }}

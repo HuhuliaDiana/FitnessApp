@@ -228,7 +228,7 @@ const BookPTSession = () => {
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
-                width: "45%",
+                width: "50%",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -318,7 +318,7 @@ const BookPTSession = () => {
               display: "flex",
               padding: "20px",
               flexDirection: "column",
-              width: "45%",
+              width: "50%",
               justifyContent: "center",
               marginLeft: "auto",
               marginRight: "auto",
@@ -326,7 +326,6 @@ const BookPTSession = () => {
           >
             <div
               style={{
-                border: "",
                 display: "flex",
                 padding: "10px",
                 marginBottom: "30px",

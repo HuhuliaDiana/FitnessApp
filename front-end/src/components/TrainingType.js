@@ -25,7 +25,7 @@ const TrainingType = (props) => {
     <div
       style={{
         "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-        padding: "20px",
+        padding: "15px",
         fontWeight:"bold"
       }}
     >

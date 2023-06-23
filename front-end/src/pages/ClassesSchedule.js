@@ -287,7 +287,7 @@ const ClassesSchedule = () => {
               display: "flex",
               padding: "20px",
               "flex-direction": "column",
-              width: "81%",
+              width: "80%",
               marginBottom: "50px",
               justifyContent: "center",
               "margin-left": "10%",
@@ -295,8 +295,8 @@ const ClassesSchedule = () => {
           >
             <div
               style={{
-                width: "35%",
                 display: "flex",
+                justifyContent:"center",
                 "margin-left": "auto",
                 "margin-right": "auto",
               }}
@@ -350,6 +350,7 @@ const ClassesSchedule = () => {
               style={{
                 "margin-top": "50px",
                 display: "flex",
+                justifyContent:"center",
                 "flex-direction": "row",
                 width: "100%",
               }}

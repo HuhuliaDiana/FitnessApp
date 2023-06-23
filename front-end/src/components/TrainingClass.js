@@ -93,7 +93,6 @@ const TrainingClass = (props) => {
         padding: "5px",
         fontSize: "15px",
         fontWeight: "bold",
-        height: "20vh",
         marginRight: "20px",
         width: "200px",
       }}
