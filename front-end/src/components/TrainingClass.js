@@ -94,10 +94,8 @@ const TrainingClass = (props) => {
         fontSize: "15px",
         fontWeight: "bold",
         height: "20vh",
-        //puse pt pagina booked classes
         marginRight: "20px",
         width: "200px",
-        //
       }}
       onClick={() => {
         navigate(`/schedule/${trainingClass.id}`);

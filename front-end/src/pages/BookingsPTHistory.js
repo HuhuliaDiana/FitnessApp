@@ -4,7 +4,7 @@ import PTSession from "../components/PTSession";
 
 const BookingsPTHistory = () => {
   const accessToken = localStorage.getItem("accessToken");
-  const [bookingsPT, setBookingsPT] = useState();
+  const [bookingsPT, setBookingsPT] = useState([]);
   const getBookingsPTHistory = () => {
     try {
       fetch(`http://localhost:8080/api/pt-session/bookings-history`, {
@@ -82,7 +82,7 @@ const BookingsPTHistory = () => {
               Personal Training history sessions
             </div>
           </div>
-          {bookingsPT ? (
+          {bookingsPT.length !== 0 ? (
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",

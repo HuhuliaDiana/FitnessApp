@@ -9,9 +9,9 @@ const SearchClasses = () => {
 
   const accessToken = localStorage.getItem("accessToken");
   const [clubs, setClubs] = useState([]);
-  const [typeId, setTypeId] = useState(4);
+  const [typeId, setTypeId] = useState();
   const [typeItems, setTypeItems] = useState();
-  const [nameDropdownTypes, setNameDropdownTypes] = useState("ANY TYPE");
+  const [nameDropdownTypes, setNameDropdownTypes] = useState("Choose a type");
   const [data, setData] = useState([]);
   const [trainerName, setTrainerName] = useState("");
   const [inputValue, setInputValue] = useState("");
@@ -20,9 +20,9 @@ const SearchClasses = () => {
       getClassesForNext7Days();
     }
   }, [typeId, setTypeId]);
-  useEffect(() => {
-    getClassesForNext7Days();
-  }, []);
+  // useEffect(() => {
+  //   getClassesForNext7Days();
+  // }, []);
   useEffect(() => {
     if (trainerName !== "") {
       getClassesForNext7Days();
@@ -30,7 +30,7 @@ const SearchClasses = () => {
   }, [trainerName, setTrainerName]);
   const getTrainingClassTypes = () => {
     try {
-      fetch(`http://localhost:8080/api/class/types`, {
+      fetch(`http://localhost:8080/api/class/types/`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -45,8 +45,8 @@ const SearchClasses = () => {
         })
         .then((data) => {
           let types = [];
-          const anyType = { key: 4, label: "ANY TYPE" };
-          types.push(anyType);
+          // const anyType = { key: 4, label: "ANY TYPE" };
+          // types.push(anyType);
           data.forEach((type) => {
             types.push({
               key: type.id,
@@ -124,7 +124,7 @@ const SearchClasses = () => {
   const onSearchByTrainer = (trainerName) => {
     setTrainerName(trainerName);
     setTypeId(null);
-    setNameDropdownTypes("ANY TYPE");
+    setNameDropdownTypes("Choose a type");
   };
   return (
     <div className="parent">

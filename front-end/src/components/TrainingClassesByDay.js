@@ -10,7 +10,7 @@ const TrainingClassesByDay = (props) => {
       justifyContent: "center",
       marginBottom: "30px",
     };
-  }
+  } 
   const localDateOfClass = props.parentToChild.nameOfWeekDay.localDateOfClass;
   const data = props.parentToChild.data;
   const [classes, setClasses] = useState([]);
