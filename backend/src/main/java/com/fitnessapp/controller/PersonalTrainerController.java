@@ -26,8 +26,8 @@ public class PersonalTrainerController {
 
     @Operation(summary = "Get trainer by id.")
     @GetMapping(PersonalTrainerEndpoints.PERSONAL_TRAINER_BY_ID)
-    public PersonalTrainerDto getTrainerById(@PathVariable Long id) {
-        return personalTrainerService.getTrainerById(id);
+    public PersonalTrainerDto getTrainerById(@PathVariable Long trainerId) {
+        return personalTrainerService.getTrainerById(trainerId);
 
     }
 }

@@ -140,7 +140,8 @@ CONSTRAINT fk_personal_training_type
 
 create table personal_trainer(
 id bigserial PRIMARY KEY NOT NULL,
-name character varying(255)
+name character varying(255),
+sex character
 );
 
 create table trainer_club(

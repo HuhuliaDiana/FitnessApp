@@ -62,8 +62,8 @@ public class ClubService {
         return clubs.stream().map(clubMapper::map).toList();
     }
 
-    public List<Club> getAllClubsByCityId(Long cityId) {
-        return clubRepository.findAllByCityId(cityId);
+    public List<ClubDto> getAllClubsByCityId(Long cityId) {
+        return clubRepository.findAllByCityId(cityId).stream().map(clubMapper::map).toList();
     }
 
     //I have a club, get me subscriptions I can buy to access that club
@@ -81,6 +81,10 @@ public class ClubService {
 
     public List<ClubDto> getAllClubs() {
         return clubRepository.findAll().stream().map(clubMapper::map).toList();
+    }
+
+    public List<Long> getAllClubsId(){
+        return clubRepository.findAll().stream().map(Club::getId).toList();
     }
 
     public List<SubscriptionDto> getSubscriptionsForClub(Long clubId) {

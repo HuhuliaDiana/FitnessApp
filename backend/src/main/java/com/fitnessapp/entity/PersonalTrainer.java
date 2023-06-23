@@ -1,5 +1,6 @@
 package com.fitnessapp.entity;
 
+import com.fitnessapp.enums.PTSex;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,5 +29,7 @@ public class PersonalTrainer {
             joinColumns = @JoinColumn(name = "personal_trainer_id"),
             inverseJoinColumns = @JoinColumn(name = "personal_training_id"))
     private Set<PersonalTraining> personalTrainings;
+
+    private PTSex sex;
 
 }

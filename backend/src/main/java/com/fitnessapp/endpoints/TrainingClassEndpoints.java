@@ -9,9 +9,10 @@ public class TrainingClassEndpoints {
     public static final String TRAINING_CLASSES_AVAILABLE = "/available";
     public static final String TRAINING_CLASS_BY_ID_CANCEL_BOOKING = "/booked/cancel/{id}";
     public static final String TRAINING_CLASS_BY_ID_CANCELABLE = "/booked/cancelable/{id}";
-    public static final String TRAINING_CLASSES_BY_CLUB_ID_IN_NEXT_7_DAYS= "/next-7-days/{id}";
+    public static final String TRAINING_CLASSES_BY_SUBSCRIPTION_CLUB_IN_NEXT_7_DAYS= "/next-7-days/subscription-club";
     public static final String TRAINING_CLASSES_IN_NEXT_7_DAYS= "/next-7-days";
     public static final String TRAINING_CLASSES_TYPES= "/types";
+    public static final String TRAINING_CLASSES_BY_ID= "/{id}";
 
 
 }

@@ -1,8 +1,6 @@
 package com.fitnessapp;
 
 import com.fitnessapp.dto.*;
-import com.fitnessapp.entity.City;
-import com.fitnessapp.entity.Membership;
 import com.fitnessapp.entity.TrainingClassType;
 import com.fitnessapp.enums.*;
 import com.fitnessapp.mapper.*;
@@ -25,8 +23,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +40,6 @@ public class DataInitializer implements CommandLineRunner {
     private final ClubRepository clubRepository;
     private final CityService cityService;
     private final CityRepository cityRepository;
-    private final CityMapper cityMapper;
     private final MembershipMapper membershipMapper;
     private final SubscriptionService subscriptionService;
     private final SubscriptionRepository subscriptionRepository;
@@ -66,6 +61,8 @@ public class DataInitializer implements CommandLineRunner {
     private final PersonalTrainerService personalTrainerService;
     private final PersonalTrainingTypeMapper personalTrainingTypeMapper;
     private final TrainingClassRepository trainingClassRepository;
+    private final AddClubsData addClubsData;
+    private final AddClassesData addClassesData;
 
     @Override
     public void run(String... args) {
@@ -81,7 +78,7 @@ public class DataInitializer implements CommandLineRunner {
         }
         if (membershipRepository.count() == 0) saveMembershipTypes();
         if (cityRepository.count() == 0) saveCities();
-        if (clubRepository.count() == 0) saveClubs();
+        if (clubRepository.count() == 0) addClubsData.saveClubs();
         if (periodRepository.count() == 0) saveAllTypesOfSubscriptionPeriod();
         if (subscriptionRepository.count() == 0) saveAllTypesOfSubscription();
         if (trainingClassTypeRepository.count() == 0) saveTrainingClassTypes();
@@ -90,28 +87,29 @@ public class DataInitializer implements CommandLineRunner {
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainerRepository.count() == 0) saveTrainers();
-        if (trainingClassRepository.count() == 0) saveTrainingClasses();
+        if (trainingClassRepository.count() == 0) addClassesData.saveClassesForAllClubs();
 
     }
 
-    private void saveTrainer(String name, Long trainingTypeId, Long clubId) {
+    private void saveTrainer(String name, Long trainingTypeId, Long clubId, PTSex sex) {
         PersonalTrainerDto trainerDto = new PersonalTrainerDto();
         trainerDto.setName(name);
+        trainerDto.setSex(sex);
         trainerDto.getPersonalTrainings().addAll(personalTrainingService.getAllByTrainingTypeId(trainingTypeId));
         trainerDto.getClubs().add(clubService.getClubById(clubId));
         personalTrainerService.save(trainerDto);
     }
 
     private void saveTrainers() {
-        saveTrainer("LAURENTIU SANDU", 3L, 4L);
-        saveTrainer("RAMONA GANEA", 3L, 4L);
-        saveTrainer("DAN SZENTKOVICS", 1L, 4L);
-        saveTrainer("ALEXANDRU MITU", 1L, 8L);
-        saveTrainer("LILIANA NEAGU", 1L, 8L);
-        saveTrainer("DICU ROBERT ADRIAN", 3L, 8L);
-        saveTrainer("VALENTIN VACARIU", 3L, 1L);
-        saveTrainer("PAUL STOICESCU", 2L, 10L);
-        saveTrainer("CRISTINA EPURE", 1L, 10L);
+        saveTrainer("LAURENTIU SANDU", 3L, 4L, PTSex.M);
+        saveTrainer("RAMONA GANEA", 3L, 1L, PTSex.F);
+        saveTrainer("DAN SZENTKOVICS", 1L, 4L, PTSex.M);
+        saveTrainer("ALEXANDRU MITU", 1L, 1L, PTSex.M);
+        saveTrainer("LILIANA NEAGU", 1L, 8L, PTSex.F);
+        saveTrainer("DICU ROBERT ADRIAN", 3L, 8L, PTSex.M);
+        saveTrainer("VALENTIN VACARIU", 3L, 1L, PTSex.M);
+        saveTrainer("PAUL STOICESCU", 2L, 10L, PTSex.M);
+        saveTrainer("CRISTINA EPURE", 1L, 10L, PTSex.F);
 
     }
 
@@ -173,68 +171,9 @@ public class DataInitializer implements CommandLineRunner {
 
     }
 
-    private void saveClubs() {
-        saveClub("Bulevardul 15 Noiembrie Nr. 78, et.2, în incinta AFI Brasov", ECity.BRASOV, "0751230693", "World Class AFI Brasov", MembershipType.BRONZE);
-        saveClub("Str. Comandor Aviator Popisteanu, Nr. 54A, Sector 1, Bucuresti", ECity.BUCURESTI, "0751230693", "World Class Expo Business Park", MembershipType.BRONZE);
-        saveClub("Șoseaua Olteniței, Nr. 208, Sector 4, Bucureşti", ECity.BUCURESTI, "0751230693", "World Class Sudului", MembershipType.BRONZE);
-
-        saveClub("Strada Liviu Rebreanu, Nr. 4, etaj 3, sector 3, în incinta Park Lake Mall", ECity.BUCURESTI, "0749213557", "World Class Park Lake", MembershipType.SILVER);
-        saveClub("Strada Călărașilor, Nr. 1", ECity.CLUJ, "0725353870", "World Class Belvedere Cluj", MembershipType.SILVER);
-        saveClub("Strada Anastasie Panu, Nr. 31", ECity.IASI, "0232210765", "World Class Iasi", MembershipType.SILVER);
-        saveClub("Bvd. Alexandru Lăpușneanu, Nr. 116C, Constanta, în incinta ECity Park Mall", ECity.CONSTANTA, "0723689211", "World Class ECity Park Constanta", MembershipType.SILVER);
-
-        saveClub("Bvd. Barbu Văcărescu, Nr. 164A, Sector 2, Bucureşti, în incinta Hotel Caro", ECity.BUCURESTI, "0751230693", "World Class Caro", MembershipType.GOLD);
-        saveClub("Str. Scortariilor Nr 10, în spatele centrului de birouri The Office", ECity.CLUJ, "0751230693", "World Class The Record Cluj", MembershipType.GOLD);
-
-        saveClub("Calea Victoriei, Nr. 63-81, Sector 1, Bucuresti, în incinta Hotel Radisson Blu", ECity.BUCURESTI, "0751230693", "World Class Downtown", MembershipType.PLATINUM);
-        saveClub("Strada Erou Iancu Nicolae, Nr. 12-26, Voluntari, Ilfov", ECity.BUCURESTI, "0751230693", "World Class Atlantis", MembershipType.PLATINUM);
-
-        saveClub("Strada Calomfirescu, nr. 2, Ploiești, Jud. Prahova, în incinta Afi Palace", ECity.PLOIESTI, "0751230693", "World Class Ploiesti", MembershipType.BRONZE);
-        saveClub("Piata Consiliul Europei, Nr. 2, Timișoara, jud. Timis, în incinta Iulius Mall", ECity.TIMISOARA, "0751230693", "World Class Timisoara", MembershipType.BRONZE);
-
-
-    }
 
     private final TrainingClassService trainingClassService;
 
-    private void saveClass(String class_date, String trainer_name, Long club_id, Long training_class_hour_id, Integer spots_available) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        TrainingClassDto trainingClass = new TrainingClassDto(null, LocalDateTime.parse(class_date, formatter), trainer_name, clubService.getClubById(club_id), trainingClassHourService.getById(training_class_hour_id), spots_available);
-        trainingClassService.save(trainingClass);
-    }
-
-    private void saveTrainingClasses() {
-        saveClass("2023-05-16 18:30:00", "Ioana Chitu", 1L, 1L, 30);
-        saveClass("2023-05-16 10:30:00", "Ioana Coarna", 1L, 2L, 30);
-        saveClass("2023-05-16 20:00:00", "Ana Maria Calin", 1L, 3L, 30);
-        saveClass("2023-05-17 13:20:00", "Ciprian Nita", 4L, 10L, 25);
-        saveClass("2023-05-17 18:00:00", "Gabriel Pana", 4L, 9L, 25);
-        saveClass("2023-05-17 18:30:00", "Ioana Chitu", 4L, 1L, 30);
-        saveClass("2023-05-17 20:10:00", "Mihai Baloiu", 4L, 8L, 25);
-        saveClass("2023-05-18 18:00:00", "Mihai Baloiu", 8L, 8L, 25);
-        saveClass("2023-05-18 10:00:00", "Ioana Coarna", 8L, 2L, 30);
-        saveClass("2023-05-18 18:30:00", "Ioana Chitu", 7L, 8L, 30);
-        saveClass("2023-05-18 20:00:00", "Ana Maria Calin", 8L, 2L, 30);
-        saveClass("2023-05-18 18:00:00", "Mihai Baloiu", 10L, 8L, 25);
-        saveClass("2023-05-18 10:00:00", "Ioana Coarna", 10L, 2L, 30);
-
-    }
-
-    private void saveClub(String address, ECity eCity, String phone, String name, MembershipType membershipType) {
-        ClubDto clubDto = new ClubDto();
-        clubDto.setAddress(address);
-        clubDto.setPhone(phone);
-        clubDto.setName(name);
-
-        City city = cityService.findByName(eCity);
-        clubDto.setCity(cityMapper.map(city));
-
-        Membership membership = membershipService.findByName(membershipType);
-        clubDto.setMembership(membershipMapper.map(membership));
-
-        clubService.save(clubDto);
-
-    }
 
     private void saveSubscription(SubscriptionPeriodType subscriptName, Double price, MembershipType membershipType) {
         SubscriptionDto dto = new SubscriptionDto();
@@ -271,10 +210,6 @@ public class DataInitializer implements CommandLineRunner {
         saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 61.42, MembershipType.PLATINUM);
         saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 75.75, MembershipType.PLATINUM);
         saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 111.00, MembershipType.PLATINUM);
-
-        saveSubscription(SubscriptionPeriodType.FULL_TIME_12_MONTHS, 83.67, MembershipType.W);
-        saveSubscription(SubscriptionPeriodType.BINDING_12_MONTHS, 152.00, MembershipType.W);
-        saveSubscription(SubscriptionPeriodType.FULL_TIME_1_MONTH_ROLLING, 102.50, MembershipType.W);
 
     }
 

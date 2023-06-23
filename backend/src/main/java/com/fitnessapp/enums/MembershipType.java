@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public enum MembershipType {
-    BRONZE, SILVER, GOLD, PLATINUM, W;
+    BRONZE, SILVER, GOLD, PLATINUM;
 
     private static MembershipType getByOrdinal(int order) {
         for (MembershipType type : MembershipType.values()) {
@@ -26,7 +26,7 @@ public enum MembershipType {
 
     public List<MembershipType> getAllGreaterThan() {
         List<MembershipType> list = new ArrayList<>();
-        for (int i = 4; i >= this.ordinal(); i--) list.add(getByOrdinal(i));
+        for (int i = 3; i >= this.ordinal(); i--) list.add(getByOrdinal(i));
         return list;
     }
 }

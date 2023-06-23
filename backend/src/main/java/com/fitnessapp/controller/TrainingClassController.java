@@ -18,15 +18,15 @@ import java.util.List;
 public class TrainingClassController {
     private final TrainingClassService trainingClassService;
 
-//    @Operation(summary = "Get all training classes available for current user.")
-//    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_AVAILABLE)
-//    public List<TrainingClass> getAllClassesAvailableForCurrentUserByClubId() {
-//        return trainingClassService.getAllClassesAvailableForCurrentUser();
-//    }
+    @Operation(summary = "Get class by id.")
+    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BY_ID)
+    public TrainingClassDto getClassById(@PathVariable Long id) {
+        return trainingClassService.findById(id);
+    }
 
     @Operation(summary = "Book a class by id.")
     @PatchMapping(TrainingClassEndpoints.TRAINING_CLASS_BOOK_BY_ID)
-    public TrainingClass bookClass(@PathVariable Long id) {
+    public TrainingClassDto bookClass(@PathVariable Long id) {
         return trainingClassService.bookClass(id);
     }
 
@@ -60,10 +60,10 @@ public class TrainingClassController {
         return trainingClassService.isClassCancelableByUser(id);
     }
 
-    @Operation(summary = "Get all training classes for next 7 days by club id (from the rest of today till the end of last day).")
-    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BY_CLUB_ID_IN_NEXT_7_DAYS)
-    public List<TrainingClassDto> getAllClassesForNext7DaysByClubId(@PathVariable Long id) {
-        return trainingClassService.getAllClassesForNext7DaysByClubId(id);
+    @Operation(summary = "Get all training classes for next 7 days by subscription club.")
+    @GetMapping(TrainingClassEndpoints.TRAINING_CLASSES_BY_SUBSCRIPTION_CLUB_IN_NEXT_7_DAYS)
+    public List<TrainingClassDto> getAllClassesForNext7DaysByClubId() {
+        return trainingClassService.getAllClassesForNext7DaysByClubId();
     }
 
     @Operation(summary = "Get all training classes for next 7 days (from the rest of today till the end of last day).")

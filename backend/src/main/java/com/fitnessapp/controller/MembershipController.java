@@ -1,6 +1,6 @@
 package com.fitnessapp.controller;
 
-import com.fitnessapp.entity.Membership;
+import com.fitnessapp.endpoints.MembershipEndpoints;
 import com.fitnessapp.entity.MembershipRecord;
 import com.fitnessapp.service.membership.MembershipService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/membership")
+@RequestMapping(MembershipEndpoints.MEMBERSHIP_BASE_URL)
 @CrossOrigin(origins = "http://localhost:3000")
 public class MembershipController {
     private final MembershipService membershipService;

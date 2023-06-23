@@ -48,20 +48,21 @@ public class UserSubscriptionService {
 
     @Transactional
     public UserSubscription buyMembership(SubscriptionRecord subscriptionRecord) {
-        if (getOptionalCurrentUserSubscription().isPresent()) cancelSubscription(); // user can not have 2 subscriptions
+        if (getOptionalCurrentUserSubscription().isPresent()) cancelSubscription();
 
         Subscription subscriptionWanted = subscriptionService.getById(subscriptionRecord.id());
         LocalDate date = LocalDate.parse(subscriptionRecord.localDate());
-
         SubscriptionPeriodType subPeriodType = subscriptionWanted.getSubscriptionPeriod().getName();
 
         UserSubscriptionDto userSubscriptionDto = new UserSubscriptionDto();
         userSubscriptionDto.setUser(userService.mapCurrentUser());
         userSubscriptionDto.setStartDate(date);
-        Club club = clubRepository.findById(subscriptionRecord.clubId()).orElseThrow(() -> new EntityNotFoundException("Club", "id", subscriptionRecord.clubId()));
+        Club club = clubRepository.findById(subscriptionRecord.clubId()).orElseThrow(() ->
+                new EntityNotFoundException("Club", "id", subscriptionRecord.clubId()));
         userSubscriptionDto.setClub(clubMapper.map(club));
 
-        userSubscriptionDto.setEndDate(userSubscriptionDto.getStartDate().plusMonths(subPeriodType.getNoMonths()).minusDays(1));
+        userSubscriptionDto.setEndDate(userSubscriptionDto.getStartDate().plusMonths(subPeriodType.getNoMonths())
+                .minusDays(1));
         userSubscriptionDto.setSubscription(subscriptionService.map(subscriptionWanted));
 
         var subscriptionPeriodType = subscriptionWanted.getSubscriptionPeriod().getName();

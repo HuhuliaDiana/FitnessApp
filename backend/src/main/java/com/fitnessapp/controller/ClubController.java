@@ -26,7 +26,7 @@ public class ClubController {
 
     @Operation(summary = "Get clubs by city id.")
     @GetMapping(ClubEndpoints.CLUBS_BY_CITY_ID)
-    public List<Club> getClubsByCityId(@PathVariable Long id) {
+    public List<ClubDto> getClubsByCityId(@PathVariable Long id) {
         return clubService.getAllClubsByCityId(id);
     }
 
