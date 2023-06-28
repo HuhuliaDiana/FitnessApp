@@ -1,18 +1,21 @@
-import { useLocation } from "react-router-dom";
-import MenuBar from "../components/MenuBar";
-import { Button, Col, DatePicker, Form, Input, Row, Space } from "antd";
+import { Button, Col, DatePicker, Form, Input } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import CreditCardInput from "react-credit-card-input";
+import { useNavigate, useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import MenuBar from "../components/MenuBar";
 const BuyPersonalTraining = () => {
   const [date, setDate] = useState("");
   const accessToken = localStorage.getItem("accessToken");
   const [user, setUser] = useState();
   const [name, setName] = useState();
-  const [price, setPrice] = useState();
   const [trainerName, setTrainerName] = useState();
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [county, setCounty] = useState("");
+  const navigate = useNavigate();
+  const [pt, setPt] = useState();
 
   const trainingId = useParams().trainingId;
   const trainerId = useParams().trainerId;
@@ -91,13 +94,17 @@ const BuyPersonalTraining = () => {
       })
         .then((response) => {
           if (response.ok) {
-            return response.json();
+            toast.success("Successfully bought PT!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
+            setTimeout(() => {
+              navigate("/my-PT");
+            }, 2000);
           }
           return Promise.reject("Cannot buy training.");
         })
-        .then((data) => {
-          console.log(data);
-        })
+
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
@@ -119,7 +126,7 @@ const BuyPersonalTraining = () => {
           console.log(response);
         })
         .then((data) => {
-          setPrice(data.price);
+          setPt(data);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -167,7 +174,7 @@ const BuyPersonalTraining = () => {
               justifyContent: "space-between",
             }}
           >
-            {trainerName && (
+            {trainerName && pt && (
               <div
                 style={{
                   marginTop: "auto",
@@ -175,7 +182,11 @@ const BuyPersonalTraining = () => {
                   marginLeft: "20px",
                 }}
               >
-                Get your personal training with <b>{trainerName}</b>
+                Get your PT of{" "}
+                <b style={{ color: "#EE5007" }}>
+                  {pt.sessionsNumber} sessions {pt.personalTrainingType.name}
+                </b>{" "}
+                with <b style={{ color: "#EE5007" }}>{trainerName}</b>
               </div>
             )}
           </div>
@@ -194,6 +205,8 @@ const BuyPersonalTraining = () => {
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "40px",
                 display: "flex",
+                marginBottom: "40px",
+
                 padding: "20px",
                 flexDirection: "column",
                 width: "44%",
@@ -400,76 +413,84 @@ const BuyPersonalTraining = () => {
                   marginTop: "40px",
                 }}
               >
-                <div
-                  style={{
-                    width: "100%",
-                    marginTop: "auto",
-                    marginBottom: "auto",
-                  }}
-                >
-                  <div>
-                    <p
-                      style={{
-                        marginBottom: "50px",
-                        fontSize: "18px",
-                        color: "#006E7F",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Payment
-                    </p>
-                  </div>
+                {pt && (
                   <div
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "80%",
-                      marginBottom: "10px",
-                      justifyContent: "space-between",
+                      width: "100%",
+                      marginTop: "auto",
+                      marginBottom: "auto",
                     }}
                   >
-                    <div>Subscription price:</div>
-                    <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                      {price} EUR
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "80%",
-                      marginBottom: "50px",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div>Total payment:</div>
-                    <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                      {price} EUR
-                    </div>
-                  </div>
-                  <div>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
+                    <div>
+                      <p
                         style={{
-                          backgroundColor: "#EE5007",
-                          color: "white",
-                          padding: "8px",
-                          height: "100%",
-                          width: "150px",
-                          fontFamily: "'Montserrat',sans-serif",
+                          marginBottom: "50px",
+                          fontSize: "18px",
+                          color: "#006E7F",
+                          fontWeight: "bold",
                         }}
                       >
-                        Go to payment
-                      </Button>
-                    </Form.Item>
+                        Payment
+                      </p>
+                    </div>
+                    <CreditCardInput
+                      inputStyle={{
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginRight: "auto",
+                        marginTop: "30px",
+                        marginLeft: "auto",
+                        width: "80%",
+                        marginBottom: "10px",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div>Subscription price:</div>
+                      <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                        {pt.price} EUR
+                      </div>
+                    </div>
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "80%",
+                        marginBottom: "50px",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div>Total payment:</div>
+                      <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                        {pt.price} EUR
+                      </div>
+                    </div>
+                    <div>
+                      <Form.Item>
+                        <Button
+                          type="primary"
+                          htmlType="submit"
+                          style={{
+                            backgroundColor: "#EE5007",
+                            color: "white",
+                            padding: "8px",
+                            height: "100%",
+                            width: "150px",
+                            fontFamily: "'Montserrat',sans-serif",
+                          }}
+                        >
+                          Buy PT
+                        </Button>
+                      </Form.Item>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div style={{ width: "70%", padding: "20px" }}>
                   <img
@@ -483,6 +504,7 @@ const BuyPersonalTraining = () => {
           </Form>
         </div>
       </div>
+      <ToastContainer style={{ marginLeft: "120px" }} />
     </div>
   );
 };

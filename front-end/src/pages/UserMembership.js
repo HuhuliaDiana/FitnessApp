@@ -462,18 +462,26 @@ const UserMembership = () => {
                       <p
                         style={{
                           fontSize: "20px",
-                          marginBottom: "30px",
                           color: "#006E7F",
                           fontWeight: "bold",
                         }}
                       >
                         Freeze membership
                       </p>
+                      <p
+                        style={{
+                          color: "#EE5007",
+                          marginBottom: "30px",
+                          fontSize:"15px"
+                        }}
+                      >
+                        You have <b>{subscription.noDaysLeftToFreeze}</b> days
+                        left to freeze
+                      </p>
                       <div
                         style={{
                           border: "",
                           display: "flex",
-                          border: "",
                           justifyContent: "center",
                         }}
                       >

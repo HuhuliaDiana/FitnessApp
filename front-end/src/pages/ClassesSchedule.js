@@ -295,10 +295,10 @@ const ClassesSchedule = () => {
           >
             <div
               style={{
-                width: "35%",
                 display: "flex",
                 "margin-left": "auto",
                 "margin-right": "auto",
+                justifyContent: "center",
               }}
             >
               <Dropdown
@@ -351,7 +351,9 @@ const ClassesSchedule = () => {
                 "margin-top": "50px",
                 display: "flex",
                 "flex-direction": "row",
-                width: "100%",
+                // border:"2px solid green",
+                justifyContent: "center",
+                // width: "100%",
               }}
             >
               {data !== [] &&

@@ -63,8 +63,7 @@ function ClubSubscriptions() {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -94,7 +93,7 @@ function ClubSubscriptions() {
               }}
             >
               <p>
-                You chose <b style={{color:"#006E7F"}}>{name}</b>
+                You chose <b style={{ color: "#006E7F" }}>{name}</b>
               </p>
               <Link
                 style={{
@@ -157,7 +156,7 @@ function ClubSubscriptions() {
               "margin-bottom": "40px",
               "font-size": "100%",
               height: "45px",
-              fontFamily:"'Montserrat',sans-serif",
+              fontFamily: "'Montserrat',sans-serif",
               fontSize: "17px",
             }}
             onClick={() => {

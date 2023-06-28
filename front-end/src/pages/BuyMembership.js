@@ -1,18 +1,27 @@
-import { Button, Col, DatePicker, Form, Input, Space } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Col, DatePicker, Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
+import CreditCardInput from "react-credit-card-input";
+import { usePaymentInputs } from "react-payment-inputs";
 import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 import MenuBar from "../components/MenuBar";
 const BuyMembership = () => {
+  const navigate = useNavigate();
   const clubId = useParams().clubId;
+  const [style, setStyle] = useState();
   const accessToken = localStorage.getItem("accessToken");
   const [localDate, setLocalDate] = useState("");
   const [user, setUser] = useState();
   const [name, setName] = useState();
-  const [price, setPrice] = useState();
   const [city, setCity] = useState("");
   const [address, setAddress] = useState("");
   const [county, setCounty] = useState("");
+  const [subscription, setSubscription] = useState();
+  const [subscriptionPeriodName, setSubscriptionPeriodName] = useState("");
+  const [modal2Open, setModal2Open] = useState(false);
 
   const id = useParams().id;
   useEffect(() => {
@@ -35,12 +44,16 @@ const BuyMembership = () => {
       })
         .then((response) => {
           if (response.ok) {
-            return response.json();
+            toast.success("Successfully bought membership!", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
+            setTimeout(() => {
+              navigate("/membership");
+            }, 2000);
           }
         })
-        .then((data) => {
-          console.log(data);
-        })
+
         .catch((err) => console.log(err));
     } catch (err) {
       console.log(err);
@@ -86,7 +99,16 @@ const BuyMembership = () => {
           console.log(response);
         })
         .then((data) => {
-          setPrice(data.price);
+          setSubscription(data);
+          const subPeriodName = data.subscriptionPeriod.name;
+          let name = "";
+          if (subPeriodName.includes("_")) {
+            const array = subPeriodName.split("_");
+            array.forEach((a) => {
+              name += a + " ";
+            });
+            setSubscriptionPeriodName(name);
+          } else setSubscriptionPeriodName(subPeriodName);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -125,25 +147,30 @@ const BuyMembership = () => {
         </div>
 
         <div className="child">
-          <div
-            style={{
-              boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
-              display: "flex",
-              height: "50px",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+          {subscription && subscriptionPeriodName !== "" && (
             <div
               style={{
-                marginTop: "auto",
-                marginBottom: "auto",
-                marginLeft: "20px",
+                boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
+                display: "flex",
+                height: "50px",
+                flexDirection: "row",
+                justifyContent: "space-between",
               }}
             >
-              Buy membership
+              <div
+                style={{
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  marginLeft: "20px",
+                }}
+              >
+                Buy membership{" "}
+                <b style={{ color: "#EE5007" }}>
+                  {subscription.membership.name} {subscriptionPeriodName}
+                </b>
+              </div>
             </div>
-          </div>
+          )}
           <Form
             name="basic"
             labelCol={{ span: 8 }}
@@ -158,6 +185,7 @@ const BuyMembership = () => {
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "40px",
+                marginBottom: "40px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
@@ -366,76 +394,86 @@ const BuyMembership = () => {
                   marginTop: "40px",
                 }}
               >
-                <div
-                  style={{
-                    width: "100%",
-                    marginTop: "auto",
-                    marginBottom: "auto",
-                  }}
-                >
-                  <div>
-                    <p
-                      style={{
-                        marginBottom: "50px",
-                        fontSize: "18px",
-                        color: "#006E7F",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Payment
-                    </p>
-                  </div>
+                {subscription && (
                   <div
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "80%",
-                      marginBottom: "10px",
-                      justifyContent: "space-between",
+                      width: "100%",
+                      marginTop: "auto",
+                      marginBottom: "auto",
                     }}
                   >
-                    <div>Subscription price:</div>
-                    <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                      {price} EUR
-                    </div>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "80%",
-                      marginBottom: "50px",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div>Total payment:</div>
-                    <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                      {price} EUR
-                    </div>
-                  </div>
-                  <div>
-                    <Form.Item>
-                      <Button
-                        type="primary"
-                        htmlType="submit"
+                    <div>
+                      <p
                         style={{
-                          backgroundColor: "#EE5007",
-                          color: "white",
-                          padding: "8px",
-                          height: "100%",
-                          width: "150px",
-                          fontFamily: "'Montserrat',sans-serif",
+                          marginBottom: "50px",
+                          fontSize: "18px",
+                          color: "#006E7F",
+                          fontWeight: "bold",
                         }}
                       >
-                        Go to payment
-                      </Button>
-                    </Form.Item>
+                        Payment
+                      </p>
+                    </div>
+
+                    <CreditCardInput
+                      inputStyle={{
+                        fontFamily: "'Montserrat', sans-serif",
+                      }}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "80%",
+                        marginTop: "30px",
+                        marginBottom: "10px",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div>Subscription price:</div>
+                      <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                        {subscription.price} EUR
+                      </div>
+                    </div>
+
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "80%",
+                        marginBottom: "50px",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div>Total payment:</div>
+                      <div style={{ color: "#006E7F", fontWeight: "bold" }}>
+                        {subscription.price} EUR
+                      </div>
+                    </div>
+                    <div>
+                      <Form.Item>
+                        <Button
+                          type="primary"
+                          htmlType="submit"
+                          style={{
+                            backgroundColor: "#EE5007",
+                            color: "white",
+                            padding: "8px",
+                            height: "100%",
+                            width: "150px",
+                            fontFamily: "'Montserrat',sans-serif",
+                          }}
+                        >
+                          Buy membership
+                        </Button>
+                      </Form.Item>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div style={{ width: "70%", padding: "20px" }}>
                   <img
@@ -449,6 +487,7 @@ const BuyMembership = () => {
           </Form>
         </div>
       </div>
+      <ToastContainer style={{ marginLeft: "120px" }} />
     </div>
   );
 };

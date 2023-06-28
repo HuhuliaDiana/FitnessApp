@@ -404,13 +404,7 @@ const BookPTSession = () => {
           {errMsg && <p style={{ color: "#B22727" }}>{errMsg}</p>}
         </div> */}
       </div>
-      {/* <Modal
-        title="You booked"
-        centered
-        open={modal2Open}
-        onOk={() => setModal2Open(false)}`
-        onCancel={() => setModal2Open(false)}
-      ></Modal> */}
+     
       <ToastContainer style={{ marginLeft: "120px" }} />
     </div>
   );

@@ -69,8 +69,7 @@ const TrainerPage = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -127,14 +126,20 @@ const TrainerPage = () => {
                   fontSize: "25px",
                 }}
               >
-                {trainer && <p style={{ color: "#006E7F",fontWeight:"bold" }}>{trainer.name}</p>}
+                {trainer && (
+                  <p style={{ color: "#006E7F", fontWeight: "bold" }}>
+                    {trainer.name}
+                  </p>
+                )}
               </div>
               <div
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   "flex-wrap": "wrap",
-                  padding: "40px",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  padding: "30px",
                 }}
               >
                 {trainings.length !== 0 &&

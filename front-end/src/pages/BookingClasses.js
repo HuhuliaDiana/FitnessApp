@@ -5,7 +5,7 @@ import TrainingClassesByClubAndDate from "../components/TrainingClassesByClubAnd
 const BookingClasses = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [clubs, setClubs] = useState([]);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState();
 
   const removeJSONDuplicatesClubs = (clubs) => {
     var uniqueArray = [];
@@ -94,7 +94,7 @@ const BookingClasses = () => {
               Your future attendings to classes
             </div>
           </div>
-          {data.length !== 0 ? (
+          {data ? (
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",

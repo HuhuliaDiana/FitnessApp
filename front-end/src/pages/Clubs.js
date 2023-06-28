@@ -391,7 +391,7 @@ const Clubs = () => {
             <p>{clubSelected.address}</p>
             <Button
               style={{
-                backgroundColor: "#006E7Fcc",
+                backgroundColor: "#006E7FCC",
                 color: "white",
                 "margin-top": "20px",
                 "font-size": "100%",
