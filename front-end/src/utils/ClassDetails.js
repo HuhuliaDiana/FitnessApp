@@ -9,7 +9,6 @@ class ClassDetails {
     "steppers",
     "dumbbell",
     "mattress",
-    "elastic bands",
     "discs",
   ];
   static AQUA_TRAINING_TYPE = [

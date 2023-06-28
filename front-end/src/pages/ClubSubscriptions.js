@@ -113,7 +113,7 @@ function ClubSubscriptions() {
           <div
             style={{
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "100px",
+              "margin-top": "50px",
               display: "flex",
               width: "80%",
               "margin-left": "10%",

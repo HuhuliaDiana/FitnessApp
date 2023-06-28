@@ -185,9 +185,10 @@ const BuyMembership = () => {
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "40px",
-                marginBottom: "40px",
+                marginBottom: "40px",            
                 display: "flex",
                 padding: "20px",
+                marginBottom: "30px",
                 flexDirection: "column",
                 width: "44%",
                 justifyContent: "center",

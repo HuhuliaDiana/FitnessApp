@@ -260,7 +260,7 @@ const TrainingClassDetails = () => {
 
   return (
     <div className="parent">
-      <MenuBar></MenuBar>
+      <MenuBar/>
       <div
         style={{
           display: "flex",
@@ -310,12 +310,12 @@ const TrainingClassDetails = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "40px",
+                marginTop: "30px",
                 marginBottom: "auto",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
-                width: "50%",
+                width: "45%",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -438,7 +438,7 @@ const TrainingClassDetails = () => {
               <div style={{ display: "flex", justifyContent: "space-around" }}>
                 <div
                   style={{
-                    width: "36%",
+                    width: "40%",
                     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                     padding: "20px",
                   }}
@@ -483,7 +483,7 @@ const TrainingClassDetails = () => {
                 </div>
                 <div
                   style={{
-                    width: "36%",
+                    width: "40%",
                     boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                     padding: "20px",
                   }}
