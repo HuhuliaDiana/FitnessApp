@@ -1,11 +1,9 @@
 import { Button, Col, DatePicker, Form, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import CreditCardInput from "react-credit-card-input";
-import { usePaymentInputs } from "react-payment-inputs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 
 import MenuBar from "../components/MenuBar";
 const BuyMembership = () => {

@@ -56,7 +56,7 @@ const TrainingClassesByClub = (props) => {
       >
         {club.name}
       </p>
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex" /* justifyContent: "center"*/ }}>
         {namesOfWeekDays !== [] &&
           namesOfWeekDays.map((nameOfWeekDay) => {
             return (

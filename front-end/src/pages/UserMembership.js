@@ -353,7 +353,7 @@ const UserMembership = () => {
             </div>
           ) : (
             <div style={{ marginTop: "100px" }}>
-              <p
+              {/* <p
                 style={{
                   fontSize: "30px",
                   color: "#006E7F",
@@ -363,7 +363,7 @@ const UserMembership = () => {
               >
                 Buy membership.
               </p>
-              <img alt="image" src="void.svg" style={{ width: "18%" }}></img>
+              <img alt="image" src="void.svg" style={{ width: "18%" }}></img> */}
             </div>
           )}
           {option && (

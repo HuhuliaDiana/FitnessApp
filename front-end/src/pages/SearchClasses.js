@@ -147,8 +147,7 @@ const SearchClasses = () => {
               "font-size": "120%",
               "font-weight": "bold",
               "margin-left": "15px",
-              color:"#006E7F"
-
+              color: "#006E7F",
             }}
           >
             Welcome to Fit & Repeat
@@ -182,7 +181,7 @@ const SearchClasses = () => {
               padding: "20px",
               "flex-direction": "column",
               width: "80%",
-              marginBottom:"50px",
+              marginBottom: "50px",
               justifyContent: "center",
               "margin-left": "10%",
             }}
@@ -235,7 +234,7 @@ const SearchClasses = () => {
                 "flex-direction": "column",
               }}
             >
-              {clubs !== [] &&
+              {clubs.length !== 0 ? (
                 clubs.map((club) => {
                   return (
                     <div
@@ -251,7 +250,28 @@ const SearchClasses = () => {
                       />
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <div style={{ marginTop: "3%" }}>
+                  <div>
+                    <img
+                      src="search.svg"
+                      alt="image"
+                      style={{ width: "20%" }}
+                    ></img>
+                  </div>
+                  <div
+                    style={{
+                      color: "#EE5007",
+                      marginTop: "3%",
+                      fontSize: "20px",
+                      marginBottom: "2%",
+                    }}
+                  >
+                    Search a training class by type or trainer's name.
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
