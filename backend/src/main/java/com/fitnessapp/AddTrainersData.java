@@ -31,15 +31,15 @@ public class AddTrainersData {
     private void saveTrainersByClubId(Long clubId) {
         Long cityId = clubService.getClubById(clubId).getCity().getId();
         if (cityId % 2 == 0) {
-            saveTrainer("RAMONA GANEA", 3L, clubId, PTSex.F);
-            saveTrainer("LILIANA NEAGU", 2L, clubId, PTSex.F);
-            saveTrainer("ALEXANDRU MITU", 1L, clubId, PTSex.M);
-            saveTrainer("VALENTIN VACARIU", 3L, clubId, PTSex.M);
+            saveTrainer("Ramona Ganea", 3L, clubId, PTSex.F);
+            saveTrainer("Liliana Neagu", 2L, clubId, PTSex.F);
+            saveTrainer("Alexandru Mitu", 1L, clubId, PTSex.M);
+            saveTrainer("Valentin Vacariu", 3L, clubId, PTSex.M);
         } else {
-            saveTrainer("LAURENTIU SANDU", 3L, clubId, PTSex.M);
-            saveTrainer("DAN SZENTKOVICS", 1L, clubId, PTSex.M);
-            saveTrainer("PAUL STOICESCU", 2L, clubId, PTSex.M);
-            saveTrainer("CRISTINA EPURE", 1L, clubId, PTSex.F);
+            saveTrainer("Laurentiu Sandu", 3L, clubId, PTSex.M);
+            saveTrainer("Daniel Ionescu", 1L, clubId, PTSex.M);
+            saveTrainer("Paul Stoicescu", 2L, clubId, PTSex.M);
+            saveTrainer("Cristina Popescu", 1L, clubId, PTSex.F);
         }
     }
 

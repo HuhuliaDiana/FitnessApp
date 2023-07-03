@@ -18,15 +18,21 @@ public enum MembershipType {
 
     }
 
-    public List<MembershipType> getAllLessThan() {
+    public List<MembershipType> getAllLessThanEqual() {
         List<MembershipType> list = new ArrayList<>();
         for (int i = 0; i <= this.ordinal(); i++) list.add(getByOrdinal(i));
         return list;
     }
 
-    public List<MembershipType> getAllGreaterThan() {
+    public List<MembershipType> getAllGreaterThanEqual() {
         List<MembershipType> list = new ArrayList<>();
         for (int i = 3; i >= this.ordinal(); i--) list.add(getByOrdinal(i));
+        return list;
+    }
+
+    public List<MembershipType> getAllGreaterThan() {
+        List<MembershipType> list = new ArrayList<>();
+        for (int i = 3; i > this.ordinal(); i--) list.add(getByOrdinal(i));
         return list;
     }
 }

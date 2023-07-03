@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface UserPersonalTrainingRepository extends JpaRepository<UserPersonalTraining, Long> {
     Optional<UserPersonalTraining> findByUserId(Long id);
     List<UserPersonalTraining> findByPersonalTrainerId(Long id);
+
+    Optional<UserPersonalTraining> findByUser_Id(Long currentUserId);
 }

@@ -5,6 +5,7 @@ import com.fitnessapp.dto.PersonalTrainingDto;
 import com.fitnessapp.dto.TrainingDto;
 import com.fitnessapp.dto.UserPersonalTrainingDto;
 import com.fitnessapp.entity.UserPersonalTraining;
+import com.fitnessapp.entity.UserSubscription;
 import com.fitnessapp.exception.EntityNotFoundException;
 import com.fitnessapp.mapper.UserPersonalTrainingMapper;
 import com.fitnessapp.repository.UserPersonalTrainingRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +34,15 @@ public class UserPersonalTrainingService {
         return userPersonalTrainingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User personal training", "id", id));
     }
 
+    public Optional<UserPersonalTraining> getOptionalCurrentUserPersonalTraining() {
+        Long currentUserId = userService.getCurrentUserId();
+        return userPersonalTrainingRepository.findByUser_Id(currentUserId);
+    }
 
+    public void deletePT() {
+        UserPersonalTraining userPersonalTraining = getCurrentUserPersonalTraining();
+        userPersonalTrainingRepository.delete(userPersonalTraining);
+    }
     public UserPersonalTrainingDto buyPersonalTraining(TrainingDto trainingDto) {
 
         PersonalTrainingDto training = personalTrainingService.getById(trainingDto.getTrainingId());

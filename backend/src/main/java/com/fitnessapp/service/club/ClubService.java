@@ -52,7 +52,7 @@ public class ClubService {
         Subscription subscription = subscriptionService.getById(subscriptionId);
 
         //get membership of user and its children
-        List<MembershipType> membershipTypes = subscription.getMembership().getName().getAllLessThan();
+        List<MembershipType> membershipTypes = subscription.getMembership().getName().getAllLessThanEqual();
 
         //get ids of these memberships
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
@@ -69,7 +69,7 @@ public class ClubService {
     //I have a club, get me subscriptions I can buy to access that club
     public List<SubscriptionDto> getSubscriptionsWhichAllowUserToAccessClub(Long clubId) {
         Club club = findClubById(clubId);
-        List<MembershipType> membershipTypes = club.getMembership().getName().getAllGreaterThan();
+        List<MembershipType> membershipTypes = club.getMembership().getName().getAllGreaterThanEqual();
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
         return subscriptionService.findAllByMembershipIdIn(membershipIds);
 
@@ -96,7 +96,7 @@ public class ClubService {
     //sectiune de cluburi pe care le poate accesa utilizatorul
     public List<SubscriptionDto> getAllSubscriptionsForClub(Long clubId) {
         Membership membership = findClubById(clubId).getMembership();
-        List<MembershipType> membershipTypes = membership.getName().getAllGreaterThan();
+        List<MembershipType> membershipTypes = membership.getName().getAllGreaterThanEqual();
         List<Long> membershipIds = membershipService.getMembershipTypeIds(membershipTypes);
         return subscriptionService.findAllByMembershipIdIn(membershipIds);
 
