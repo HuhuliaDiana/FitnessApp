@@ -315,7 +315,7 @@ const TrainingClassDetails = () => {
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
-                width: "45%",
+                width: "50%",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -328,7 +328,7 @@ const TrainingClassDetails = () => {
                   marginBottom: "50px",
                 }}
               >
-                <div style={{ width: "50%", marginLeft: "auto" }}>
+                <div style={{ width: "100%", marginLeft: "auto" }}>
                   {className && (
                     <p
                       style={{
@@ -430,7 +430,7 @@ const TrainingClassDetails = () => {
                   <img
                     alt="image"
                     src="/working_out.svg"
-                    style={{ width: "50%", padding: "20px" }}
+                    style={{ width: "70%", }}
                   ></img>
                 </div>
               </div>
@@ -529,7 +529,7 @@ const TrainingClassDetails = () => {
 
               {status && <p style={styleStatus()}>{status}</p>}
               {displayBtn && (
-                <div style={{ marginTop: "10px", marginBottom: "20px" }}>
+                <div style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <Button
                     onClick={handleOnClick}
                     style={{

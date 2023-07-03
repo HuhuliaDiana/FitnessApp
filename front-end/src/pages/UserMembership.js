@@ -265,7 +265,7 @@ const UserMembership = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "50px",
+                marginTop: "30px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
@@ -276,14 +276,13 @@ const UserMembership = () => {
               }}
             >
               {subscription && (
-                <div style={{ border: "", display: "flex" }}>
+                <div style={{ border: "", display: "flex" ,}}>
                   <div
                     style={{
                       border: "",
-                      width: "60%",
+                      width: "100%",
                       margin: "auto",
-                      backgroundColor: "",
-                      color: "",
+                 
                     }}
                   >
                     <p
@@ -296,7 +295,7 @@ const UserMembership = () => {
                       {subscription.subscription.membership.name}{" "}
                       {subscriptionPeriodName}
                     </p>
-                    <p style={{}}>
+                    <p>
                       Available from{" "}
                       <b style={{ color: "#006E7F" }}>
                         {subscription.startDate}
@@ -309,14 +308,13 @@ const UserMembership = () => {
                     <img
                       alt="image"
                       src="membership.svg"
-                      style={{ width: "50%", padding: "20px" }}
+                      style={{ width: "60%", padding: "20px" }}
                     ></img>
                   </div>
                 </div>
               )}
               <div
                 style={{
-                  border: "",
                   marginTop: "50px",
                   display: "flex",
                   justifyContent: "space-between",
@@ -370,12 +368,12 @@ const UserMembership = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "25px",
+                marginTop: "20px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
                 width: "60%",
-                marginBottom: "25px",
+                marginBottom: "20px",
                 justifyContent: "center",
                 marginLeft: "auto",
                 marginRight: "auto",
@@ -383,7 +381,7 @@ const UserMembership = () => {
             >
               {/* transfer */}
               {option === "transfer" && (
-                <div style={{ border: "", display: "flex" }}>
+                <div style={{display: "flex" }}>
                   <div style={{ width: "50%", margin: "auto" }}>
                     <img
                       src="transfer.svg"
@@ -589,6 +587,7 @@ const UserMembership = () => {
               color: "#006E7F",
               "margin-left": "auto",
               "margin-right": "auto",
+              marginBottom:"30px",
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
             }}
           >

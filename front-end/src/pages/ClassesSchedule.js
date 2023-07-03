@@ -283,14 +283,14 @@ const ClassesSchedule = () => {
           <div
             style={{
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "50px",
+              "margin-top": "30px",
               display: "flex",
-              padding: "20px",
+              padding: "30px 30px 30px 30px",
               "flex-direction": "column",
-              width: "80%",
+              width: "90%",
               marginBottom: "50px",
               justifyContent: "center",
-              "margin-left": "10%",
+              "margin-left": "55px",
             }}
           >
             <div
@@ -353,9 +353,7 @@ const ClassesSchedule = () => {
                 display: "flex",
                 justifyContent:"center",
                 "flex-direction": "row",
-                // border:"2px solid green",
                 justifyContent: "center",
-                // width: "100%",
               }}
             >
               {data !== [] &&
@@ -366,7 +364,8 @@ const ClassesSchedule = () => {
                       key={nameOfWeekDay.id}
                       style={{
                         width: "200px",
-                        "margin-right": "20px",
+                        "margin-right": "10px",
+                        "margin-left": "10px",
                       }}
                     >
                       <div

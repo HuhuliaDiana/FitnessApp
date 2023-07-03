@@ -98,12 +98,12 @@ const BookingClasses = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "50px",
+                marginTop: "30px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
                 width: "60%",
-                marginBottom: "50px",
+                marginBottom: "30px",
                 justifyContent: "center",
                 marginLeft: "19%",
               }}
@@ -135,9 +135,10 @@ const BookingClasses = () => {
                   })}
               </div>
             </div>
-          ) : (
-            <div style={{ marginTop: "100px" }}>
-              <p
+          ) :
+            (
+              <div style={{ marginTop: "100px" }}>
+                {/* <p
                 style={{
                   fontSize: "30px",
                   color: "#006E7F",
@@ -147,9 +148,10 @@ const BookingClasses = () => {
               >
                 You haven't booked any class yet.
               </p>
-              <img alt="image" src="void.svg" style={{ width: "18%" }}></img>
-            </div>
-          )}
+              <img alt="image" src="void.svg" style={{ width: "18%" }}></img> */}
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

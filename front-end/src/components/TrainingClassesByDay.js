@@ -8,7 +8,7 @@ const TrainingClassesByDay = (props) => {
     styleDiv = {
       display: "flex",
       justifyContent: "center",
-      marginBottom: "30px",
+      marginBottom: "20px",
     };
   } 
   const localDateOfClass = props.parentToChild.nameOfWeekDay.localDateOfClass;

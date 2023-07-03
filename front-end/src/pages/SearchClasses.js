@@ -176,14 +176,15 @@ const SearchClasses = () => {
           <div
             style={{
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              "margin-top": "50px",
+              marginTop: "30px",
               display: "flex",
               padding: "20px",
               "flex-direction": "column",
-              width: "80%",
-              marginBottom: "50px",
+              width: "90%",
+              marginBottom: "30px",
               justifyContent: "center",
-              "margin-left": "10%",
+              marginRight:"auto",
+              marginLeft:"auto",
             }}
           >
             <div

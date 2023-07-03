@@ -240,7 +240,7 @@ const Clubs = () => {
           <div
             style={{
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "50px",
+              marginTop: "30px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",
@@ -266,7 +266,6 @@ const Clubs = () => {
               {cities.length > 0 && (
                 <div
                   style={{
-                    border: "",
                     width: "70%",
                     margin: "auto",
                   }}
@@ -320,7 +319,7 @@ const Clubs = () => {
           <div
             style={{
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "30px",
+              marginTop: "20px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",
@@ -368,12 +367,12 @@ const Clubs = () => {
             style={{
               width: "20%",
               "text-align": "center",
-              "margin-top": "30px",
+              "margin-top": "20px",
               padding: "20px",
               backgroundColor: "white",
               color: "#006E7F",
               "margin-left": "auto",
-              marginBottom:"50px",
+              marginBottom:"30px",
               "margin-right": "auto",
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
             }}

@@ -34,12 +34,11 @@ const data = [
 
 const captionStyle = {
   fontSize: "25px",
-  color: "",
+  color: "white",
 };
 
 const Home = () => {
   const accessToken = localStorage.getItem("accessToken");
-  const [user, setUser] = useState();
   const navigate = useNavigate();
   const [name, setName] = useState();
   useEffect(() => {
@@ -62,7 +61,6 @@ const Home = () => {
           return Promise.reject("Cannot get current user.");
         })
         .then((data) => {
-          setUser(data);
           setName(data.firstname + " " + data.lastname);
         })
         .catch((err) => console.log(err));
@@ -100,13 +98,11 @@ const Home = () => {
         <div className="child">
           <div
             style={{
-              marginTop: "50px",
+              marginTop: "30px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",
-              width: "90%",
-              marginLeft: "auto",
-              marginRight: "auto",
+              justifyContent:"center",
             }}
           >
             {name && (
@@ -121,46 +117,46 @@ const Home = () => {
                 <b style={{ color: "#EE5007" }}>{name}</b> !
               </div>
             )}
-            {/* <div style={{justifyContent:"center"}}> */}
-            <div>
-              <Carousel
-                data={data}
-                time={2000}
-                width="800px"
-                height="350px"
-                captionStyle={captionStyle}
-                radius="10px"
-                // slideNumber={true}
-                // slideNumberStyle={slideNumberStyle}
-                captionPosition="bottom"
-                automatic={true}
-                // dots={true}
-                // pauseIconColor="white"
-                // pauseIconSize="40px"
-                // slideBackgroundColor="darkgrey"
-                slideImageFit="contain"
-                // thumbnails={true}
-                // thumbnailWidth="100px"
-                style={{
-                  // textAlign: "center",
-                  // maxWidth: "850px",
-                  marginLeft: "26%",
-                  marginTop: "5%",
-                  // maxHeight: "500px",
-                  // margin: "0 auto",
-                  // margin: "40px auto",
-                }}
-              />
-            </div>
-            {/* </div> */}
-            <div style={{ display: "flex", justifyContent:"space-between" }}>
+            <Carousel
+              data={data}
+              time={2000}
+              width="1000px"
+              height="300px"
+              captionStyle={captionStyle}
+              radius="10px"
+              // slideNumber={true}
+              // slideNumberStyle={slideNumberStyle}
+              captionPosition="bottom"
+              automatic={true}
+              // dots={true}
+              // pauseIconColor="white"
+              // pauseIconSize="40px"
+              // slideBackgroundColor="darkgrey"
+              slideImageFit="contain"
+              // thumbnails={true}
+              // thumbnailWidth="100px"
+              style={{
+                // textAlign: "center",
+                // maxWidth: "850px",
+                marginLeft: "20%",
+                // marginRight:"auto",
+                marginTop: "50px",
+                // maxHeight: "500px",
+                // margin: "0 auto",
+                // margin: "40px auto",
+              }}
+            />
+            <div style={{
+              display: "flex", justifyContent: "space-between", marginTop: "30px",width:"90%",marginLeft:"auto",marginRight:"auto"
+            }}>
               <div
                 style={{
-                  marginTop: "5%",
                   display: "flex",
                   flexDirection: "column",
-                  width: "40%",
+                  width: "45%",
+                  padding: "30px",
                   justifyContent: "flex-start",
+                  boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 }}
               >
                 <p
@@ -186,6 +182,7 @@ const Home = () => {
                     justifyContent: "flex-start",
                     "font-size": "120%",
                     textAlign: "justify",
+
                   }}
                 >
                   Invest in your health and well-being today because you deserve
@@ -232,14 +229,14 @@ const Home = () => {
                   </Button>
                 </div>
               </div>
-              {/*  */}
               <div
                 style={{
-                  marginTop: "5%",
                   display: "flex",
                   flexDirection: "column",
-                  width: "40%",
+                  width: "45%",
+                  padding: "30px",
                   justifyContent: "flex-start",
+                  boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 }}
               >
                 <p
@@ -269,9 +266,7 @@ const Home = () => {
                   supporting you at every step of your fitness journey. They
                   will provide you with the knowledge, guidance, and motivation
                   needed to overcome any obstacles and unlock your true
-                  potential. Whether you're a beginner taking your first steps
-                  or a seasoned athlete seeking new challenges, we are here to
-                  push your limits and celebrate your achievements.
+                  potential. We are here to push your limits and celebrate your achievements.
                 </p>
                 {/* <p
                 align="left"

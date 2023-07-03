@@ -13,13 +13,7 @@ import {
   FaUserCircle
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-function MenuItem() {
-  return (
-    <Menu.Item>
-      <p>Fitness</p>
-    </Menu.Item>
-  );
-}
+
 const MenuBar = () => {
   const navigate = useNavigate();
   function getItem(label, key, icon, children, type) {

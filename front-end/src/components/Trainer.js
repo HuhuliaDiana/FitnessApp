@@ -22,7 +22,8 @@ const Trainer = (props) => {
       style={{
         "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
         padding: "15px",
-        "margin-right": "40px",
+        "margin-right": "20px",
+        "margin-left": "20px",
         width: "18%",
       }}
     >
