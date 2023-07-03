@@ -36,7 +36,6 @@ public class DataInitializer implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final MembershipRepository membershipRepository;
     private final MembershipService membershipService;
-    private final ClubService clubService;
     private final ClubRepository clubRepository;
     private final CityService cityService;
     private final CityRepository cityRepository;
@@ -58,11 +57,11 @@ public class DataInitializer implements CommandLineRunner {
     private final PersonalTrainingTypeRepository personalTrainingTypeRepository;
     private final PersonalTrainerRepository personalTrainerRepository;
     private final PersonalTrainingTypeService personalTrainingTypeService;
-    private final PersonalTrainerService personalTrainerService;
     private final PersonalTrainingTypeMapper personalTrainingTypeMapper;
     private final TrainingClassRepository trainingClassRepository;
     private final AddClubsData addClubsData;
     private final AddClassesData addClassesData;
+    private final AddTrainersData addTrainersData;
 
     @Override
     public void run(String... args) {
@@ -86,30 +85,8 @@ public class DataInitializer implements CommandLineRunner {
         if (personalTrainingTypeRepository.count() == 0) saveTrainingTypes();
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
         if (personalTrainingRepository.count() == 0) savePersonalTrainingsInfo();
-        if (personalTrainerRepository.count() == 0) saveTrainers();
+        if (personalTrainerRepository.count() == 0) addTrainersData.saveTrainers();
         if (trainingClassRepository.count() == 0) addClassesData.saveClassesForAllClubs();
-
-    }
-
-    private void saveTrainer(String name, Long trainingTypeId, Long clubId, PTSex sex) {
-        PersonalTrainerDto trainerDto = new PersonalTrainerDto();
-        trainerDto.setName(name);
-        trainerDto.setSex(sex);
-        trainerDto.getPersonalTrainings().addAll(personalTrainingService.getAllByTrainingTypeId(trainingTypeId));
-        trainerDto.getClubs().add(clubService.getClubById(clubId));
-        personalTrainerService.save(trainerDto);
-    }
-
-    private void saveTrainers() {
-        saveTrainer("LAURENTIU SANDU", 3L, 4L, PTSex.M);
-        saveTrainer("RAMONA GANEA", 3L, 1L, PTSex.F);
-        saveTrainer("DAN SZENTKOVICS", 1L, 4L, PTSex.M);
-        saveTrainer("ALEXANDRU MITU", 1L, 1L, PTSex.M);
-        saveTrainer("LILIANA NEAGU", 1L, 8L, PTSex.F);
-        saveTrainer("DICU ROBERT ADRIAN", 3L, 8L, PTSex.M);
-        saveTrainer("VALENTIN VACARIU", 3L, 1L, PTSex.M);
-        saveTrainer("PAUL STOICESCU", 2L, 10L, PTSex.M);
-        saveTrainer("CRISTINA EPURE", 1L, 10L, PTSex.F);
 
     }
 
@@ -170,9 +147,6 @@ public class DataInitializer implements CommandLineRunner {
         });
 
     }
-
-
-    private final TrainingClassService trainingClassService;
 
 
     private void saveSubscription(SubscriptionPeriodType subscriptName, Double price, MembershipType membershipType) {
