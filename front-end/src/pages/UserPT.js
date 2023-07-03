@@ -186,7 +186,7 @@ const UserPT = () => {
             </div>
           ) : (
             <div style={{ marginTop: "100px" }}>
-              <p
+              {/* <p
                 style={{
                   fontSize: "30px",
                   color: "#006E7F",
@@ -200,7 +200,7 @@ const UserPT = () => {
                 alt="image"
                 src="void.svg"
                 style={{ width: "18%" }}
-              ></img>
+              ></img> */}
             </div>
           )}
         </div>

@@ -102,18 +102,19 @@ const BookedClassesHistory = () => {
                 marginTop: "50px",
                 display: "flex",
                 padding: "20px",
-                marginBottom: "50px",
+                marginBottom: "30px",
                 flexDirection: "column",
-                width: "80%",
+                width: "60%",
                 justifyContent: "center",
-                marginLeft: "10%",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
-              <div>
+              <div >
                 <img
                   alt="image"
                   src="/online_calendar.svg"
-                  style={{ width: "20%" }}
+                  style={{ width: "25%",padding:"10px" }}
                 ></img>
               </div>
               <div>
@@ -127,7 +128,7 @@ const BookedClassesHistory = () => {
                           marginRight: "20px",
                         }}
                       >
-                        <TrainingClassesByClub
+                        <TrainingClassesByClubAndDate
                           key={club.id}
                           parentToChild={{ club, data }}
                         />

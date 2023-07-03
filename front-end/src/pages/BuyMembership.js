@@ -9,6 +9,7 @@ import MenuBar from "../components/MenuBar";
 const BuyMembership = () => {
   const navigate = useNavigate();
   const clubId = useParams().clubId;
+  const [clubName, setClubName] = useState();
   const [style, setStyle] = useState();
   const accessToken = localStorage.getItem("accessToken");
   const [localDate, setLocalDate] = useState("");
@@ -19,12 +20,13 @@ const BuyMembership = () => {
   const [county, setCounty] = useState("");
   const [subscription, setSubscription] = useState();
   const [subscriptionPeriodName, setSubscriptionPeriodName] = useState("");
-  const [modal2Open, setModal2Open] = useState(false);
-
   const id = useParams().id;
   useEffect(() => {
     getSubscriptionById();
   }, [id]);
+  useEffect(() => {
+    getClubById();
+  }, [clubId]);
 
   useEffect(() => {
     getCurrentUser();
@@ -81,6 +83,7 @@ const BuyMembership = () => {
       console.log(err);
     }
   };
+
   const getSubscriptionById = () => {
     try {
       fetch(`http://localhost:8080/api/subscription/${id}`, {
@@ -107,6 +110,29 @@ const BuyMembership = () => {
             });
             setSubscriptionPeriodName(name);
           } else setSubscriptionPeriodName(subPeriodName);
+        })
+        .catch((err) => console.log(err));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getClubById = () => {
+    try {
+      fetch(`http://localhost:8080/api/club/${clubId}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        method: "get",
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          console.log(response);
+        })
+        .then((data) => {
+          setClubName(data.name);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -166,6 +192,7 @@ const BuyMembership = () => {
                 <b style={{ color: "#EE5007" }}>
                   {subscription.membership.name} {subscriptionPeriodName}
                 </b>
+                to train in <b style={{ color: "#EE5007" }}>{clubName}</b>
               </div>
             </div>
           )}
@@ -183,7 +210,7 @@ const BuyMembership = () => {
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "40px",
-                marginBottom: "40px",            
+                marginBottom: "40px",
                 display: "flex",
                 padding: "20px",
                 marginBottom: "30px",

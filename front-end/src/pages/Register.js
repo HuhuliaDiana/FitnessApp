@@ -12,9 +12,9 @@ const Register = () => {
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
 
-  const onFinish = async () => {
+  const onFinish = async ({ firstname, lastname, email, phone, password }) => {
     try {
-      fetch("/user", {
+      fetch("http://localhost:8080/api/user", {
         headers: {
           "Content-Type": "application/json",
         },

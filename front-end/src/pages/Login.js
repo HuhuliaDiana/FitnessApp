@@ -2,19 +2,21 @@ import { FaLock, FaMailBulk } from "react-icons/fa";
 import { Button, Col, Form, Input, Row } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = ({ requestedLocation }) => {
   const navigate = useNavigate();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
+  // const [errMsg, setErrMsg] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
     localStorage.removeItem("accessToken");
-    setErrMsg("");
+    // setErrMsg("");
   }, [email, password]);
 
   const onFinish = async ({ email, password }) => {
@@ -29,10 +31,11 @@ const Login = ({ requestedLocation }) => {
         .then((response) => {
           if (response.ok) {
             return response.json();
-          } else if (!response.ok && response.status === 400) {
-            setErrMsg("Missing Username or Password");
           } else if (!response.ok && response.status === 401) {
-            setErrMsg("Unauthorized");
+            toast.error("Unauthorized", {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500,
+            });
           }
           return Promise.reject("Invalid register attempt.");
         })
@@ -114,9 +117,6 @@ const Login = ({ requestedLocation }) => {
                 </Row>
               </Col>
             </Row>
-            <Row>
-              <Col>{!isLoggedIn && <p>{errMsg}</p>}</Col>
-            </Row>
             <Row
               style={{
                 display: "flex",
@@ -142,6 +142,7 @@ const Login = ({ requestedLocation }) => {
           </Form>
         </div>
       </div>
+      <ToastContainer style={{ marginLeft: "120px" }} />
     </div>
   );
 };

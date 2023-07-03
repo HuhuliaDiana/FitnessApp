@@ -1,10 +1,21 @@
 import { useEffect, useState } from "react";
 import MenuBar from "../components/MenuBar";
-import PTSession from "../components/PTSession";
+import PTSessionsByClubAndTrainer from "../components/PTSessionsByClubAndTrainer";
 
 const BookingsPTHistory = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [bookingsPT, setBookingsPT] = useState([]);
+  const [clubs, setClubs] = useState([]);
+  const removeJSONDuplicatesClubs = (clubs) => {
+    var uniqueArray = [];
+    for (var i = 0; i < clubs.length; i++) {
+      if (!uniqueArray.find((x) => x.id === clubs[i].id)) {
+        uniqueArray.push(clubs[i]);
+      }
+    }
+    return uniqueArray;
+  };
+
   const getBookingsPTHistory = () => {
     try {
       fetch(`http://localhost:8080/api/pt-session/bookings-history`, {
@@ -18,13 +29,17 @@ const BookingsPTHistory = () => {
           if (response.ok) {
             return response.json();
           }
-
           return Promise.reject(
             "Cannot get bookings PT history of current user."
           );
         })
         .then((data) => {
+          console.log(data);
           setBookingsPT(data);
+          let clubs = data.map(
+            (d) => d.userPersonalTraining.personalTrainer.clubs[0]
+          );
+          setClubs(removeJSONDuplicatesClubs(clubs));
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -103,18 +118,22 @@ const BookingsPTHistory = () => {
                   style={{ width: "25%" }}
                 ></img>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  marginTop: "50px",
-                }}
-              >
-                {bookingsPT &&
-                  bookingsPT.map((bookingPT) => {
+              <div>
+                {clubs !== [] &&
+                  clubs.map((club) => {
                     return (
-                      <PTSession key={bookingPT.id} parentToChild={bookingPT} />
+                      <div
+                        key={club.id}
+                        style={{
+                          width: "100%",
+                          marginRight: "20px",
+                        }}
+                      >
+                        <PTSessionsByClubAndTrainer
+                          key={club.id}
+                          parentToChild={{ club, data: bookingsPT }}
+                        />
+                      </div>
                     );
                   })}
               </div>
@@ -129,7 +148,7 @@ const BookingsPTHistory = () => {
                   marginBottom: "150px",
                 }}
               >
-                You haven't booked any personal training session yet.
+                You haven't attended any personal training session yet.
               </p>
               <img alt="image" src="void.svg" style={{ width: "18%" }}></img>
             </div>

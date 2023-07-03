@@ -98,21 +98,22 @@ const BookingClasses = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "30px",
+                marginTop: "50px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
                 width: "60%",
                 marginBottom: "30px",
                 justifyContent: "center",
-                marginLeft: "19%",
+                marginLeft: "auto",
+                marginRight: "auto",
               }}
             >
-              <div>
+              <div >
                 <img
                   alt="image"
-                  src="/bookings-future-attendings.svg"
-                  style={{ width: "20%" }}
+                  src="/future.svg"
+                  style={{ width: "20%",padding:"10px" }}
                 ></img>
               </div>
               <div>

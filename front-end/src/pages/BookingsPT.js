@@ -1,10 +1,19 @@
 import { useEffect, useState } from "react";
 import MenuBar from "../components/MenuBar";
-import PTSession from "../components/PTSession";
+import PTSessionsByClubAndTrainer from "../components/PTSessionsByClubAndTrainer";
 const BookingsPT = () => {
   const accessToken = localStorage.getItem("accessToken");
-  const [bookingsPT, setBookingsPT] = useState();
-
+  const [bookingsPT, setBookingsPT] = useState([]);
+  const [clubs, setClubs] = useState([]);
+  const removeJSONDuplicatesClubs = (clubs) => {
+    var uniqueArray = [];
+    for (var i = 0; i < clubs.length; i++) {
+      if (!uniqueArray.find((x) => x.id === clubs[i].id)) {
+        uniqueArray.push(clubs[i]);
+      }
+    }
+    return uniqueArray;
+  };
   const getBookingsPT = () => {
     try {
       fetch(`http://localhost:8080/api/pt-session/bookings`, {
@@ -23,6 +32,10 @@ const BookingsPT = () => {
         })
         .then((data) => {
           setBookingsPT(data);
+          let clubs = data.map(
+            (d) => d.userPersonalTraining.personalTrainer.clubs[0]
+          );
+          setClubs(removeJSONDuplicatesClubs(clubs));
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -80,11 +93,11 @@ const BookingsPT = () => {
               Personal Training booked sessions
             </div>
           </div>
-          {bookingsPT ? (
+          {bookingsPT.length !== 0 ? (
             <div
               style={{
                 "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                "margin-top": "100px",
+                "margin-top": "50px",
                 display: "flex",
                 padding: "20px",
                 "flex-direction": "column",
@@ -101,25 +114,29 @@ const BookingsPT = () => {
                   style={{ width: "25%" }}
                 ></img>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  flexWrap: "wrap",
-                  marginTop: "50px",
-                }}
-              >
-                {bookingsPT &&
-                  bookingsPT.map((bookingPT) => {
+              <div>
+                {clubs !== [] &&
+                  clubs.map((club) => {
                     return (
-                      <PTSession key={bookingPT.id} parentToChild={bookingPT} />
+                      <div
+                        key={club.id}
+                        style={{
+                          width: "100%",
+                          marginRight: "20px",
+                        }}
+                      >
+                        <PTSessionsByClubAndTrainer
+                          key={club.id}
+                          parentToChild={{ club, data: bookingsPT }}
+                        />
+                      </div>
                     );
                   })}
               </div>
             </div>
           ) : (
             <div style={{ marginTop: "100px" }}>
-              <p
+              {/* <p
                 style={{
                   fontSize: "30px",
                   color: "#006E7F",
@@ -129,7 +146,7 @@ const BookingsPT = () => {
               >
                 You haven't attended any personal training session yet.
               </p>
-              <img alt="image" src="void.svg" style={{ width: "18%" }}></img>
+              <img alt="image" src="void.svg" style={{ width: "18%" }}></img> */}
             </div>
           )}
         </div>

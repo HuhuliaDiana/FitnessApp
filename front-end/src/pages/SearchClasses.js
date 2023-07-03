@@ -20,9 +20,7 @@ const SearchClasses = () => {
       getClassesForNext7Days();
     }
   }, [typeId, setTypeId]);
-  // useEffect(() => {
-  //   getClassesForNext7Days();
-  // }, []);
+
   useEffect(() => {
     if (trainerName !== "") {
       getClassesForNext7Days();
@@ -266,7 +264,7 @@ const SearchClasses = () => {
                       color: "#EE5007",
                       marginTop: "3%",
                       fontSize: "20px",
-                      marginBottom: "2%",
+                        marginBottom: "2%",
                     }}
                   >
                     Search a training class by type or trainer's name.

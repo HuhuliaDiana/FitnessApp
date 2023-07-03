@@ -224,7 +224,7 @@ const BookPTSession = () => {
             <div
               style={{
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-                marginTop: "50px",
+                marginTop: "30px",
                 display: "flex",
                 padding: "20px",
                 flexDirection: "column",
@@ -276,7 +276,6 @@ const BookPTSession = () => {
                     display: "flex",
                     flexDirection: "column",
                     margin: "auto",
-                    border: "",
                     width: "100%",
                   }}
                 >
@@ -314,7 +313,7 @@ const BookPTSession = () => {
           <div
             style={{
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "40px",
+              marginTop: "20px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",
@@ -366,7 +365,7 @@ const BookPTSession = () => {
           <div
             style={{
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-              marginTop: "40px",
+              marginTop: "20px",
               display: "flex",
               padding: "20px",
               flexDirection: "column",

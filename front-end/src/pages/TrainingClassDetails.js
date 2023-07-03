@@ -1,5 +1,7 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   FaCalendarDay,
   FaClock,
@@ -16,6 +18,7 @@ const TrainingClassDetails = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [status, setStatus] = useState("");
   const [buttonTitle, setButtonTitle] = useState("");
+  const navigate = useNavigate();
   const [handleOnClick, setHandleOnClick] = useState(() => {});
   const [isCancelable, setIsCancelable] = useState();
   const [displayBtn, setDisplayBtn] = useState();
@@ -71,6 +74,9 @@ const TrainingClassDetails = () => {
               position: toast.POSITION.BOTTOM_CENTER,
               autoClose: 1500,
             });
+            setTimeout(() => {
+              navigate("/schedule");
+            }, 2000);
           } else return Promise.reject("Cannot book class by id.");
         })
         .then(() => {
@@ -182,6 +188,9 @@ const TrainingClassDetails = () => {
               position: toast.POSITION.BOTTOM_CENTER,
               autoClose: 1500,
             });
+            setTimeout(() => {
+              navigate("/schedule");
+            }, 2000);
           } else return Promise.reject("Cannot cancel class by id.");
         })
         .then(() => {
@@ -260,7 +269,7 @@ const TrainingClassDetails = () => {
 
   return (
     <div className="parent">
-      <MenuBar/>
+      <MenuBar />
       <div
         style={{
           display: "flex",
@@ -430,7 +439,7 @@ const TrainingClassDetails = () => {
                   <img
                     alt="image"
                     src="/working_out.svg"
-                    style={{ width: "70%", }}
+                    style={{ width: "70%" }}
                   ></img>
                 </div>
               </div>

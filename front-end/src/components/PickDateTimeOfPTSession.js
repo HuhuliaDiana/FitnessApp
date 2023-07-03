@@ -42,7 +42,7 @@ const PickDateTimeOfPTSession = (props) => {
     setSelectedTimeSlot(null);
     timeSlot = null;
     setLocalBookingDate(
-      moment(new Date(e)).toISOString().split("T")[0]
+      moment(new Date(e)).add(1, "days").toISOString().split("T")[0]
     );
     setBookingDate(new Date(e));
 
@@ -50,6 +50,7 @@ const PickDateTimeOfPTSession = (props) => {
       bookingTimes: bkgTimes,
       selectedTimeSolt: timeSlot,
       localBookingDate: moment(new Date(e))
+        .add(1, "days")
         .toISOString()
         .split("T")[0],
       bookingDate: new Date(e),

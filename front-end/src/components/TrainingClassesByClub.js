@@ -45,7 +45,7 @@ const TrainingClassesByClub = (props) => {
     return uniqueArray;
   };
   return (
-    <div key={club.id} style={{}}>
+    <div key={club.id}>
       <p
         style={{
           padding: "10px",
@@ -56,7 +56,7 @@ const TrainingClassesByClub = (props) => {
       >
         {club.name}
       </p>
-      <div style={{ display: "flex" /* justifyContent: "center"*/ }}>
+      <div style={{ display: "flex", justifyContent: "center"}}>
         {namesOfWeekDays !== [] &&
           namesOfWeekDays.map((nameOfWeekDay) => {
             return (

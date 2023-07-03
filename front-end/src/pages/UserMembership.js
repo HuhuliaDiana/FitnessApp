@@ -45,6 +45,7 @@ const UserMembership = () => {
           return Promise.reject("Cannot get user subscription.");
         })
         .then((data) => {
+          console.log(data);
           setDataStartFreeze(data.startFreeze);
           setDataEndFreeze(data.endFreeze);
           setStartDayOfMembership(data.startDate);
@@ -276,13 +277,12 @@ const UserMembership = () => {
               }}
             >
               {subscription && (
-                <div style={{ border: "", display: "flex" ,}}>
+                <div style={{ border: "", display: "flex" }}>
                   <div
                     style={{
                       border: "",
                       width: "100%",
                       margin: "auto",
-                 
                     }}
                   >
                     <p
@@ -302,6 +302,9 @@ const UserMembership = () => {
                       </b>{" "}
                       to{" "}
                       <b style={{ color: "#006E7F" }}>{subscription.endDate}</b>
+                    </p>
+                    <p>
+                      Choosen club: <b style={{ color: "#006E7F" }}>{subscription.club.name}</b>
                     </p>
                   </div>
                   <div>
@@ -381,7 +384,7 @@ const UserMembership = () => {
             >
               {/* transfer */}
               {option === "transfer" && (
-                <div style={{display: "flex" }}>
+                <div style={{ display: "flex" }}>
                   <div style={{ width: "50%", margin: "auto" }}>
                     <img
                       src="transfer.svg"
@@ -470,7 +473,7 @@ const UserMembership = () => {
                         style={{
                           color: "#EE5007",
                           marginBottom: "30px",
-                          fontSize:"15px"
+                          fontSize: "15px",
                         }}
                       >
                         You have <b>{subscription.noDaysLeftToFreeze}</b> days
@@ -587,7 +590,7 @@ const UserMembership = () => {
               color: "#006E7F",
               "margin-left": "auto",
               "margin-right": "auto",
-              marginBottom:"30px",
+              marginBottom: "30px",
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
             }}
           >

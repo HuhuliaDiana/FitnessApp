@@ -100,8 +100,9 @@ const TrainerPage = () => {
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               "margin-top": "100px",
               display: "flex",
-              width: "80%",
-              "margin-left": "10%",
+              width: "83%",
+              "margin-left": "auto",
+              marginRight: "auto",
             }}
           >
             <div style={{ width: "40vh", margin: "auto" }}>

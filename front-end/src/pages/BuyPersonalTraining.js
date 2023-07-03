@@ -26,6 +26,7 @@ const BuyPersonalTraining = () => {
   useEffect(() => {
     getPersonalTrainerById();
   }, [trainerId]);
+  const [clubName, setClubName] = useState();
 
   useEffect(() => {
     getCurrentUser();
@@ -72,6 +73,7 @@ const BuyPersonalTraining = () => {
         .then((data) => {
           console.log(data);
           setTrainerName(data.name);
+          setClubName(data.clubs[0].name);
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -186,7 +188,8 @@ const BuyPersonalTraining = () => {
                 <b style={{ color: "#EE5007" }}>
                   {pt.sessionsNumber} sessions {pt.personalTrainingType.name}
                 </b>{" "}
-                with <b style={{ color: "#EE5007" }}>{trainerName}</b>
+                with <b style={{ color: "#EE5007" }}>{trainerName}</b> to train
+                in <b style={{ color: "#EE5007" }}>{clubName}</b>
               </div>
             )}
           </div>
