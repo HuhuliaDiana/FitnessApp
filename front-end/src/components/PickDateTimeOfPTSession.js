@@ -25,13 +25,10 @@ const PickDateTimeOfPTSession = (props) => {
   const [localBookingDate, setLocalBookingDate] = useState();
 
   useEffect(() => {
-    // console.log("booking date has changed");
     getPTSessionByTrainerId();
   }, [bookingDate]);
 
   const onDateChange = (e) => {
-    // console.log("bookingTimes");
-    // console.log(bookingTimes);
     let bkgTimes = bookingTimes;
     let timeSlot = selectedTimeSlot;
 
@@ -42,15 +39,16 @@ const PickDateTimeOfPTSession = (props) => {
     setSelectedTimeSlot(null);
     timeSlot = null;
     setLocalBookingDate(
-      moment(new Date(e)).add(1, "days").toISOString().split("T")[0]
+      moment(new Date(e)).toISOString().split("T")[0]
     );
     setBookingDate(new Date(e));
+
+    console.log(moment(new Date(e)).toISOString().split("T")[0])
 
     props.onBookingTimes({
       bookingTimes: bkgTimes,
       selectedTimeSolt: timeSlot,
       localBookingDate: moment(new Date(e))
-        .add(1, "days")
         .toISOString()
         .split("T")[0],
       bookingDate: new Date(e),
@@ -82,8 +80,7 @@ const PickDateTimeOfPTSession = (props) => {
           const array = dataFilteredByChosenDate.map(
             (d) => d.startSessionTime + " - " + d.endSessionTime
           );
-          // console.log("session hours reserved ");
-          // console.log(array);
+
           setSessionHoursReserved(array);
         })
         .catch((err) => console.log(err));
@@ -92,7 +89,6 @@ const PickDateTimeOfPTSession = (props) => {
     }
   };
   useEffect(() => {
-    // console.log(new Date(moment()));
     if (startDateOfPT) {
       const min =
         new Date(startDateOfPT) > new Date(moment())
@@ -117,18 +113,15 @@ const PickDateTimeOfPTSession = (props) => {
     if (sessionHoursReserved.length !== 0) {
       const extract = allTimes.filter((t) => !sessionHoursReserved.includes(t));
       setBookingTimes(extract.sort());
-      // console.log("booking times");
-      // console.log(extract.sort());
+
     } else {
       setBookingTimes(allTimes.sort());
     }
   }, [sessionHoursReserved]);
 
   useEffect(() => {
-    // console.log(localBookingDate);
 
     if (selectedTimeSlot !== null) {
-      // console.log(selectedTimeSlot.split(" - ")[0]);
       props.onSelectDateTime({
         localDate: localBookingDate,
         localTime: selectedTimeSlot.split(" - ")[0],
@@ -141,8 +134,6 @@ const PickDateTimeOfPTSession = (props) => {
       <DatePicker
         defaultValue={bookingDate}
         onChange={onDateChange}
-        // min={minDate}
-        // max={maxDate}
         disabledDate={(d) => d.isBefore(minDate) || d.isAfter(maxDate)}
       />
     </div>

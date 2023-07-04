@@ -19,6 +19,7 @@ const BuyMembership = () => {
   const [address, setAddress] = useState("");
   const [county, setCounty] = useState("");
   const [subscription, setSubscription] = useState();
+  const [price, setPrice] = useState()
   const [subscriptionPeriodName, setSubscriptionPeriodName] = useState("");
   const id = useParams().id;
   useEffect(() => {
@@ -100,6 +101,7 @@ const BuyMembership = () => {
           console.log(response);
         })
         .then((data) => {
+          console.log(data)
           setSubscription(data);
           const subPeriodName = data.subscriptionPeriod.name;
           let name = "";
@@ -110,6 +112,23 @@ const BuyMembership = () => {
             });
             setSubscriptionPeriodName(name);
           } else setSubscriptionPeriodName(subPeriodName);
+          switch (data.subscriptionPeriod.id) {
+            case 1: {
+              const price = data.price * 12
+              const roundPrice = Math.round(price * 100) / 100
+              setPrice(roundPrice)
+            }
+              break;
+            case 2: {
+              const price = data.price * 12
+              const roundPrice = Math.round(price * 100) / 100
+              setPrice(roundPrice)
+            }
+              break;
+            default: setPrice(data.price)
+              break;
+          }
+
         })
         .catch((err) => console.log(err));
     } catch (err) {
@@ -243,7 +262,7 @@ const BuyMembership = () => {
                       fontWeight: "bold",
                     }}
                   >
-                    Pick a date to start your subscription
+                    Pick a date to start your membership
                   </div>
                   <div>
                     <Form.Item
@@ -458,9 +477,9 @@ const BuyMembership = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      <div>Subscription price:</div>
+                      <div>Membership price:</div>
                       <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                        {subscription.price} EUR
+                        {price} EUR
                       </div>
                     </div>
 
@@ -477,7 +496,7 @@ const BuyMembership = () => {
                     >
                       <div>Total payment:</div>
                       <div style={{ color: "#006E7F", fontWeight: "bold" }}>
-                        {subscription.price} EUR
+                        {price} EUR
                       </div>
                     </div>
                     <div>

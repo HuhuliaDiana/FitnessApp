@@ -454,7 +454,7 @@ const BuyPersonalTraining = () => {
                         justifyContent: "space-between",
                       }}
                     >
-                      <div>Subscription price:</div>
+                      <div>Personal training price:</div>
                       <div style={{ color: "#006E7F", fontWeight: "bold" }}>
                         {pt.price} EUR
                       </div>

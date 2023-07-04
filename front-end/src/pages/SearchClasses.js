@@ -9,7 +9,7 @@ const SearchClasses = () => {
 
   const accessToken = localStorage.getItem("accessToken");
   const [clubs, setClubs] = useState([]);
-  const [typeId, setTypeId] = useState();
+  const [typeId, setTypeId] = useState(null);
   const [typeItems, setTypeItems] = useState();
   const [nameDropdownTypes, setNameDropdownTypes] = useState("Choose a type");
   const [data, setData] = useState([]);
@@ -60,6 +60,8 @@ const SearchClasses = () => {
   };
   useEffect(() => {
     getTrainingClassTypes();
+    console.log(trainerName)
+    console.log(typeId)
   }, []);
 
   const handleMenuClickTypes = ({ key }) => {
@@ -117,7 +119,7 @@ const SearchClasses = () => {
       console.log(err);
     }
   };
-  useEffect(() => {}, [nameDropdownTypes]);
+  useEffect(() => { }, [nameDropdownTypes]);
 
   const onSearchByTrainer = (trainerName) => {
     setTrainerName(trainerName);
@@ -176,13 +178,13 @@ const SearchClasses = () => {
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               marginTop: "30px",
               display: "flex",
-              padding: "20px",
+              padding: "30px",
               "flex-direction": "column",
               width: "90%",
               marginBottom: "30px",
               justifyContent: "center",
-              marginRight:"auto",
-              marginLeft:"auto",
+              marginRight: "auto",
+              marginLeft: "auto",
             }}
           >
             <div
@@ -238,10 +240,7 @@ const SearchClasses = () => {
                   return (
                     <div
                       key={club.id}
-                      style={{
-                        width: "100%",
-                        "margin-right": "20px",
-                      }}
+                     
                     >
                       <TrainingClassesByClub
                         key={club.id}
@@ -251,6 +250,7 @@ const SearchClasses = () => {
                   );
                 })
               ) : (
+
                 <div style={{ marginTop: "3%" }}>
                   <div>
                     <img
@@ -264,10 +264,12 @@ const SearchClasses = () => {
                       color: "#EE5007",
                       marginTop: "3%",
                       fontSize: "20px",
-                        marginBottom: "2%",
+                      marginBottom: "2%",
                     }}
                   >
-                    Search a training class by type or trainer's name.
+                    {
+                      typeId === null && trainerName === "" ? (<div><p>Search a training class by type or trainer's name.</p></div>) : (<div><p>No training class found.</p></div>)
+                    }
                   </div>
                 </div>
               )}

@@ -226,7 +226,7 @@ const BookPTSession = () => {
                 boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
                 marginTop: "30px",
                 display: "flex",
-                padding: "20px",
+                padding: "10px",
                 flexDirection: "column",
                 width: "50%",
                 justifyContent: "center",
@@ -238,6 +238,7 @@ const BookPTSession = () => {
                 style={{
                   color: "#006E7F",
                   fontSize: "20px",
+                  marginTop:"20px",
                   fontWeight: "bold",
                 }}
               >
@@ -245,7 +246,7 @@ const BookPTSession = () => {
                 <b style={{ color: "#EE5007" }}>
                   {userPT.personalTrainer.name}
                 </b>
-                <br></br> at {trainerClub}
+                <br></br> at <b style={{ color: "#EE5007" }}>{trainerClub}</b>
               </div>
               <div
                 style={{
@@ -258,7 +259,6 @@ const BookPTSession = () => {
                   style={{
                     width: "90%",
                     display: "flex",
-                    border: "",
                   }}
                 >
                   <img
@@ -315,7 +315,7 @@ const BookPTSession = () => {
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               marginTop: "20px",
               display: "flex",
-              padding: "20px",
+              padding: "10px",
               flexDirection: "column",
               width: "50%",
               justifyContent: "center",
@@ -338,6 +338,7 @@ const BookPTSession = () => {
             <div
               style={{
                 display: "flex",
+                justifyContent:"center"
               }}
             >
               {bookingTimes.map((time) => {
@@ -367,7 +368,7 @@ const BookPTSession = () => {
               boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               marginTop: "20px",
               display: "flex",
-              padding: "20px",
+              padding: "10px",
               flexDirection: "column",
               width: "20%",
               justifyContent: "center",
@@ -402,7 +403,7 @@ const BookPTSession = () => {
           {errMsg && <p style={{ color: "#B22727" }}>{errMsg}</p>}
         </div> */}
       </div>
-     
+
       <ToastContainer style={{ marginLeft: "120px" }} />
     </div>
   );

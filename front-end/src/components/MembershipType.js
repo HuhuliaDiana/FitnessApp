@@ -16,15 +16,15 @@ const MembershipType = (props) => {
     <div
       style={{
         "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-        width: "25%",
+        width: "27%",
         "margin-bottom": "50px",
         padding: "20px",
-        fontWeight: "bold",
+
       }}
     >
-      <p style={{ color: "#B22727",fontSize:"20px" }}>{subscription.membership.name}</p>
-      <p style={{ color: "#006E7F" }}>{formattedSubscriptionPeriodName}</p>
-      <p style={{ color: "#EE5007",fontSize:"20px"  }}>{subscription.price} EUR</p>
+      <p style={{ color: "#B22727", fontSize: "20px", fontWeight: "bold", }}>{subscription.membership.name}</p>
+      <p style={{ color: "#006E7F", fontWeight: "bold", }}>{formattedSubscriptionPeriodName}</p>
+      <p style={{ color: "grey" }}><b style={{ color: "#EE5007", fontSize: "20px", fontWeight: "bold", }}>{subscription.price} EUR</b> / month</p>
       <Button
         style={{
           backgroundColor: "#006E7F",

@@ -93,7 +93,7 @@ function ClubSubscriptions() {
               }}
             >
               <p>
-                You chose <b style={{ color: "#006E7F" }}>{name}</b>
+                You chose <b style={{ color: "#EE5007" }}>{name}</b>
               </p>
               <Link
                 style={{
@@ -102,6 +102,7 @@ function ClubSubscriptions() {
                   "margin-bottom": "auto",
                   "margin-left": "20px",
                   "margin-right": "20px",
+                  color: "#006E7F"
                 }}
                 to="/buy-membership"
               >
@@ -115,15 +116,15 @@ function ClubSubscriptions() {
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               "margin-top": "50px",
               display: "flex",
-              width: "80%",
-              "margin-left": "10%",
+              width: "85%",
+              "margin-left": "8%",
             }}
           >
-            <div style={{ width: "50vh", margin: "auto" }}>
+            <div style={{ width: "55vh", margin: "auto" }}>
               <img
                 src="/memberships_page.svg"
                 alt="image"
-                style={{ width: "80%", padding: "50px" }}
+                style={{ width: "80%", }}
               />
             </div>
             <div

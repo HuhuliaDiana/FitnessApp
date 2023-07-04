@@ -285,7 +285,7 @@ const ClassesSchedule = () => {
               "box-shadow": "rgba(0, 0, 0, 0.24) 0px 3px 8px",
               "margin-top": "30px",
               display: "flex",
-              padding: "30px 30px 30px 30px",
+              padding: "30px",
               "flex-direction": "column",
               width: "90%",
               marginBottom: "50px",

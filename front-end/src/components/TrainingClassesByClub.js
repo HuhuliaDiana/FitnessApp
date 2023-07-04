@@ -56,15 +56,16 @@ const TrainingClassesByClub = (props) => {
       >
         {club.name}
       </p>
-      <div style={{ display: "flex", justifyContent: "center"}}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         {namesOfWeekDays !== [] &&
           namesOfWeekDays.map((nameOfWeekDay) => {
             return (
               <div
                 key={nameOfWeekDay.id}
                 style={{
-                  "margin-right": "20px",
-                  width: "200px",
+                  "margin-right": "3px",
+                  "margin-left": "3px",
+                  width: "14%",
                 }}
               >
                 <div
